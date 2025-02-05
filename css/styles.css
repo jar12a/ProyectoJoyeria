@@ -240,6 +240,51 @@ html {
 	border-radius: 3rem;
 }
 
+
+/* ********************************** */
+/*               imagen wrapper       */
+/* ********************************** */
+* {
+	margin: 100;
+	padding: 100;
+	box-sizing: border-box;
+	font-family: Arial, sans-serif;
+}
+
+.contenedor {
+	justify-content: center;
+	min-height: 100vh;
+	background-color: #1dced4;
+	border: 3px solid #fff;
+}
+
+.wrapper {
+	float: left;
+	margin: 150px auto;
+	width: 70%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.derecha {
+	max-width: 320px;
+	float: left;
+}
+
+.text-box {
+
+	color: #fff;
+}
+.text-box h2 {
+	font-size: 18px;
+	color: black;
+}
+
+.text-box p {
+    font-size: 12px;
+}
+
 /* ********************************** */
 /*            MAIN CONTENT            */
 /* ********************************** */
