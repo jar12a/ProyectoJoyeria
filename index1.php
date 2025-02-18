@@ -11,7 +11,6 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css" />
 	<?php include 'complementos/head.php'; ?>
-
 </head>
 
 <body>
@@ -140,15 +139,6 @@
         
     </section>
 
-
-    
-
-
-
-
-
-
-
         <div class="card" style="width: 18rem;">
             <img src="product/1.jpg" class="card-img-top" alt="...">
             <div class="card-body">
@@ -195,10 +185,6 @@
                 </div>
             </div>
 
-        
-
-
-
             <nav aria-label="...">
                 <ul class="pagination">
                     <li class="page-item disabled">
@@ -214,8 +200,6 @@
                     </li>
                 </ul>
             </nav>
-
-
 
             <section class="container top-categories">
 				<h1 class="heading-1">Mejores Precios</h1>
