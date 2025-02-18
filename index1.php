@@ -51,21 +51,21 @@
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active" data-bs-interval="1000">
-                <img src="http://localhost/ProyectoJoyeria/img/banner1.jpg" class="d-block w-100" alt="...">
+                <img src="img/banner1.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>La Calidad</h5>
                     <p>En la palma de tu mano.</p>
                 </div>
             </div>
             <div class="carousel-item" data-bs-interval="2000">
-                <img src="http://localhost/ProyectoJoyeria/img/banner2.avif" class="d-block w-100" alt="...">
+                <img src="img/banner2.avif" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Desde los mejores Precios.</h5>
                     <p>Con grabados personalizos.</p>
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="http://localhost/ProyectoJoyeria/img/banner3.jpeg" class="d-block w-100" alt="...">
+                <img src="img/banner3.jpeg" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Con un catalogo muy Completo</h5>
                     <p>Con porcentaje de descuentos por su preferencia.</p>
@@ -74,7 +74,7 @@
 
             
             <div class="carousel-item">
-                <img src="http://localhost/ProyectoJoyeria/img/banner4.jpg" class="d-block w-100" alt="...">
+                <img src="img/banner4.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Con envios a todas partes del mundo.</h5>
                     <p>Recibes en la puerta de su hogar.</p>
@@ -150,7 +150,7 @@
 
 
         <div class="card" style="width: 18rem;">
-            <img src="http://localhost/ProyectoJoyeria/product/1.jpg" class="card-img-top" alt="...">
+            <img src="product/1.jpg" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">Aretes Flor de Diamante en Oro Rosado</h5>
                 <p class="card-text">Estos deslumbrantes aretes en forma de flor cuentan con pétalos de oro rosado y un
@@ -179,7 +179,7 @@
 
         <div class="div">
             <div class="card" style="width: 18rem;">
-                <img src="http://localhost/ProyectoJoyeria/product/3.jpg" class="card-img-top" alt="...">
+                <img src="product/3.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Moneda de Oro con Diseño de Divinidad Hindú – Arte y Espiritualidad</h5>
                     <p class="card-text">Descubre esta extraordinaria moneda de oro, una obra maestra que combina el
