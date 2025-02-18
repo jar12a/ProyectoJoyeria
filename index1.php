@@ -621,5 +621,5 @@
     
 		<script src="https://kit.fontawesome.com/45b2b3afef.js" crossorigin="anonymous"></script>
 </body>
-<?php include 'complementos/foother.php'; ?>
+<?php include 'complementos/footer.php'; ?>
 </html>
