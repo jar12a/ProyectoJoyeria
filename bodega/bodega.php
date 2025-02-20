@@ -2,9 +2,25 @@
 
 // consultas sql
 include 'conexion.php';
+
+// Obtener los valores de los filtros si existen
+$categoria_filtro = isset($_GET['categoria']) ? $_GET['categoria'] : '';
+$material_filtro = isset($_GET['material']) ? $_GET['material'] : '';
+
+// Construir la consulta SQL con los filtros
 $sql_productos = "SELECT p.ID_Producto, p.Nombre, c.Nombre AS Categoria, p.Descripción, p.Stock, p.Precio, p.Material, p.Imagen 
                   FROM producto p
-                  JOIN categoría c ON p.ID_Categoría = c.ID_categoría";
+                  JOIN categoría c ON p.ID_Categoría = c.ID_categoría
+                  WHERE 1=1";
+
+if ($categoria_filtro) {
+    $sql_productos .= " AND c.ID_categoría = '$categoria_filtro'";
+}
+
+if ($material_filtro) {
+    $sql_productos .= " AND p.Material = '$material_filtro'";
+}
+
 $result_productos = $conn->query($sql_productos);
 
 $sql_categorias = "SELECT ID_categoría, Nombre FROM categoría"; 
@@ -74,6 +90,38 @@ if (!$result_categorias) {
                 <div class="col-md-3 mb-3 d-flex align-items-end">
                     <button type="button" id="btnAgregar" class="btn btn-primary me-2" onclick="agregarProducto()">Agregar</button>
                     <button type="button" id="btnActualizar" class="btn btn-warning" onclick="actualizarProducto()" style="display:none;">Actualizar</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Formulario de filtros -->
+        <form method="GET" class="mb-4">
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <select id="categoria" name="categoria" class="form-control">
+                        <option value="">Filtrar por categoría</option>
+                        <?php
+                        $result_categorias->data_seek(0); // Reiniciar el puntero del resultado
+                        if ($result_categorias && $result_categorias->num_rows > 0) {
+                            while ($row = $result_categorias->fetch_assoc()) {
+                                $selected = ($row['ID_categoría'] == $categoria_filtro) ? 'selected' : '';
+                                echo "<option value='" . $row['ID_categoría'] . "' $selected>" . $row['Nombre'] . "</option>";
+                            }
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <select id="material" name="material" class="form-control">
+                        <option value="">Filtrar por material</option>
+                        <option value="Oro" <?php echo ($material_filtro == 'Oro') ? 'selected' : ''; ?>>Oro</option>
+                        <option value="Plata" <?php echo ($material_filtro == 'Plata') ? 'selected' : ''; ?>>Plata</option>
+                        <option value="Platino" <?php echo ($material_filtro == 'Platino') ? 'selected' : ''; ?>>Platino</option>
+                        <option value="Acero" <?php echo ($material_filtro == 'Acero') ? 'selected' : ''; ?>>Acero</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-3 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary">Filtrar</button>
                 </div>
             </div>
         </form>
