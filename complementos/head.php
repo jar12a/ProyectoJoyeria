@@ -26,7 +26,7 @@
             <div class="col-12 col-md-4 d-flex justify-content-center">
                 <div class="container-logo">
                     <i class="fa-regular fa-gem fa-beat-fade"></i>
-                    <h1 class="logo"><a href="/">Imperial Gems</a></h1>
+                    <h1 class="logo"><a href="index.php">Imperial Gems</a></h1>
                 </div>
             </div>
 
