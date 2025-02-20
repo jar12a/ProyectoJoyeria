@@ -33,7 +33,7 @@ include 'bodega/conexionproductos.php';
             background-color: black;
         }
         .modal-lg-custom {
-            max-width: 30%;
+            max-width: 50%;
         }
         .rating {
             display: flex;
