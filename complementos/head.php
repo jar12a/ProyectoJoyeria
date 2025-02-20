@@ -77,8 +77,10 @@
                         Catálogos
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Cadenas</a></li>
-                        <li><a class="dropdown-item" href="#">Pulseras</a></li>
+                        <li><a class="dropdown-item" href="categoria_aritos.php">Aritos</a></li>
+                        <li><a class="dropdown-item" href="categoria_anillos.php">Anillos</a></li>
+                        <li><a class="dropdown-item" href="categoria_cadena.php">Cadenas</a></li>
+                        <li><a class="dropdown-item" href="categoria_brazaletes.php">Brazaletes</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#">Algo más aquí</a></li>
                     </ul>
