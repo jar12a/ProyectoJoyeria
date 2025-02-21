@@ -2,6 +2,11 @@
 session_start();
 include 'complementos/head.php';
 include 'bodega/conexionproductos.php';
+
+// Realizar la consulta para contar el número de productos registrados
+$sql_count = "SELECT COUNT(*) AS total_productos FROM producto";
+$stmt_count = $pdo->query($sql_count);
+$total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +38,7 @@ include 'bodega/conexionproductos.php';
             background-color: black;
         }
         .modal-lg-custom {
-            max-width: 50%;
+            max-width: 40%;
         }
         .rating {
             display: flex;
@@ -58,7 +63,7 @@ include 'bodega/conexionproductos.php';
 <body>
     <div class="container mt-5">
         <!-- Sección de Productos -->
-        <h2 class="mb-4">Productos</h2>
+        <h2 class="mb-4">Productos <span class="badge badge-secondary"><?php echo $total_productos; ?></span></h2>
         <div class="row">
             <?php
             // Realizar la consulta a la base de datos
@@ -153,35 +158,31 @@ include 'bodega/conexionproductos.php';
                 imagen: imagen // Añadir la imagen del producto
             };
 
-            fetch('agregar_carrito.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(producto)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Producto agregado al carrito');
-                    actualizarContadorCarrito(); // Actualizar el contador del carrito
-                    location.reload(); // Recargar la página para mostrar los cambios
-                } else {
-                    alert('Error al agregar el producto al carrito');
-                }
-            })
-            .catch(error => console.error('Error:', error));
+            // Obtener el carrito actual del localStorage
+            let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+            // Verificar si el producto ya está en el carrito
+            let productoExistente = carrito.find(item => item.id === id);
+            if (productoExistente) {
+                // Actualizar la cantidad del producto existente
+                productoExistente.cantidad += producto.cantidad;
+            } else {
+                // Agregar el nuevo producto al carrito
+                carrito.push(producto);
+            }
+
+            // Guardar el carrito actualizado en el localStorage
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+
+            alert('Producto agregado al carrito');
+            actualizarContadorCarrito(); // Actualizar el contador del carrito
         }
 
         // Función para actualizar el contador del carrito
         function actualizarContadorCarrito() {
-            fetch('obtener_carrito.php')
-                .then(response => response.json())
-                .then(data => {
-                    const cartCount = document.getElementById('cart-count');
-                    cartCount.textContent = `(${data.count})`;
-                })
-                .catch(error => console.error('Error:', error));
+            let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            const cartCount = document.getElementById('cart-count');
+            cartCount.textContent = `(${carrito.length})`;
         }
 
         // Función para agregar un producto a la lista de deseos
@@ -225,7 +226,6 @@ include 'bodega/conexionproductos.php';
         document.addEventListener('DOMContentLoaded', () => {
             actualizarContadorCarrito();
         });
-   
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
