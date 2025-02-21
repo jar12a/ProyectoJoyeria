@@ -1,33 +1,42 @@
 <?php
 session_start();
 
-$data = json_decode(file_get_contents("php://input"), true);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $data = json_decode(file_get_contents('php://input'), true);
+    $id = $data['id'];
+    $nombre = $data['nombre'];
+    $precio = $data['precio'];
+    $cantidad = $data['cantidad'];
+    $imagen = $data['imagen'];
 
-if (!isset($_SESSION['carrito'])) {
-    $_SESSION['carrito'] = [];
-}
-
-$producto = [
-    'id' => $data['id'],
-    'nombre' => $data['nombre'],
-    'precio' => $data['precio'],
-    'cantidad' => $data['cantidad'],
-    'imagen' => $data['imagen'] // Añadir la imagen del producto
-];
-
-// Verificar si el producto ya está en el carrito
-$producto_existente = false;
-foreach ($_SESSION['carrito'] as &$item) {
-    if ($item['id'] == $producto['id']) {
-        $item['cantidad'] += $producto['cantidad'];
-        $producto_existente = true;
-        break;
+    // Verificar si el carrito ya existe en la sesión
+    if (!isset($_SESSION['carrito'])) {
+        $_SESSION['carrito'] = [];
     }
-}
 
-if (!$producto_existente) {
-    $_SESSION['carrito'][] = $producto;
-}
+    // Verificar si el producto ya está en el carrito
+    $productoExistente = false;
+    foreach ($_SESSION['carrito'] as &$producto) {
+        if ($producto['id'] === $id) {
+            $producto['cantidad'] += $cantidad;
+            $productoExistente = true;
+            break;
+        }
+    }
 
-echo json_encode(['success' => true]);
+    // Si el producto no existe en el carrito, agregarlo
+    if (!$productoExistente) {
+        $_SESSION['carrito'][] = [
+            'id' => $id,
+            'nombre' => $nombre,
+            'precio' => $precio,
+            'cantidad' => $cantidad,
+            'imagen' => $imagen
+        ];
+    }
+
+    echo json_encode(['success' => true]);
+} else {
+    echo json_encode(['success' => false]);
+}
 ?>

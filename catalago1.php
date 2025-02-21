@@ -158,31 +158,50 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
                 imagen: imagen // Añadir la imagen del producto
             };
 
-            // Obtener el carrito actual del localStorage
-            let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            // Enviar los datos al servidor
+            fetch('agregar_carrito.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(producto)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Obtener el carrito actual del localStorage
+                    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-            // Verificar si el producto ya está en el carrito
-            let productoExistente = carrito.find(item => item.id === id);
-            if (productoExistente) {
-                // Actualizar la cantidad del producto existente
-                productoExistente.cantidad += producto.cantidad;
-            } else {
-                // Agregar el nuevo producto al carrito
-                carrito.push(producto);
-            }
+                    // Verificar si el producto ya está en el carrito
+                    let productoExistente = carrito.find(item => item.id === id);
+                    if (productoExistente) {
+                        // Actualizar la cantidad del producto existente
+                        productoExistente.cantidad += producto.cantidad;
+                    } else {
+                        // Agregar el nuevo producto al carrito
+                        carrito.push(producto);
+                    }
 
-            // Guardar el carrito actualizado en el localStorage
-            localStorage.setItem('carrito', JSON.stringify(carrito));
+                    // Guardar el carrito actualizado en el localStorage
+                    localStorage.setItem('carrito', JSON.stringify(carrito));
 
-            alert('Producto agregado al carrito');
-            actualizarContadorCarrito(); // Actualizar el contador del carrito
+                    alert('Producto agregado al carrito');
+                    actualizarContadorCarrito(); // Actualizar el contador del carrito
+                } else {
+                    alert('Error al agregar el producto al carrito');
+                }
+            })
+            .catch(error => console.error('Error:', error));
         }
 
         // Función para actualizar el contador del carrito
         function actualizarContadorCarrito() {
             let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            let totalCantidad = carrito.reduce((acc, item) => acc + item.cantidad, 0);
             const cartCount = document.getElementById('cart-count');
-            cartCount.textContent = `(${carrito.length})`;
+            if (cartCount) {
+                cartCount.textContent = `(${totalCantidad})`;
+            }
         }
 
         // Función para agregar un producto a la lista de deseos
