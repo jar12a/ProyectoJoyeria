@@ -67,7 +67,7 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
         <div class="row">
             <?php
             // Realizar la consulta a la base de datos
-            $sql = "SELECT * FROM producto";
+            $sql = "SELECT * FROM producto ORDER BY RAND()";
             $stmt = $pdo->query($sql);
 
             // Iterar sobre los resultados y mostrarlos en tarjetas de Bootstrap
