@@ -147,8 +147,8 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
     </div>
 
     <script>
-          // Función para agregar un producto al carrito
-          function agregarAlCarrito(id, nombre, precio, imagen) {
+        // Función para agregar un producto al carrito
+        function agregarAlCarrito(id, nombre, precio, imagen) {
             let cantidad = document.getElementById(`cantidad-${id}`).value;
             let producto = {
                 id: id,
@@ -158,6 +158,7 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
                 imagen: imagen // Añadir la imagen del producto
             };
 
+            // Agregar producto al carrito en el servidor
             fetch('agregar_carrito.php', {
                 method: 'POST',
                 headers: {
@@ -169,6 +170,17 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
             .then(data => {
                 if (data.success) {
                     alert('Producto agregado al carrito');
+                    // Actualizar el carrito en localStorage
+                    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+                    let productoExistente = carrito.find(item => item.id === id);
+
+                    if (productoExistente) {
+                        productoExistente.cantidad += producto.cantidad;
+                    } else {
+                        carrito.push(producto);
+                    }
+
+                    localStorage.setItem('carrito', JSON.stringify(carrito));
                     actualizarContadorCarrito(); // Actualizar el contador del carrito
                 } else {
                     alert('Error al agregar el producto al carrito');
@@ -182,9 +194,9 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
             fetch('obtener_carrito.php')
                 .then(response => response.json())
                 .then(data => {
-                    const cartCount = document.getElementById('cart-count');
-                    cartCount.textContent = `(${data.count})`;
-                })
+            const cartCount = document.getElementById('cart-count');
+            cartCount.textContent = `(${data.count})`;
+})
                 .catch(error => console.error('Error:', error));
         }
 
@@ -194,25 +206,13 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
                 id: id,
                 nombre: nombre,
                 precio: precio,
-                imagen: imagen // Añadir la imagen del producto
+                imagen: imagen
             };
 
-            fetch('agregar_lista_deseos.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(producto)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Producto agregado a la lista de deseos');
-                } else {
-                    alert('Error al agregar el producto a la lista de deseos');
-                }
-            })
-            .catch(error => console.error('Error:', error));
+            let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+            wishlist.push(producto);
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            alert('Producto agregado a la lista de deseos');
         }
 
         // Función para compartir un producto
@@ -226,7 +226,9 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
         }
 
         // Llamar a las funciones para actualizar los contadores al cargar la página
-        document.addEventListener('DOMContentLoaded', actualizarContadorCarrito);
+        document.addEventListener('DOMContentLoaded', () => {
+            actualizarContadorCarrito();
+        });
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
