@@ -147,9 +147,9 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
     </div>
 
     <script>
-        // Función para agregar un producto al carrito
-        function agregarAlCarrito(id, nombre, precio, imagen, isModal = false) {
-            let cantidad = isModal ? document.getElementById(`modal-cantidad-${id}`).value : document.getElementById(`cantidad-${id}`).value;
+          // Función para agregar un producto al carrito
+          function agregarAlCarrito(id, nombre, precio, imagen) {
+            let cantidad = document.getElementById(`cantidad-${id}`).value;
             let producto = {
                 id: id,
                 nombre: nombre,
@@ -158,7 +158,6 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
                 imagen: imagen // Añadir la imagen del producto
             };
 
-            // Enviar los datos al servidor
             fetch('agregar_carrito.php', {
                 method: 'POST',
                 headers: {
@@ -169,22 +168,6 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Obtener el carrito actual del localStorage
-                    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-
-                    // Verificar si el producto ya está en el carrito
-                    let productoExistente = carrito.find(item => item.id === id);
-                    if (productoExistente) {
-                        // Actualizar la cantidad del producto existente
-                        productoExistente.cantidad += producto.cantidad;
-                    } else {
-                        // Agregar el nuevo producto al carrito
-                        carrito.push(producto);
-                    }
-
-                    // Guardar el carrito actualizado en el localStorage
-                    localStorage.setItem('carrito', JSON.stringify(carrito));
-
                     alert('Producto agregado al carrito');
                     actualizarContadorCarrito(); // Actualizar el contador del carrito
                 } else {
@@ -196,12 +179,13 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
 
         // Función para actualizar el contador del carrito
         function actualizarContadorCarrito() {
-            let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-            let totalCantidad = carrito.reduce((acc, item) => acc + item.cantidad, 0);
-            const cartCount = document.getElementById('cart-count');
-            if (cartCount) {
-                cartCount.textContent = `(${totalCantidad})`;
-            }
+            fetch('obtener_carrito.php')
+                .then(response => response.json())
+                .then(data => {
+                    const cartCount = document.getElementById('cart-count');
+                    cartCount.textContent = `(${data.count})`;
+                })
+                .catch(error => console.error('Error:', error));
         }
 
         // Función para agregar un producto a la lista de deseos
@@ -242,9 +226,7 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
         }
 
         // Llamar a las funciones para actualizar los contadores al cargar la página
-        document.addEventListener('DOMContentLoaded', () => {
-            actualizarContadorCarrito();
-        });
+        document.addEventListener('DOMContentLoaded', actualizarContadorCarrito);
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
