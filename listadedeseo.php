@@ -133,6 +133,27 @@ include 'bodega/conexionproductos.php';
             }
         }
 
+        // Función para agregar un producto a la lista de deseos
+        function agregarAListaDeseos(id, nombre, precio, imagen) {
+            let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+            let productoExistente = wishlist.find(producto => producto.id === id);
+
+            if (productoExistente) {
+                alert('Este producto ya está en la lista de deseos');
+            } else {
+                let producto = {
+                    id: id,
+                    nombre: nombre,
+                    precio: precio,
+                    imagen: imagen
+                };
+                wishlist.push(producto);
+                localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                cargarListaDeseos();
+                alert('Producto agregado a la lista de deseos');
+            }
+        }
+
         // Función para agregar un producto al carrito
         function agregarAlCarrito(id, nombre, precio, imagen) {
             let cantidad = document.getElementById(`cantidad-${id}`).value;

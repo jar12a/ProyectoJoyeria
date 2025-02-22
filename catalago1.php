@@ -147,88 +147,103 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
     </div>
 
     <script>
-        // Función para agregar un producto al carrito
-        function agregarAlCarrito(id, nombre, precio, imagen) {
-            let cantidad = document.getElementById(`cantidad-${id}`).value;
-            let producto = {
-                id: id,
-                nombre: nombre,
-                precio: precio,
-                cantidad: parseInt(cantidad),
-                imagen: imagen // Añadir la imagen del producto
-            };
+    // Función para agregar un producto al carrito
+    function agregarAlCarrito(id, nombre, precio, imagen) {
+        let cantidad = document.getElementById(`cantidad-${id}`).value;
+        let producto = {
+            id: id,
+            nombre: nombre,
+            precio: precio,
+            cantidad: parseInt(cantidad),
+            imagen: imagen // Añadir la imagen del producto
+        };
 
-            // Agregar producto al carrito en el servidor
-            fetch('agregar_carrito.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(producto)
-            })
+        // Agregar producto al carrito en el servidor
+        fetch('agregar_carrito.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(producto)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Producto agregado al carrito');
+                // Actualizar el carrito en localStorage
+                let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+                let productoExistente = carrito.find(item => item.id === id);
+
+                if (productoExistente) {
+                    productoExistente.cantidad += producto.cantidad;
+                } else {
+                    carrito.push(producto);
+                }
+
+                localStorage.setItem('carrito', JSON.stringify(carrito));
+                actualizarContadorCarrito(); // Actualizar el contador del carrito
+            } else {
+                alert('Error al agregar el producto al carrito');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    // Función para actualizar el contador del carrito
+    function actualizarContadorCarrito() {
+        fetch('obtener_carrito.php')
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
-                    alert('Producto agregado al carrito');
-                    // Actualizar el carrito en localStorage
-                    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-                    let productoExistente = carrito.find(item => item.id === id);
-
-                    if (productoExistente) {
-                        productoExistente.cantidad += producto.cantidad;
-                    } else {
-                        carrito.push(producto);
-                    }
-
-                    localStorage.setItem('carrito', JSON.stringify(carrito));
-                    actualizarContadorCarrito(); // Actualizar el contador del carrito
-                } else {
-                    alert('Error al agregar el producto al carrito');
-                }
+                const cartCount = document.getElementById('cart-count');
+                cartCount.textContent = `(${data.count})`;
             })
             .catch(error => console.error('Error:', error));
-        }
+    }
 
-        // Función para actualizar el contador del carrito
-        function actualizarContadorCarrito() {
-            fetch('obtener_carrito.php')
-                .then(response => response.json())
-                .then(data => {
-            const cartCount = document.getElementById('cart-count');
-            cartCount.textContent = `(${data.count})`;
-})
-                .catch(error => console.error('Error:', error));
-        }
+    // Función para cargar los productos del carrito al cargar la página
+    function cargarCarrito() {
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        carrito.forEach(producto => {
+            // Aquí puedes agregar el código para mostrar los productos en el carrito
+            console.log('Producto en carrito:', producto);
+        });
+    }
 
-        // Función para agregar un producto a la lista de deseos
-        function agregarAListaDeseos(id, nombre, precio, imagen) {
+    // Llamar a las funciones para actualizar los contadores y cargar productos al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+        actualizarContadorCarrito();
+        cargarCarrito();
+    });
+
+    // Función para agregar un producto a la lista de deseos
+    function agregarAListaDeseos(id, nombre, precio, imagen) {
+        let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        let productoExistente = wishlist.find(producto => producto.id === id);
+
+        if (productoExistente) {
+            alert('Este producto ya está en la lista de deseos');
+        } else {
             let producto = {
                 id: id,
                 nombre: nombre,
                 precio: precio,
                 imagen: imagen
             };
-
-            let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
             wishlist.push(producto);
             localStorage.setItem('wishlist', JSON.stringify(wishlist));
             alert('Producto agregado a la lista de deseos');
         }
+    }
 
-        // Función para compartir un producto
-        function compartirProducto(id) {
-            const url = window.location.href + '?producto=' + id;
-            navigator.clipboard.writeText(url).then(() => {
-                alert('Enlace del producto copiado al portapapeles');
-            }).catch(err => {
-                console.error('Error al copiar el enlace: ', err);
-            });
-        }
-
-        // Llamar a las funciones para actualizar los contadores al cargar la página
-        document.addEventListener('DOMContentLoaded', () => {
-            actualizarContadorCarrito();
+    // Función para compartir un producto
+    function compartirProducto(id) {
+        const url = window.location.href + '?producto=' + id;
+        navigator.clipboard.writeText(url).then(() => {
+            alert('Enlace del producto copiado al portapapeles');
+        }).catch(err => {
+            console.error('Error al copiar el enlace: ', err);
         });
+    }
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
