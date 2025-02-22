@@ -93,37 +93,46 @@ include 'bodega/conexionproductos.php';
 <body>
     <div class="container mt-5">
         <h2 class="mb-4">Lista de Deseos</h2>
-        <div class="row">
-            <?php
-            if (isset($_SESSION['wishlist']) && count($_SESSION['wishlist']) > 0) {
-                foreach ($_SESSION['wishlist'] as $producto) {
-                    echo '<div class="col-md-3 mb-4">';
-                    echo '    <div class="card">';
-                    echo '        <img src="' . $producto['imagen'] . '" class="card-img-top" alt="' . $producto['nombre'] . '">';
-                    echo '        <div class="card-body">';
-                    echo '            <h6 class="card-title">' . $producto['nombre'] . '</h6>';
-                    echo '            <p class="card-text">LPS.' . $producto['precio'] . '</p>';
-                    echo '            <div class="input-group mb-3">';
-                    echo '                <input type="number" class="form-control" placeholder="Cantidad" min="1" value="1" id="cantidad-' . $producto['id'] . '">';
-                    echo '                <div class="input-group-append">';
-                    echo '                    <button class="btn btn-primary" type="button" onclick="agregarAlCarrito(' . $producto['id'] . ', \'' . $producto['nombre'] . '\', ' . $producto['precio'] . ', \'' . $producto['imagen'] . '\')">';
-                    echo '                        <i class="bi bi-cart"></i>Agregar al carrito';
-                    echo '                    </button>';
-                    echo '                </div>';
-                    echo '            </div>';
-                    echo '            <button class="btn btn-danger" onclick="eliminarDeListaDeseos(' . $producto['id'] . ')">Eliminar</button>';
-                    echo '        </div>';
-                    echo '    </div>';
-                    echo '</div>';
-                }
-            } else {
-                echo '<p>No hay productos en la lista de deseos.</p>';
-            }
-            ?>
+        <div class="row" id="wishlist-container">
+            <!-- Los productos se cargarán aquí desde JavaScript -->
         </div>
     </div>
 
     <script>
+        // Función para cargar la lista de deseos desde localStorage
+        function cargarListaDeseos() {
+            let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+            let container = document.getElementById('wishlist-container');
+            container.innerHTML = '';
+
+            if (wishlist.length > 0) {
+                wishlist.forEach(producto => {
+                    let productHTML = `
+                        <div class="col-md-3 mb-4">
+                            <div class="card">
+                                <img src="${producto.imagen}" class="card-img-top" alt="${producto.nombre}">
+                                <div class="card-body">
+                                    <h6 class="card-title">${producto.nombre}</h6>
+                                    <p class="card-text">LPS.${producto.precio}</p>
+                                    <div class="input-group mb-3">
+                                        <input type="number" class="form-control" placeholder="Cantidad" min="1" value="1" id="cantidad-${producto.id}">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button" onclick="agregarAlCarrito(${producto.id}, '${producto.nombre}', ${producto.precio}, '${producto.imagen}')">
+                                                <i class="bi bi-cart"></i>Agregar al carrito
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-danger" onclick="eliminarDeListaDeseos(${producto.id})">Eliminar</button>
+                                </div>
+                            </div>
+                        </div>`;
+                    container.innerHTML += productHTML;
+                });
+            } else {
+                container.innerHTML = '<p>No hay productos en la lista de deseos.</p>';
+            }
+        }
+
         // Función para agregar un producto al carrito
         function agregarAlCarrito(id, nombre, precio, imagen) {
             let cantidad = document.getElementById(`cantidad-${id}`).value;
@@ -156,23 +165,10 @@ include 'bodega/conexionproductos.php';
 
         // Función para eliminar un producto de la lista de deseos
         function eliminarDeListaDeseos(id) {
-            fetch('eliminar_lista_deseos.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ id: id })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Producto eliminado de la lista de deseos');
-                    location.reload(); // Recargar la página para mostrar los cambios
-                } else {
-                    alert('Error al eliminar el producto de la lista de deseos');
-                }
-            })
-            .catch(error => console.error('Error:', error));
+            let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+            wishlist = wishlist.filter(producto => producto.id !== id);
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            cargarListaDeseos();
         }
 
         // Función para actualizar el contador del carrito
@@ -186,8 +182,11 @@ include 'bodega/conexionproductos.php';
                 .catch(error => console.error('Error:', error));
         }
 
-        // Llamar a la función para actualizar el contador del carrito al cargar la página
-        document.addEventListener('DOMContentLoaded', actualizarContadorCarrito);
+        // Llamar a la función para cargar la lista de deseos al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarListaDeseos();
+            actualizarContadorCarrito();
+        });
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
