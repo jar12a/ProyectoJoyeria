@@ -92,8 +92,8 @@
                     <a class="nav-link disabled" aria-disabled="true">Imperial Gems</a>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+            <form class="d-flex" role="search" action="filtradobusqueda.php" method="GET">
+                <input class="form-control me-2" type="search" name="busqueda" placeholder="Buscar" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Buscar</button>
             </form>
         </div>
