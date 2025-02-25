@@ -157,6 +157,12 @@ include 'bodega/conexionproductos.php';
         // Función para agregar un producto al carrito
         function agregarAlCarrito(id, nombre, precio, imagen) {
             let cantidad = document.getElementById(`cantidad-${id}`).value;
+            
+            if (cantidad < 1) {
+                alert('La cantidad debe ser al menos 1');
+                return;
+            }
+
             let producto = {
                 id: id,
                 nombre: nombre,

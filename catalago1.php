@@ -148,8 +148,14 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
 
     <script>
     // Función para agregar un producto al carrito
-    function agregarAlCarrito(id, nombre, precio, imagen) {
-        let cantidad = document.getElementById(`cantidad-${id}`).value;
+    function agregarAlCarrito(id, nombre, precio, imagen, isModal = false) {
+        let cantidad = isModal ? document.getElementById(`modal-cantidad-${id}`).value : document.getElementById(`cantidad-${id}`).value;
+        
+        if (cantidad < 1) {
+            alert('La cantidad debe ser al menos 1');
+            return;
+        }
+
         let producto = {
             id: id,
             nombre: nombre,
@@ -194,9 +200,9 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
         fetch('obtener_carrito.php')
             .then(response => response.json())
             .then(data => {
-                const cartCount = document.getElementById('cart-count');
-                cartCount.textContent = `(${data.count})`;
-            })
+        const cartCount = document.getElementById('cart-count');
+        cartCount.textContent = `(${data.count})`;
+})
             .catch(error => console.error('Error:', error));
     }
 
