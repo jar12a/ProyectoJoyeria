@@ -39,6 +39,41 @@ if (!$result_categorias) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bodega Virtual - Joyas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .table th, .table td {
+            padding: 1rem;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        .table th:nth-child(1), .table td:nth-child(1) { /* Enumeración */
+            width:1%;
+        }
+        .table th:nth-child(2), .table td:nth-child(2) { /* Nombre */
+            width: 0%;
+        }
+        .table th:nth-child(3), .table td:nth-child(3) { /* Categoria */
+            width: 1%;
+        }
+        .table th:nth-child(4), .table td:nth-child(4) { /* Descripción */
+            width: 1%;
+        }
+        .table th:nth-child(5), .table td:nth-child(5) { /* Cantidad */
+            width: 1%;
+        }
+        .table th:nth-child(6), .table td:nth-child(6) { /* Precio */
+            width: 1%;
+        }
+        .table th:nth-child(7), .table td:nth-child(7) { /* Material */
+            width: 1%;
+        }
+        .table th:nth-child(8), .table td:nth-child(8) { /* Imagen */
+            width: 1%;
+        }
+        .table th:nth-child(9), .table td:nth-child(9) { /* Acciones */
+            width: 1%;
+        }
+    </style>
 </head>
 <body>
     <div class="container mt-4">
@@ -130,6 +165,7 @@ if (!$result_categorias) {
         <table class="table table-bordered">
             <thead>
                 <tr>
+                    <th>#</th>
                     <th>Nombre</th>
                     <th>Categoria</th>
                     <th>Descripción</th>
@@ -143,25 +179,61 @@ if (!$result_categorias) {
             <tbody id="productosLista">
                 <?php
                 if ($result_productos->num_rows > 0) {
+                    $contador = 1;
                     while ($row = $result_productos->fetch_assoc()) {
                         echo "<tr id='producto-{$row['ID_Producto']}'>
+                                <td>{$contador}</td>
                                 <td>{$row['Nombre']}</td>
-                                <td>{$row['Categoria']}</td> <!-- Aquí mostramos el nombre de la categoría -->
-                                <td>{$row['Descripción']}</td>
+                                <td>{$row['Categoria']}</td>
+                                <td><button class='btn btn-info btn-sm' onclick='mostrarDescripcion(\"{$row['Descripción']}\")'>detalles</button></td>
                                 <td>{$row['Stock']}</td>
                                 <td>{$row['Precio']}</td>
                                 <td>{$row['Material']}</td>
                                 <td><img src='{$row['Imagen']}' alt='Imagen' style='width: 50px; height: 50px;'></td>
                                 <td>
-                                    <button class='btn btn-warning btn-sm' onclick='editarProducto({$row['ID_Producto']})'>Editar</button>
+                                    <button class='btn btn-warning btn-sm' onclick='editarProducto({$row['ID_Producto']}, \"{$row['Descripción']}\")'>Editar</button>
                                     <button class='btn btn-danger btn-sm' onclick='eliminarProducto({$row['ID_Producto']})'>Eliminar</button>
                                 </td>
                             </tr>";
+                        $contador++;
                     }
                 }
                 ?>
             </tbody>
         </table>
+
+        <!-- Modal para la descripción -->
+        <div class="modal fade" id="descripcionModal" tabindex="-1" aria-labelledby="descripcionModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="descripcionModalLabel">Descripción del Producto</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="descripcionModalContent"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para mensajes -->
+        <div class="modal fade" id="mensajeModal" tabindex="-1" aria-labelledby="mensajeModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="mensajeModalLabel">Mensaje</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="mensajeModalContent"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -169,18 +241,18 @@ if (!$result_categorias) {
         let productoId = null;
 
         // Función para editar un producto
-        function editarProducto(id) {
+        function editarProducto(id, descripcion) {
             const fila = document.getElementById(`producto-${id}`);
             const celdas = fila.getElementsByTagName("td");
 
             // Llenar el formulario con los datos actuales del producto
-            document.getElementById("nombre").value = celdas[0].innerText;
-            document.getElementById("tipo").value = celdas[1].innerText;
-            document.getElementById("descripcion").value = celdas[2].innerText;
-            document.getElementById("cantidad").value = celdas[3].innerText;
-            document.getElementById("precio").value = celdas[4].innerText;
-            document.getElementById("material").value = celdas[5].innerText;
-            document.getElementById("imagen_actual").value = celdas[6].querySelector("img").src;
+            document.getElementById("nombre").value = celdas[1].innerText;
+            document.getElementById("tipo").value = celdas[2].innerText;
+            document.getElementById("descripcion").value = descripcion;
+            document.getElementById("cantidad").value = celdas[4].innerText;
+            document.getElementById("precio").value = celdas[5].innerText;
+            document.getElementById("material").value = celdas[6].innerText;
+            document.getElementById("imagen_actual").value = celdas[7].querySelector("img").src;
 
             // Mostrar el botón de actualizar y ocultar el de agregar
             document.getElementById("btnAgregar").style.display = "none";
@@ -201,10 +273,20 @@ if (!$result_categorias) {
             const imagen = document.getElementById("imagen").value;
 
             if (!nombre || !tipo || !descripcion || !cantidad || !precio || !material) {
-                alert("Todos los campos son obligatorios.");
+                mostrarMensaje("Todos los campos son obligatorios.");
                 return false;
             }
             return true;
+        }
+
+        // Función para mostrar mensajes en un modal
+        function mostrarMensaje(mensaje) {
+            document.getElementById("mensajeModalContent").innerText = mensaje;
+            var mensajeModal = new bootstrap.Modal(document.getElementById('mensajeModal'));
+            mensajeModal.show();
+            setTimeout(() => {
+                mensajeModal.hide();
+            }, 1000);
         }
 
         // Función para agregar un producto
@@ -222,13 +304,18 @@ if (!$result_categorias) {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert("Producto agregado correctamente.");
-                    location.reload(); // Recargar la página
+                    mostrarMensaje("Producto agregado correctamente.");
+                    setTimeout(() => {
+                        location.reload(); // Recargar la página
+                    }, 1000);
                 } else {
-                    alert("Error al agregar el producto.");
+                    mostrarMensaje("Error al agregar el producto.");
                 }
             })
-            .catch(error => console.error("Error:", error));
+            .catch(error => {
+                console.error("Error:", error);
+                mostrarMensaje("Error al agregar el producto.");
+            });
         }
 
         // Función para actualizar un producto
@@ -248,13 +335,18 @@ if (!$result_categorias) {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert("Producto actualizado correctamente.");
-                    location.reload(); // Recargar la página para ver los cambios
+                    mostrarMensaje("Producto actualizado correctamente.");
+                    setTimeout(() => {
+                        location.reload(); // Recargar la página para ver los cambios
+                    }, 1000);
                 } else {
-                    alert("Error al actualizar el producto.");
+                    mostrarMensaje("Error al actualizar el producto.");
                 }
             })
-            .catch(error => console.error("Error:", error));
+            .catch(error => {
+                console.error("Error:", error);
+                mostrarMensaje("Error al actualizar el producto.");
+            });
         }
 
         // Función para eliminar un producto
@@ -270,14 +362,26 @@ if (!$result_categorias) {
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        alert("Producto eliminado correctamente.");
-                        document.getElementById(`producto-${id}`).remove(); // Elimina la fila de la tabla
+                        mostrarMensaje("Producto eliminado correctamente.");
+                        setTimeout(() => {
+                            document.getElementById(`producto-${id}`).remove(); // Elimina la fila de la tabla
+                        }, 1000);
                     } else {
-                        alert("Error al eliminar el producto.");
+                        mostrarMensaje("Error al eliminar el producto.");
                     }
                 })
-                .catch(error => console.error("Error:", error));
+                .catch(error => {
+                    console.error("Error:", error);
+                    mostrarMensaje("Error al eliminar el producto.");
+                });
             }
+        }
+
+        // Función para mostrar la descripción en el modal
+        function mostrarDescripcion(descripcion) {
+            document.getElementById("descripcionModalContent").innerText = descripcion;
+            var descripcionModal = new bootstrap.Modal(document.getElementById('descripcionModal'));
+            descripcionModal.show();
         }
 
         // Manejo del formulario de agregar producto
@@ -297,14 +401,22 @@ if (!$result_categorias) {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    location.reload(); // Recargar la página para mostrar los nuevos productos
+                    mostrarMensaje("Producto agregado correctamente.");
+                    setTimeout(() => {
+                        location.reload(); // Recargar la página para mostrar los nuevos productos
+                    }, 1000);
                 } else {
-                    alert("Error al guardar el producto.");
+                    mostrarMensaje("Error al guardar el producto.");
                 }
             })
-            .catch(error => console.error("Error:", error));
+            .catch(error => {
+                console.error("Error:", error);
+                mostrarMensaje("Error al guardar el producto.");
+            });
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
 
