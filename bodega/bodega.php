@@ -46,32 +46,11 @@ if (!$result_categorias) {
             text-overflow: ellipsis;
             overflow: hidden;
         }
-        .table th:nth-child(1), .table td:nth-child(1) { /* Enumeración */
-            width:1%;
-        }
-        .table th:nth-child(2), .table td:nth-child(2) { /* Nombre */
-            width: 0%;
-        }
-        .table th:nth-child(3), .table td:nth-child(3) { /* Categoria */
-            width: 1%;
-        }
-        .table th:nth-child(4), .table td:nth-child(4) { /* Descripción */
-            width: 1%;
-        }
-        .table th:nth-child(5), .table td:nth-child(5) { /* Cantidad */
-            width: 1%;
-        }
-        .table th:nth-child(6), .table td:nth-child(6) { /* Precio */
-            width: 1%;
-        }
-        .table th:nth-child(7), .table td:nth-child(7) { /* Material */
-            width: 1%;
-        }
-        .table th:nth-child(8), .table td:nth-child(8) { /* Imagen */
-            width: 1%;
-        }
-        .table th:nth-child(9), .table td:nth-child(9) { /* Acciones */
-            width: 1%;
+        @media (max-width: 768px) {
+            .table th, .table td {
+                white-space: normal;
+                overflow: visible;
+            }
         }
     </style>
 </head>
@@ -129,78 +108,73 @@ if (!$result_categorias) {
             </div>
         </form>
 
-        <!-- Formulario de filtros -->
-        <form method="GET" class="mb-4">
-            <div class="row">
-                <div class="col-md-3 mb-3">
-                    <select id="categoria" name="categoria" class="form-control">
-                        <option value="">Filtrar por categoría</option>
-                        <?php
-                        $result_categorias->data_seek(0); // Reiniciar el puntero del resultado
-                        if ($result_categorias && $result_categorias->num_rows > 0) {
-                            while ($row = $result_categorias->fetch_assoc()) {
-                                $selected = ($row['ID_categoría'] == $categoria_filtro) ? 'selected' : '';
-                                echo "<option value='" . $row['ID_categoría'] . "' $selected>" . $row['Nombre'] . "</option>";
-                            }
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <select id="material" name="material" class="form-control">
-                        <option value="">Filtrar por material</option>
-                        <option value="Oro" <?php echo ($material_filtro == 'Oro') ? 'selected' : ''; ?>>Oro</option>
-                        <option value="Plata" <?php echo ($material_filtro == 'Plata') ? 'selected' : ''; ?>>Plata</option>
-                        <option value="Platino" <?php echo ($material_filtro == 'Platino') ? 'selected' : ''; ?>>Platino</option>
-                        <option value="Acero" <?php echo ($material_filtro == 'Acero') ? 'selected' : ''; ?>>Acero</option>
-                    </select>
-                </div>
-                <div class="col-md-3 mb-3 d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary">Filtrar</button>
-                </div>
-            </div>
-        </form>
+      
+
+        <!-- Buscador -->
+        <div class="mb-4">
+            <input type="text" id="buscador" class="form-control" placeholder="Buscar...">
+        </div>
 
         <!-- Tabla para mostrar joyas -->
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nombre</th>
-                    <th>Categoria</th>
-                    <th>Descripción</th>
-                    <th>Cantidad</th>
-                    <th>Precio</th>
-                    <th>Material</th>
-                    <th>Imagen</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="productosLista">
-                <?php
-                if ($result_productos->num_rows > 0) {
-                    $contador = 1;
-                    while ($row = $result_productos->fetch_assoc()) {
-                        echo "<tr id='producto-{$row['ID_Producto']}'>
-                                <td>{$contador}</td>
-                                <td>{$row['Nombre']}</td>
-                                <td>{$row['Categoria']}</td>
-                                <td><button class='btn btn-info btn-sm' onclick='mostrarDescripcion(\"{$row['Descripción']}\")'>detalles</button></td>
-                                <td>{$row['Stock']}</td>
-                                <td>{$row['Precio']}</td>
-                                <td>{$row['Material']}</td>
-                                <td><img src='{$row['Imagen']}' alt='Imagen' style='width: 50px; height: 50px;'></td>
-                                <td>
-                                    <button class='btn btn-warning btn-sm' onclick='editarProducto({$row['ID_Producto']}, \"{$row['Descripción']}\")'>Editar</button>
-                                    <button class='btn btn-danger btn-sm' onclick='eliminarProducto({$row['ID_Producto']})'>Eliminar</button>
-                                </td>
-                            </tr>";
-                        $contador++;
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Categoria</th>
+                        <th>Descripción</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Material</th>
+                        <th>Imagen</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="productosLista">
+                    <?php
+                    if ($result_productos->num_rows > 0) {
+                        $contador = 1;
+                        while ($row = $result_productos->fetch_assoc()) {
+                            echo "<tr id='producto-{$row['ID_Producto']}'>
+                                    <td>{$contador}</td>
+                                    <td>{$row['Nombre']}</td>
+                                    <td>{$row['Categoria']}</td>
+                                    <td><button class='btn btn-info btn-sm' onclick='mostrarDescripcion(\"{$row['Descripción']}\")'>detalles</button></td>
+                                    <td>{$row['Stock']}</td>
+                                    <td>{$row['Precio']}</td>
+                                    <td>{$row['Material']}</td>
+                                    <td><img src='{$row['Imagen']}' alt='Imagen' style='width: 50px; height: 50px;'></td>
+                                    <td>
+                                        <button class='btn btn-warning btn-sm' onclick='editarProducto({$row['ID_Producto']}, \"{$row['Descripción']}\")'>Editar</button>
+                                        <button class='btn btn-danger btn-sm' onclick='eliminarProducto({$row['ID_Producto']})'>Eliminar</button>
+                                    </td>
+                                </tr>";
+                            $contador++;
+                        }
                     }
-                }
-                ?>
-            </tbody>
-        </table>
+                    ?>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Paginación -->
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <label for="filasPorPagina">Filas por página:</label>
+                <select id="filasPorPagina" class="form-select" style="width: auto; display: inline-block;">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
+            </div>
+            <nav>
+                <ul class="pagination" id="paginacion">
+                    <!-- Paginación generada dinámicamente -->
+                </ul>
+            </nav>
+        </div>
 
         <!-- Modal para la descripción -->
         <div class="modal fade" id="descripcionModal" tabindex="-1" aria-labelledby="descripcionModalLabel" aria-hidden="true">
@@ -414,6 +388,78 @@ if (!$result_categorias) {
                 mostrarMensaje("Error al guardar el producto.");
             });
         });
+
+        // Función para filtrar los productos en la tabla
+        document.getElementById("buscador").addEventListener("input", function() {
+            const filtro = this.value.toLowerCase();
+            const filas = document.querySelectorAll("#productosLista tr");
+
+            filas.forEach(fila => {
+                const celdas = fila.getElementsByTagName("td");
+                let coincide = false;
+
+                for (let i = 1; i < celdas.length - 1; i++) {
+                    if (celdas[i].innerText.toLowerCase().includes(filtro)) {
+                        coincide = true;
+                        break;
+                    }
+                }
+
+                if (coincide) {
+                    fila.style.display = "";
+                } else {
+                    fila.style.display = "none";
+                }
+            });
+        });
+
+        // Función para manejar la paginación
+        function manejarPaginacion() {
+            const filasPorPagina = parseInt(document.getElementById("filasPorPagina").value);
+            const filas = document.querySelectorAll("#productosLista tr");
+            const totalFilas = filas.length;
+            const totalPaginas = Math.ceil(totalFilas / filasPorPagina);
+            const paginacion = document.getElementById("paginacion");
+
+            paginacion.innerHTML = "";
+
+            for (let i = 1; i <= totalPaginas; i++) {
+                const li = document.createElement("li");
+                li.className = "page-item";
+                li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                li.addEventListener("click", function() {
+                    mostrarPagina(i, filasPorPagina, filas);
+                });
+                paginacion.appendChild(li);
+            }
+
+            mostrarPagina(1, filasPorPagina, filas);
+        }
+
+        // Función para mostrar una página específica
+        function mostrarPagina(pagina, filasPorPagina, filas) {
+            const inicio = (pagina - 1) * filasPorPagina;
+            const fin = inicio + filasPorPagina;
+
+            filas.forEach((fila, index) => {
+                if (index >= inicio && index < fin) {
+                    fila.style.display = "";
+                } else {
+                    fila.style.display = "none";
+                }
+            });
+
+            const paginacion = document.getElementById("paginacion").getElementsByTagName("li");
+            for (let i = 0; i < paginacion.length; i++) {
+                paginacion[i].classList.remove("active");
+            }
+            paginacion[pagina - 1].classList.add("active");
+        }
+
+        document.getElementById("filasPorPagina").addEventListener("change", manejarPaginacion);
+
+        // Inicializar la paginación
+        manejarPaginacion();
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
