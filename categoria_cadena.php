@@ -73,12 +73,47 @@ include 'bodega/conexionproductos.php';
             align-items: center;
             justify-content: center;
         }
+        .banner1 {
+            height: 300px;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+        }
+        .banner1 img {
+            height: 100%;
+            object-fit: cover;
+        }
+        .banner-description {
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        @media (max-width: 768px) {
+            .banner1 {
+                height: 200px;
+            }
+            .banner-description h3 {
+                font-size: 1.5rem;
+            }
+            .banner-description p {
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Banner de Cadenas -->
+    <div class="banner1 mb-4 position-relative">
+        <img src="/ProyectoJoyeria/imagenes/103.jpg" class="img-fluid w-100" alt="Banner Cadenas">
+        <div class="banner-description position-absolute text-white p-3 d-flex flex-column align-items-center justify-content-center">
+            <h3>Cadenas Exclusivas</h3>
+            <p>Descubre nuestra colección de cadenas elegantes y sofisticadas, perfectas para cualquier ocasión.</p>
+        </div>
+    </div>
     <div class="container mt-5">
         <!-- Sección de Productos -->
-        <h2 class="mb-4">CADENAS</h2>
+    
         <div class="row">
             <?php
             // Realizar la consulta a la base de datos para obtener solo los productos de la categoría "cadenas"

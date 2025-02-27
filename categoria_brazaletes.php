@@ -73,9 +73,44 @@ include 'bodega/conexionproductos.php';
             align-items: center;
             justify-content: center;
         }
+        .banner1 {
+            height: 300px;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+        }
+        .banner1 img {
+            height: 100%;
+            object-fit: cover;
+        }
+        .banner-description {
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        @media (max-width: 768px) {
+            .banner1 {
+                height: 200px;
+            }
+            .banner-description h3 {
+                font-size: 1.5rem;
+            }
+            .banner-description p {
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Banner de Brazaletes -->
+    <div class="banner1 mb-4 position-relative">
+        <img src="/ProyectoJoyeria/imagenes/104.jpg" class="img-fluid w-100" alt="Banner Brazaletes">
+        <div class="banner-description position-absolute text-white p-3 d-flex flex-column align-items-center justify-content-center">
+            <h3>Brazaletes Exclusivos</h3>
+            <p>Descubre nuestra colección de brazaletes elegantes y sofisticados, perfectos para cualquier ocasión.</p>
+        </div>
+    </div>
     <div class="container mt-5">
         <!-- Sección de Productos -->
         <h2 class="mb-4">BRAZALETES</h2>

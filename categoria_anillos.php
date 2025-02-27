@@ -77,6 +77,14 @@ include 'bodega/conexionproductos.php';
     </style>
 </head>
 <body>
+    <!-- Banner de Anillos -->
+    <div class="banner1 mb-4 position-relative" style="height: 300px; width: 100vw; margin-left: calc(-50vw + 50%);">
+        <img src="/ProyectoJoyeria/imagenes/101.jpg" class="img-fluid w-100" alt="Banner Anillos" style="height: 100%; object-fit: cover;">
+        <div class="banner-description position-absolute text-white p-3 d-flex flex-column align-items-center justify-content-center" style="top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5);">
+            <h3>Anillos Exclusivos</h3>
+            <p>Descubre nuestra colección de anillos únicos y elegantes, perfectos para cualquier ocasión.</p>
+        </div>
+    </div>
     <div class="container mt-5">
         <!-- Sección de Productos -->
         <h2 class="mb-4">ANILLOS</h2>
