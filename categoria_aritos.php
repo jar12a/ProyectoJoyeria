@@ -199,6 +199,23 @@ include 'bodega/conexionproductos.php';
         </div>
     </div>
 
+    <!-- Modal de Mensaje -->
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageModalLabel">Mensaje</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="messageModalBody">
+                    <!-- El mensaje se actualizará dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Función para agregar un producto al carrito
         function agregarAlCarrito(id, nombre, precio, imagen, isModal = false) {
@@ -206,7 +223,7 @@ include 'bodega/conexionproductos.php';
             
           
             if (cantidad < 1) {
-                alert('La cantidad debe ser al menos 1');
+                mostrarMensaje('La cantidad debe ser al menos 1');
                 return;
             }
 
@@ -262,7 +279,7 @@ include 'bodega/conexionproductos.php';
                         }, 2000);
                 } else {
                     
-                    alert('Error al agregar el producto al carrito');
+                    mostrarMensaje('Error al agregar el producto al carrito');
                     boton.innerHTML = '<i class="bi bi-cart"></i> Agregar al carrito';
                         boton.style.backgroundColor = ''; // Restaurar el color original del botón
                         boton.disabled = false; // Habilitar el botón nuevamente
@@ -293,39 +310,44 @@ include 'bodega/conexionproductos.php';
 
         // Función para agregar un producto a la lista de deseos
         function agregarAListaDeseos(id, nombre, precio, imagen) {
-            let producto = {
-                id: id,
-                nombre: nombre,
-                precio: precio,
-                imagen: imagen // Añadir la imagen del producto
-            };
+            let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+            let productoExistente = wishlist.find(producto => producto.id === id);
 
-            fetch('agregar_lista_deseos.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(producto)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Producto agregado a la lista de deseos');
-                } else {
-                    alert('Error al agregar el producto a la lista de deseos');
-                }
-            })
-            .catch(error => console.error('Error:', error));
+            if (productoExistente) {
+                mostrarMensaje('Este producto ya está en la lista de deseos');
+            } else {
+                let producto = {
+                    id: id,
+                    nombre: nombre,
+                    precio: precio,
+                    imagen: imagen
+                };
+                wishlist.push(producto);
+                localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                mostrarMensaje('Producto agregado a la lista de deseos');
+            }
         }
 
         // Función para compartir un producto
         function compartirProducto(id) {
             const url = window.location.href + '?producto=' + id;
             navigator.clipboard.writeText(url).then(() => {
-                alert('Enlace del producto copiado al portapapeles');
+                mostrarMensaje('Enlace del producto copiado al portapapeles');
             }).catch(err => {
                 console.error('Error al copiar el enlace: ', err);
             });
+        }
+
+        // Función para mostrar un mensaje en el modal
+        function mostrarMensaje(mensaje) {
+            const messageModal = new bootstrap.Modal(document.getElementById('messageModal'));
+            document.getElementById('messageModalBody').textContent = mensaje;
+            messageModal.show();
+
+            // Cerrar el modal automáticamente después de 1.5 segundos
+            setTimeout(() => {
+                messageModal.hide();
+            }, 1500);
         }
 
         // Llamar a las funciones para actualizar los contadores al cargar la página
