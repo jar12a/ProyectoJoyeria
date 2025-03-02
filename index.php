@@ -1,6 +1,4 @@
-<?php
-session_start();
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,6 +14,9 @@ session_start();
 </head>
 
 <body>
+
+
+
     <br>
 
     <style>
@@ -99,7 +100,7 @@ session_start();
         <div class="content-banner">
             <p>Las mejores joyas</p>
             <h2>Al mejor precio <br />Envios a cualquier parte del mundo</h2>
-            <a href="/ProyectoJoyeria/catalago1.php">Ver catalogos</a>
+            <a href="catalago.html">Ver catalogos</a>
         </div>
     </section>
 
@@ -257,7 +258,7 @@ session_start();
 								<i class="fa-regular fa-star"></i>
 							</div>
 							<h3>Joya 4</h3>
-
+							<span class="add-cart">
 								<i class="fa-solid fa-basket-shopping"></i>
 							</span>
 							<p class="price">L500 <span>L600</span></p>
@@ -292,7 +293,7 @@ session_start();
 								<i class="fa-regular fa-star"></i>
 							</div>
 							<h3>Joya5</h3>
-
+							<span class="add-cart">
 								<i class="fa-solid fa-basket-shopping"></i>
 							</span>
 							<p class="price">L700.00<span>L780.00</span></p>
@@ -326,7 +327,7 @@ session_start();
 								<i class="fa-solid fa-star"></i>
 							</div>
 							<h3>Joya 6</h3>
-
+							<span class="add-cart">
 								<i class="fa-solid fa-basket-shopping"></i>
 							</span>
 							<p class="price">L500.00</p>
@@ -357,7 +358,7 @@ session_start();
 								<i class="fa-regular fa-star"></i>
 							</div>
 							<h3>Joya 7</h3>
-
+							<span class="add-cart">
 								<i class="fa-solid fa-basket-shopping"></i>
 							</span>
 							<p class="price">L700.00</p>
@@ -420,7 +421,7 @@ session_start();
 								<i class="fa-regular fa-star"></i>
 							</div>
 							<h3>joya 15</h3>
-
+							<span class="add-cart">
 								<i class="fa-solid fa-basket-shopping"></i>
 							</span>
 							<p class="price">$4.60 <span>$5.30</span></p>
@@ -455,7 +456,7 @@ session_start();
 								<i class="fa-regular fa-star"></i>
 							</div>
 							<h3>Joya 16</h3>
-
+							<span class="add-cart">
 								<i class="fa-solid fa-basket-shopping"></i>
 							</span>
 							<p class="price">$5.70 <span>$7.30</span></p>
@@ -487,7 +488,7 @@ session_start();
 								<i class="fa-solid fa-star"></i>
 							</div>
 							<h3>Joya 17</h3>
-
+							<span class="add-cart">
 								<i class="fa-solid fa-basket-shopping"></i>
 							</span>
 							<p class="price">$3.85 <span>$5.50</span></p>
@@ -518,7 +519,7 @@ session_start();
 								<i class="fa-regular fa-star"></i>
 							</div>
 							<h3>Joya 18</h3>
-						
+							<span class="add-cart">
 								<i class="fa-solid fa-basket-shopping"></i>
 							</span>
 							<p class="price">$5.60</p>
@@ -603,8 +604,9 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-	<script src="https://kit.fontawesome.com/45b2b3afef.js" crossorigin="anonymous"></script>
-   
+
+    
+		<script src="https://kit.fontawesome.com/45b2b3afef.js" crossorigin="anonymous"></script>
 </body>
 <?php include 'complementos/footer.php'; ?>
 </html>

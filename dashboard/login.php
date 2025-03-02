@@ -34,6 +34,7 @@ if ($_POST) {
         echo "No existe usuario";
     }
 }
+
 ?>
 
 
@@ -48,6 +49,7 @@ if ($_POST) {
         <title>Login - SB Admin</title>
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <?php include 'complementos/head.php'; ?>
     </head>
     <body class="bg-primary">
         <div id="layoutAuthentication">
@@ -105,4 +107,5 @@ if ($_POST) {
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
     </body>
+    <?php include 'complementos/footer.php'; ?>
 </html>
