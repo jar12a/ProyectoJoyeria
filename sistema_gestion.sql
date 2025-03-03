@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-02-2025 a las 19:14:52
+-- Tiempo de generación: 03-03-2025 a las 01:19:44
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -55,19 +55,6 @@ CREATE TABLE `detalle_pedido` (
   `Cantidad` int(11) NOT NULL DEFAULT 1,
   `Subtotal` decimal(10,2) NOT NULL,
   `Total` decimal(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `login`
---
-
-CREATE TABLE `login` (
-  `ID_Login` int(11) NOT NULL,
-  `Correo` varchar(150) NOT NULL,
-  `Contraseña` varchar(255) NOT NULL,
-  `Último_Acceso` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -142,39 +129,25 @@ INSERT INTO `producto` (`ID_Producto`, `Nombre`, `Descripción`, `Material`, `Pr
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `roles`
---
-
-CREATE TABLE `roles` (
-  `ID_Rol` int(11) NOT NULL,
-  `Nombre` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `roles`
---
-
-INSERT INTO `roles` (`ID_Rol`, `Nombre`) VALUES
-(1, 'Administrador'),
-(2, 'Cliente'),
-(3, 'Vendedor');
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `usuario`
 --
 
 CREATE TABLE `usuario` (
-  `ID_Usuario` int(11) NOT NULL,
-  `Nombre` varchar(100) NOT NULL,
-  `Correo` varchar(150) NOT NULL,
-  `Contraseña` varchar(255) NOT NULL,
-  `Teléfono` varchar(15) DEFAULT NULL,
-  `Dirección` text DEFAULT NULL,
-  `ID_Login` int(11) NOT NULL,
-  `ID_Rol` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `id` int(11) NOT NULL,
+  `usuario` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `tipo_usuario` int(11) NOT NULL,
+  `correo` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`id`, `usuario`, `password`, `nombre`, `tipo_usuario`, `correo`) VALUES
+(1, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'Administrador Web', 1, ''),
+(2, 'vendedor', '88d6818710e371b461efff33d271e0d2fb6ccf47', 'Juan Carlos Arguijo', 2, '');
 
 --
 -- Índices para tablas volcadas
@@ -196,13 +169,6 @@ ALTER TABLE `detalle_pedido`
   ADD KEY `ID_Producto` (`ID_Producto`);
 
 --
--- Indices de la tabla `login`
---
-ALTER TABLE `login`
-  ADD PRIMARY KEY (`ID_Login`),
-  ADD UNIQUE KEY `Correo` (`Correo`);
-
---
 -- Indices de la tabla `pedido`
 --
 ALTER TABLE `pedido`
@@ -217,20 +183,10 @@ ALTER TABLE `producto`
   ADD KEY `ID_Categoría` (`ID_Categoría`);
 
 --
--- Indices de la tabla `roles`
---
-ALTER TABLE `roles`
-  ADD PRIMARY KEY (`ID_Rol`),
-  ADD UNIQUE KEY `Nombre` (`Nombre`);
-
---
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`ID_Usuario`),
-  ADD UNIQUE KEY `Correo` (`Correo`),
-  ADD KEY `ID_Login` (`ID_Login`),
-  ADD KEY `ID_Rol` (`ID_Rol`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -249,12 +205,6 @@ ALTER TABLE `detalle_pedido`
   MODIFY `ID_Detalle` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `login`
---
-ALTER TABLE `login`
-  MODIFY `ID_Login` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `pedido`
 --
 ALTER TABLE `pedido`
@@ -264,19 +214,13 @@ ALTER TABLE `pedido`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `ID_Producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
-
---
--- AUTO_INCREMENT de la tabla `roles`
---
-ALTER TABLE `roles`
-  MODIFY `ID_Rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID_Producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `ID_Usuario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
@@ -293,20 +237,13 @@ ALTER TABLE `detalle_pedido`
 -- Filtros para la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`ID_Usuario`) REFERENCES `usuario` (`ID_Usuario`);
+  ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`ID_Usuario`) REFERENCES `usuario` (`id`);
 
 --
 -- Filtros para la tabla `producto`
 --
 ALTER TABLE `producto`
   ADD CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`ID_Categoría`) REFERENCES `categoría` (`ID_Categoría`);
-
---
--- Filtros para la tabla `usuario`
---
-ALTER TABLE `usuario`
-  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`ID_Login`) REFERENCES `login` (`ID_Login`),
-  ADD CONSTRAINT `usuario_ibfk_2` FOREIGN KEY (`ID_Rol`) REFERENCES `roles` (`ID_Rol`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
