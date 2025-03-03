@@ -38,7 +38,7 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
             background-color: black;
         }
         .modal-lg-custom {
-            max-width: 40%;
+            max-width: 50%;
         }
         .rating {
             display: flex;
@@ -57,6 +57,26 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
         .rating label:hover ~ label,
         .rating input:checked ~ label {
             color: #FFED85;
+        }
+        .loading-spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #3498db;
+            border-radius: 50%;
+            width: 12px;
+            height: 12px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .btn-primary, .form-control {
+            height: 50px; /* Ajusta esta altura según tus necesidades */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     </style>
 </head>
@@ -84,7 +104,7 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
                 echo '            <div class="input-group mb-3">';
                 echo '                <input type="number" class="form-control" placeholder="Cantidad" min="1" value="1" id="cantidad-' . $row['ID_Producto'] . '">';
                 echo '                <div class="input-group-append">';
-                echo '                    <button class="btn btn-primary" type="button" onclick="agregarAlCarrito(' . $row['ID_Producto'] . ', \'' . $row['Nombre'] . '\', ' . $row['Precio'] . ', \'' . $row['Imagen'] . '\')">';
+                echo '                    <button class="btn btn-primary" type="button" id="btn-carrito-' . $row['ID_Producto'] . '" onclick="agregarAlCarrito(' . $row['ID_Producto'] . ', \'' . $row['Nombre'] . '\', ' . $row['Precio'] . ', \'' . $row['Imagen'] . '\')">';
                 echo '                        <i class="bi bi-cart"></i>Agregar al carrito';
                 echo '                    </button>';
                 echo '                </div>';
@@ -116,7 +136,7 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
                 echo '                        <div class="input-group mb-1">';
                 echo '                            <input type="number" class="form-control" placeholder="Cantidad" min="1" value="1" id="modal-cantidad-' . $row['ID_Producto'] . '" style="width: 100px;">';
                 echo '                            <div class="input-group-append">';
-                echo '                                <button class="btn btn-primary" type="button" onclick="agregarAlCarrito(' . $row['ID_Producto'] . ', \'' . $row['Nombre'] . '\', ' . $row['Precio'] . ', \'' . $row['Imagen'] . '\', true)">';
+                echo '                                <button class="btn btn-primary" type="button" id="btn-modal-carrito-' . $row['ID_Producto'] . '" onclick="agregarAlCarrito(' . $row['ID_Producto'] . ', \'' . $row['Nombre'] . '\', ' . $row['Precio'] . ', \'' . $row['Imagen'] . '\', true)">';
                 echo '                                    <i class="bi bi-cart"></i> Agregar al carrito';
                 echo '                                </button>';
                 echo '                            </div>';
@@ -148,8 +168,14 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
 
     <script>
     // Función para agregar un producto al carrito
-    function agregarAlCarrito(id, nombre, precio, imagen) {
-        let cantidad = document.getElementById(`cantidad-${id}`).value;
+    function agregarAlCarrito(id, nombre, precio, imagen, isModal = false) {
+        let cantidad = isModal ? document.getElementById(`modal-cantidad-${id}`).value : document.getElementById(`cantidad-${id}`).value;
+        
+        if (cantidad < 1) {
+            alert('La cantidad debe ser al menos 1');
+            return;
+        }
+
         let producto = {
             id: id,
             nombre: nombre,
@@ -157,6 +183,16 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
             cantidad: parseInt(cantidad),
             imagen: imagen // Añadir la imagen del producto
         };
+
+        // Obtener el botón y cambiar su estado a "Cargando..."
+        let boton = isModal ? document.getElementById(`btn-modal-carrito-${id}`) : document.getElementById(`btn-carrito-${id}`);
+            boton.innerHTML = '<div class="loading-spinner"></div> Cargando...';
+            boton.style.backgroundColor = '#000'; // Cambiar el color del botón a negro
+            boton.disabled = true; // Deshabilitar el botón para evitar múltiples clics
+
+            // Simular el tiempo de carga de 1.5 segundos
+            setTimeout(() => {
+                // Agregar producto al carrito en el servidor
 
         // Agregar producto al carrito en el servidor
         fetch('agregar_carrito.php', {
@@ -169,7 +205,6 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert('Producto agregado al carrito');
                 // Actualizar el carrito en localStorage
                 let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
                 let productoExistente = carrito.find(item => item.id === id);
@@ -182,21 +217,41 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
 
                 localStorage.setItem('carrito', JSON.stringify(carrito));
                 actualizarContadorCarrito(); // Actualizar el contador del carrito
+
+               // Cambiar el texto del botón a "Añadido al carrito" con un GIF de cheque
+               boton.innerHTML = '<img src="product/cheque.gif" alt="Cheque" style="width: 20px; height: 20px;"> Añadido al carrito';
+                        boton.style.backgroundColor = '#28a745'; // Cambiar el color del botón a verde
+
+                        // Volver a cambiar el texto del botón a "Agregar al carrito" después de 2 segundos
+                        setTimeout(() => {
+                            boton.innerHTML = '<i class="bi bi-cart"></i> Agregar al carrito';
+                            boton.style.backgroundColor = ''; // Restaurar el color original del botón
+                            boton.disabled = false; // Habilitar el botón nuevamente
+                        }, 2000);
             } else {
                 alert('Error al agregar el producto al carrito');
+                boton.innerHTML = '<i class="bi bi-cart"></i> Agregar al carrito';
+                        boton.style.backgroundColor = ''; // Restaurar el color original del botón
+                        boton.disabled = false; // Habilitar el botón nuevamente
             }
         })
-        .catch(error => console.error('Error:', error));
-    }
+        .catch(error => {
+                    console.error('Error:', error);
+                    boton.innerHTML = '<i class="bi bi-cart"></i> Agregar al carrito';
+                    boton.style.backgroundColor = ''; // Restaurar el color original del botón
+                    boton.disabled = false; // Habilitar el botón nuevamente
+                });
+            }, 1500);
+        }
 
     // Función para actualizar el contador del carrito
     function actualizarContadorCarrito() {
         fetch('obtener_carrito.php')
             .then(response => response.json())
             .then(data => {
-                const cartCount = document.getElementById('cart-count');
-                cartCount.textContent = `(${data.count})`;
-            })
+        const cartCount = document.getElementById('cart-count');
+        cartCount.textContent = `(${data.count})`;
+})
             .catch(error => console.error('Error:', error));
     }
 

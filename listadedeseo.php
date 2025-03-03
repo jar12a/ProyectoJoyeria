@@ -98,7 +98,33 @@ include 'bodega/conexionproductos.php';
         </div>
     </div>
 
+    <!-- Modal de Mensaje -->
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageModalLabel">Mensaje</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="messageModalBody">
+                    <!-- Mensaje se cargará aquí -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Función para mostrar el modal de mensaje
+        function mostrarMensaje(mensaje) {
+            document.getElementById('messageModalBody').textContent = mensaje;
+            $('#messageModal').modal('show');
+            setTimeout(() => {
+                $('#messageModal').modal('hide');
+            }, 1500);
+        }
+
         // Función para cargar la lista de deseos desde localStorage
         function cargarListaDeseos() {
             let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
@@ -139,7 +165,7 @@ include 'bodega/conexionproductos.php';
             let productoExistente = wishlist.find(producto => producto.id === id);
 
             if (productoExistente) {
-                alert('Este producto ya está en la lista de deseos');
+                mostrarMensaje('Este producto ya está en la lista de deseos');
             } else {
                 let producto = {
                     id: id,
@@ -150,13 +176,19 @@ include 'bodega/conexionproductos.php';
                 wishlist.push(producto);
                 localStorage.setItem('wishlist', JSON.stringify(wishlist));
                 cargarListaDeseos();
-                alert('Producto agregado a la lista de deseos');
+                mostrarMensaje('Producto agregado a la lista de deseos');
             }
         }
 
         // Función para agregar un producto al carrito
         function agregarAlCarrito(id, nombre, precio, imagen) {
             let cantidad = document.getElementById(`cantidad-${id}`).value;
+            
+            if (cantidad < 1) {
+                mostrarMensaje('La cantidad debe ser al menos 1');
+                return;
+            }
+
             let producto = {
                 id: id,
                 nombre: nombre,
@@ -175,10 +207,10 @@ include 'bodega/conexionproductos.php';
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('Producto agregado al carrito');
+                    mostrarMensaje('Producto agregado al carrito');
                     actualizarContadorCarrito(); // Actualizar el contador del carrito
                 } else {
-                    alert('Error al agregar el producto al carrito');
+                    mostrarMensaje('Error al agregar el producto al carrito');
                 }
             })
             .catch(error => console.error('Error:', error));
@@ -190,6 +222,7 @@ include 'bodega/conexionproductos.php';
             wishlist = wishlist.filter(producto => producto.id !== id);
             localStorage.setItem('wishlist', JSON.stringify(wishlist));
             cargarListaDeseos();
+            mostrarMensaje('Producto eliminado de la lista de deseos');
         }
 
         // Función para actualizar el contador del carrito

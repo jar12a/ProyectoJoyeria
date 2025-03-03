@@ -72,3 +72,43 @@
         </div>
     </div>
 </footer>
+
+<style>
+    @media (max-width: 768px) {
+        .container-footer {
+            padding: 2rem;
+        }
+        .menu-footer {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        .contact-info, .information, .my-account, .newsletter {
+            text-align: center;
+        }
+        .contact-info ul, .information ul, .my-account ul {
+            padding: 0;
+        }
+        .contact-info ul li, .information ul li, .my-account ul li {
+            font-size: 1.2rem;
+        }
+        .social-icons {
+            justify-content: center;
+        }
+        .content p {
+            font-size: 1.2rem;
+        }
+        .content input {
+            width: 100%;
+        }
+        .content button {
+            width: 100%;
+        }
+        .copyright {
+            flex-direction: column;
+            text-align: center;
+        }
+        .copyright p {
+            margin-bottom: 1rem;
+        }
+    }
+</style>
