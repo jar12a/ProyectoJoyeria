@@ -81,6 +81,23 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
     </style>
 </head>
 <body>
+    <!-- Modal para mensajes -->
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageModalLabel">Mensaje</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="messageModalBody">
+                    <!-- Mensaje se insertará aquí -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin del modal para mensajes -->
     <div class="container mt-5">
         <!-- Sección de Productos -->
         <h2 class="mb-4">Productos <span class="badge badge-secondary"><?php echo $total_productos; ?></span></h2>
@@ -167,12 +184,21 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
     </div>
 
     <script>
+    // Función para mostrar el modal de mensaje
+    function mostrarMensaje(mensaje) {
+        document.getElementById('messageModalBody').textContent = mensaje;
+        $('#messageModal').modal('show');
+        setTimeout(() => {
+            $('#messageModal').modal('hide');
+        }, 1500);
+    }
+
     // Función para agregar un producto al carrito
     function agregarAlCarrito(id, nombre, precio, imagen, isModal = false) {
         let cantidad = isModal ? document.getElementById(`modal-cantidad-${id}`).value : document.getElementById(`cantidad-${id}`).value;
         
         if (cantidad < 1) {
-            alert('La cantidad debe ser al menos 1');
+            mostrarMensaje('La cantidad debe ser al menos 1');
             return;
         }
 
@@ -229,7 +255,7 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
                             boton.disabled = false; // Habilitar el botón nuevamente
                         }, 2000);
             } else {
-                alert('Error al agregar el producto al carrito');
+                mostrarMensaje('Error al agregar el producto al carrito');
                 boton.innerHTML = '<i class="bi bi-cart"></i> Agregar al carrito';
                         boton.style.backgroundColor = ''; // Restaurar el color original del botón
                         boton.disabled = false; // Habilitar el botón nuevamente
@@ -237,6 +263,7 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
         })
         .catch(error => {
                     console.error('Error:', error);
+                    mostrarMensaje('Error al agregar el producto al carrito');
                     boton.innerHTML = '<i class="bi bi-cart"></i> Agregar al carrito';
                     boton.style.backgroundColor = ''; // Restaurar el color original del botón
                     boton.disabled = false; // Habilitar el botón nuevamente
@@ -276,7 +303,7 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
         let productoExistente = wishlist.find(producto => producto.id === id);
 
         if (productoExistente) {
-            alert('Este producto ya está en la lista de deseos');
+            mostrarMensaje('Este producto ya está en la lista de deseos');
         } else {
             let producto = {
                 id: id,
@@ -286,7 +313,7 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
             };
             wishlist.push(producto);
             localStorage.setItem('wishlist', JSON.stringify(wishlist));
-            alert('Producto agregado a la lista de deseos');
+            mostrarMensaje('Producto agregado a la lista de deseos');
         }
     }
 
@@ -294,9 +321,10 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
     function compartirProducto(id) {
         const url = window.location.href + '?producto=' + id;
         navigator.clipboard.writeText(url).then(() => {
-            alert('Enlace del producto copiado al portapapeles');
+            mostrarMensaje('Enlace del producto copiado al portapapeles');
         }).catch(err => {
             console.error('Error al copiar el enlace: ', err);
+            mostrarMensaje('Error al copiar el enlace');
         });
     }
     </script>
