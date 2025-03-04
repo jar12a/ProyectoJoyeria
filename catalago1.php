@@ -17,6 +17,7 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
     <title>Catálogo de Productos</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    
     <style>
         .card-img-overlay {
             background: rgba(0, 0, 0, 0.5);
