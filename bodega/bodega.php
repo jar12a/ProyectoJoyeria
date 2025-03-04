@@ -1,7 +1,7 @@
 <?php
 
 // consultas sql
-include 'conexion.php';
+include '../confi/conexionproductos.php'; // Corrige la ruta del archivo
 
 // Obtener los valores de los filtros si existen
 $categoria_filtro = isset($_GET['categoria']) ? $_GET['categoria'] : '';

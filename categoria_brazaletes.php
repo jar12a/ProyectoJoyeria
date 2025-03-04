@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'complementos/head.php';
-include 'bodega/conexionproductos.php';
+include 'confi/conexionproductos.php';
 ?>
 
 <!DOCTYPE html>
@@ -121,10 +121,10 @@ include 'bodega/conexionproductos.php';
                     FROM producto p
                     JOIN categoría c ON p.ID_Categoría = c.ID_categoría
                     WHERE c.Nombre = 'brazaletes'";
-            $stmt = $pdo->query($sql);
+            $stmt = $conn->query($sql);
 
             // Iterar sobre los resultados y mostrarlos en tarjetas de Bootstrap
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            while ($row = $stmt->fetch_assoc()) {
                 echo '<div class="col-md-3 mb-4">';
                 echo '    <div class="card">';
                 echo '        <img src="' . $row['Imagen'] . '" class="card-img-top" alt="' . $row['Nombre'] . '">';

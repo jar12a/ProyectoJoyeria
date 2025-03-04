@@ -1,12 +1,12 @@
 <?php
 session_start();
 include 'complementos/head.php';
-include 'bodega/conexionproductos.php';
+include 'confi/conexionproductos.php';
 
 // Realizar la consulta para contar el número de productos registrados
 $sql_count = "SELECT COUNT(*) AS total_productos FROM producto";
-$stmt_count = $pdo->query($sql_count);
-$total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
+$stmt_count = $conn->query($sql_count);
+$total_productos = $stmt_count->fetch_assoc()['total_productos'];
 ?>
 
 <!DOCTYPE html>
@@ -108,10 +108,10 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
             <?php
             // Realizar la consulta a la base de datos
             $sql = "SELECT * FROM producto ORDER BY RAND()";
-            $stmt = $pdo->query($sql);
+            $stmt = $conn->query($sql);
 
             // Iterar sobre los resultados y mostrarlos en tarjetas de Bootstrap
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            while ($row = $stmt->fetch_assoc()) {
                 echo '<div class="col-md-3 mb-4">';
                 echo '    <div class="card">';
                 echo '        <img src="' . $row['Imagen'] . '" class="card-img-top" alt="' . $row['Nombre'] . '">';
