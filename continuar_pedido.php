@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'complementos/head.php';
-include 'bodega/conexionproductos.php';
+include 'confi/conexionproductos.php';
 ?>
 
 <!DOCTYPE html>
