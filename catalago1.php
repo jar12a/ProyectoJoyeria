@@ -78,11 +78,14 @@ $total_productos = $stmt_count->fetch(PDO::FETCH_ASSOC)['total_productos'];
             align-items: center;
             justify-content: center;
         }
+        .modal-message {
+            z-index: 1051; /* Un valor más alto que el modal de vista previa */
+        }
     </style>
 </head>
 <body>
     <!-- Modal para mensajes -->
-    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+    <div class="modal fade modal-message" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
