@@ -121,10 +121,10 @@ include 'confi/conexionproductos.php';
                     FROM producto p
                     JOIN categoría c ON p.ID_Categoría = c.ID_categoría
                     WHERE c.Nombre = 'aritos'";
-            $stmt = $conn->query($sql);
+            $stmt = $pdo->query($sql);
 
             // Iterar sobre los resultados y mostrarlos en tarjetas de Bootstrap
-            while ($row = $stmt->fetch_assoc()) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo '<div class="col-md-3 mb-4">';
                 echo '    <div class="card">';
                 echo '        <img src="' . $row['Imagen'] . '" class="card-img-top" alt="' . $row['Nombre'] . '">';

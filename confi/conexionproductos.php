@@ -10,14 +10,11 @@ $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
 
 // Intentar establecer la conexión
 try {
-    // Crear una instancia de mysqli para la conexión
-    $conn = new mysqli($host, $username, $password, $dbname);
-
-    // Verificar si hay errores en la conexión
-    if ($conn->connect_error) {
-        die("Error al conectar con la base de datos: " . $conn->connect_error);
-    }
-} catch (Exception $e) {
+    // Crear una instancia de PDO para la conexión
+    $pdo = new PDO($dsn, $username, $password);
+    // Configurar el modo de error de PDO para que lance excepciones
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
     // Si hay un error de conexión, mostrarlo
     die("Error al conectar con la base de datos: " . $e->getMessage());
 }
