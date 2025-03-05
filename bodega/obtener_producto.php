@@ -1,5 +1,5 @@
 <?php
-include '../confi/conexionproductos.php';
+include '../confi/conexion.php';
 
 $data = json_decode(file_get_contents("php://input"), true);
 $id = $data['id'];

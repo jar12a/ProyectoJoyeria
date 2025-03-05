@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'complementos/head.php';
-include 'confi/conexionproductos.php';
+include 'confi/conexion.php';
 
 // Definir el IVA y el costo de envío
 $iva = 0.15; // 15% de IVA

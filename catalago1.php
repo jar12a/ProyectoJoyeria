@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'complementos/head.php';
-include 'confi/conexionproductos.php';
+include 'confi/conexion.php';
 
 // Realizar la consulta para contar el número de productos registrados
 $sql_count = "SELECT COUNT(*) AS total_productos FROM producto";

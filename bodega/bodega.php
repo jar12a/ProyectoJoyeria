@@ -1,7 +1,7 @@
 <?php
 
 // consultas sql
-include '../confi/conexionproductos.php'; // Corrige la ruta del archivo
+include '../confi/conexion.php'; // Corrige la ruta del archivo
 
 // Obtener los valores de los filtros si existen
 $categoria_filtro = isset($_GET['categoria']) ? $_GET['categoria'] : '';
@@ -522,17 +522,18 @@ if (!$stmt_categorias) {
                 } else {
                     fila.style.display = "none";
                 }
+                
             });
 
-            manejarPaginacion(); // Llamar a la función de paginación después de filtrar
-        });
+
+     });
 
         // Función para manejar la paginación
         function manejarPaginacion() {
             const filasPorPagina = parseInt(document.getElementById("filasPorPagina").value);
             const filas = document.querySelectorAll("#productosLista tr");
             const filasVisibles = Array.from(filas).filter(fila => fila.style.display !== "none");
-            const totalFilas = filasVisibles.length;
+            const totalFilas = filas.length;
             const totalPaginas = Math.ceil(totalFilas / filasPorPagina);
             const paginacion = document.getElementById("paginacion");
 
@@ -543,12 +544,12 @@ if (!$stmt_categorias) {
                 li.className = "page-item";
                 li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
                 li.addEventListener("click", function() {
-                    mostrarPagina(i, filasPorPagina, filasVisibles);
+                    mostrarPagina(i, filasPorPagina, filas);
                 });
                 paginacion.appendChild(li);
             }
 
-            mostrarPagina(1, filasPorPagina, filasVisibles);
+            mostrarPagina(1, filasPorPagina, filas);
         }
 
         // Función para mostrar una página específica

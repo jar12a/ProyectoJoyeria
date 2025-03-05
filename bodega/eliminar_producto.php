@@ -1,5 +1,5 @@
 <?php
-include '../confi/conexionproductos.php';
+include '../confi/conexion.php';
 
 // Recibir el ID del producto a eliminar
 $data = json_decode(file_get_contents('php://input'), true);

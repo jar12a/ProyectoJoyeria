@@ -1,5 +1,5 @@
 <?php
-include '../confi/conexionproductos.php';
+include '../confi/conexion.php';
 
 $sql = "SELECT ID_categoría, Nombre FROM categoría";
 $stmt = $pdo->query($sql);

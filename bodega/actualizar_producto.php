@@ -1,5 +1,5 @@
 <?php
-include '../confi/conexionproductos.php';
+include '../confi/conexion.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificar si el id_producto está presente
