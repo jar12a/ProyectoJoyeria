@@ -1,7 +1,7 @@
 <?php
 
 // consultas sql
-include 'conexion.php';
+include '../confi/conexionproductos.php'; // Corrige la ruta del archivo
 
 // Obtener los valores de los filtros si existen
 $categoria_filtro = isset($_GET['categoria']) ? $_GET['categoria'] : '';
@@ -14,20 +14,30 @@ $sql_productos = "SELECT p.ID_Producto, p.Nombre, c.Nombre AS Categoria, p.Descr
                   WHERE 1=1";
 
 if ($categoria_filtro) {
-    $sql_productos .= " AND c.ID_categoría = '$categoria_filtro'";
+    $sql_productos .= " AND c.ID_categoría = :categoria_filtro";
 }
 
 if ($material_filtro) {
-    $sql_productos .= " AND p.Material = '$material_filtro'";
+    $sql_productos .= " AND p.Material = :material_filtro";
 }
 
-$result_productos = $conn->query($sql_productos);
+$stmt_productos = $pdo->prepare($sql_productos);
+
+if ($categoria_filtro) {
+    $stmt_productos->bindParam(':categoria_filtro', $categoria_filtro, PDO::PARAM_STR);
+}
+
+if ($material_filtro) {
+    $stmt_productos->bindParam(':material_filtro', $material_filtro, PDO::PARAM_STR);
+}
+
+$stmt_productos->execute();
 
 $sql_categorias = "SELECT ID_categoría, Nombre FROM categoría"; 
-$result_categorias = $conn->query($sql_categorias);
+$stmt_categorias = $pdo->query($sql_categorias);
 
-if (!$result_categorias) {
-    die("Error en la consulta de categorías: " . $conn->error);
+if (!$stmt_categorias) {
+    die("Error en la consulta de categorías: " . $pdo->errorInfo()[2]);
 }
 
 ?>
@@ -69,8 +79,8 @@ if (!$result_categorias) {
                         <option value="">Seleccione categoria</option>
                         <!-- Aquí cargas las categorías desde PHP -->
                         <?php
-                        if ($result_categorias && $result_categorias->num_rows > 0) {
-                            while ($row = $result_categorias->fetch_assoc()) {
+                        if ($stmt_categorias && $stmt_categorias->rowCount() > 0) {
+                            while ($row = $stmt_categorias->fetch(PDO::FETCH_ASSOC)) {
                                 echo "<option value='" . $row['ID_categoría'] . "'>" . $row['Nombre'] . "</option>";
                             }
                         } else {
@@ -133,9 +143,9 @@ if (!$result_categorias) {
                 </thead>
                 <tbody id="productosLista">
                     <?php
-                    if ($result_productos->num_rows > 0) {
+                    if ($stmt_productos->rowCount() > 0) {
                         $contador = 1;
-                        while ($row = $result_productos->fetch_assoc()) {
+                        while ($row = $stmt_productos->fetch(PDO::FETCH_ASSOC)) {
                             echo "<tr id='producto-{$row['ID_Producto']}'>
                                     <td>{$contador}</td>
                                     <td>{$row['Nombre']}</td>
@@ -467,5 +477,5 @@ if (!$result_categorias) {
 </html>
 
 <?php
-$conn->close();
+$pdo = null;
 ?>

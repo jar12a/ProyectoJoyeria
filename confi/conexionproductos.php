@@ -12,8 +12,7 @@ $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
 try {
     // Crear una instancia de PDO para la conexión
     $pdo = new PDO($dsn, $username, $password);
-    
-    // Configurar PDO para lanzar excepciones en caso de error
+    // Configurar el modo de error de PDO para que lance excepciones
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     // Si hay un error de conexión, mostrarlo
