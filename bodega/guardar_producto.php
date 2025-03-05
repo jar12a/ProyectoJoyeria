@@ -1,5 +1,5 @@
 <?php
-include 'conexion.php';
+include '../confi/conexionproductos.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = $_POST["nombre"];
@@ -23,15 +23,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Inserción en la base de datos
     $sql = "INSERT INTO producto (ID_Categoría, Nombre, Descripción, Material, Precio, Stock, Imagen)
-            VALUES ('$tipo', '$nombre', '$descripcion', '$material', '$precio', '$cantidad', '$imagenRuta')";
+            VALUES (:tipo, :nombre, :descripcion, :material, :precio, :cantidad, :imagenRuta)";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':tipo', $tipo);
+    $stmt->bindParam(':nombre', $nombre);
+    $stmt->bindParam(':descripcion', $descripcion);
+    $stmt->bindParam(':material', $material);
+    $stmt->bindParam(':precio', $precio);
+    $stmt->bindParam(':cantidad', $cantidad);
+    $stmt->bindParam(':imagenRuta', $imagenRuta);
 
-    if ($conn->query($sql) === TRUE) {
+    if ($stmt->execute()) {
         echo json_encode(["success" => true]);
     } else {
-        echo json_encode(["success" => false, "error" => $conn->error]);
+        echo json_encode(["success" => false, "error" => $stmt->errorInfo()]);
     }
 
-    $conn->close();
+    $pdo = null;
 }
 ?>
 

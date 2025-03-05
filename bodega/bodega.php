@@ -68,57 +68,125 @@ if (!$stmt_categorias) {
     <div class="container mt-4">
         <h2 class="text-center">Bodega Virtual - Joyas</h2>
         
-        <!-- Formulario para agregar joyas -->
-        <form id="productoForm" class="mb-4" enctype="multipart/form-data">
-            <div class="row">
-                <div class="col-md-3 mb-3">
-                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre de la joya" required>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <select id="tipo" name="tipo" class="form-control" required>
-                        <option value="">Seleccione categoria</option>
-                        <!-- Aquí cargas las categorías desde PHP -->
-                        <?php
-                        if ($stmt_categorias && $stmt_categorias->rowCount() > 0) {
-                            while ($row = $stmt_categorias->fetch(PDO::FETCH_ASSOC)) {
-                                echo "<option value='" . $row['ID_categoría'] . "'>" . $row['Nombre'] . "</option>";
-                            }
-                        } else {
-                            echo "<option value=''>No hay categorías disponibles</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <input type="text" id="descripcion" name="descripcion" class="form-control" placeholder="Descripción" required>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <input type="number" id="cantidad" name="cantidad" class="form-control" placeholder="Cantidad disponible" required>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <input type="number" id="precio" name="precio" class="form-control" placeholder="Precio" required>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <select id="material" name="material" class="form-control" required>
-                        <option value="">Selecciona material</option>
-                        <option value="Oro">Oro</option>
-                        <option value="Plata">Plata</option>
-                        <option value="Platino">Platino</option>
-                        <option value="Acero">Acero</option>
-                    </select>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <input type="file" id="imagen" name="imagen" class="form-control">
-                    <input type="hidden" id="imagen_actual" name="imagen_actual">
-                </div>
-                <div class="col-md-3 mb-3 d-flex align-items-end">
-                    <button type="button" id="btnAgregar" class="btn btn-primary me-2" onclick="agregarProducto()">Agregar</button>
-                    <button type="button" id="btnActualizar" class="btn btn-warning" onclick="actualizarProducto()" style="display:none;">Actualizar</button>
+        <!-- Botón para abrir el modal de agregar producto -->
+        <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#agregarProductoModal">
+            Agregar Producto
+        </button>
+
+        <!-- Modal para agregar producto -->
+        <div class="modal fade" id="agregarProductoModal" tabindex="-1" aria-labelledby="agregarProductoModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="agregarProductoModalLabel">Agregar Producto</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="productoForm" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre de la joya" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <select id="tipo" name="tipo" class="form-control" required>
+                                        <option value="">Seleccione categoria</option>
+                                        <!-- Aquí cargas las categorías desde PHP -->
+                                        <?php
+                                        if ($stmt_categorias && $stmt_categorias->rowCount() > 0) {
+                                            while ($row = $stmt_categorias->fetch(PDO::FETCH_ASSOC)) {
+                                                echo "<option value='" . $row['ID_categoría'] . "'>" . $row['Nombre'] . "</option>";
+                                            }
+                                        } else {
+                                            echo "<option value=''>No hay categorías disponibles</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <input type="text" id="descripcion" name="descripcion" class="form-control" placeholder="Descripción" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <input type="number" id="cantidad" name="cantidad" class="form-control" placeholder="Cantidad disponible" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <input type="number" id="precio" name="precio" class="form-control" placeholder="Precio" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <select id="material" name="material" class="form-control" required>
+                                        <option value="">Selecciona material</option>
+                                        <option value="Oro">Oro</option>
+                                        <option value="Plata">Plata</option>
+                                        <option value="Platino">Platino</option>
+                                        <option value="Acero">Acero</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <input type="file" id="imagen" name="imagen" class="form-control">
+                                    <input type="hidden" id="imagen_actual" name="imagen_actual">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" onclick="agregarProducto()">Agregar Producto</button>
+                    </div>
                 </div>
             </div>
-        </form>
+        </div>
 
-      
+        <!-- Modal para editar producto -->
+        <div class="modal fade" id="editarProductoModal" tabindex="-1" aria-labelledby="editarProductoModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editarProductoModalLabel">Editar Producto</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editarProductoForm" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <input type="text" id="editar_nombre" name="nombre" class="form-control" placeholder="Nombre de la joya" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <select id="editar_tipo" name="tipo" class="form-control" required>
+                                        <option value="">Seleccione categoria</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <input type="text" id="editar_descripcion" name="descripcion" class="form-control" placeholder="Descripción" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <input type="number" id="editar_cantidad" name="cantidad" class="form-control" placeholder="Cantidad disponible" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <input type="number" id="editar_precio" name="precio" class="form-control" placeholder="Precio" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <select id="editar_material" name="material" class="form-control" required>
+                                        <option value="">Selecciona material</option>
+                                        <option value="Oro">Oro</option>
+                                        <option value="Plata">Plata</option>
+                                        <option value="Platino">Platino</option>
+                                        <option value="Acero">Acero</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <input type="file" id="editar_imagen" name="imagen" class="form-control">
+                                    <input type="hidden" id="editar_imagen_actual" name="imagen_actual">
+                                    <img id="vista_previa_imagen" src="" alt="Vista previa" style="width: 100px; height: 100px; margin-top: 10px;">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" onclick="actualizarProducto()">Actualizar Producto</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Buscador -->
         <div class="mb-4">
@@ -156,7 +224,7 @@ if (!$stmt_categorias) {
                                     <td>{$row['Material']}</td>
                                     <td><img src='{$row['Imagen']}' alt='Imagen' style='width: 50px; height: 50px;'></td>
                                     <td>
-                                        <button class='btn btn-warning btn-sm' onclick='editarProducto({$row['ID_Producto']}, \"{$row['Descripción']}\")'>Editar</button>
+                                        <button class='btn btn-warning btn-sm' onclick='abrirModalEditarProducto({$row['ID_Producto']})'>Editar</button>
                                         <button class='btn btn-danger btn-sm' onclick='eliminarProducto({$row['ID_Producto']})'>Eliminar</button>
                                     </td>
                                 </tr>";
@@ -224,41 +292,75 @@ if (!$stmt_categorias) {
         // Variable para almacenar el ID del producto a actualizar
         let productoId = null;
 
-        // Función para editar un producto
-        function editarProducto(id, descripcion) {
-            const fila = document.getElementById(`producto-${id}`);
-            const celdas = fila.getElementsByTagName("td");
-
-            // Llenar el formulario con los datos actuales del producto
-            document.getElementById("nombre").value = celdas[1].innerText;
-            document.getElementById("tipo").value = celdas[2].innerText;
-            document.getElementById("descripcion").value = descripcion;
-            document.getElementById("cantidad").value = celdas[4].innerText;
-            document.getElementById("precio").value = celdas[5].innerText;
-            document.getElementById("material").value = celdas[6].innerText;
-            document.getElementById("imagen_actual").value = celdas[7].querySelector("img").src;
-
-            // Mostrar el botón de actualizar y ocultar el de agregar
-            document.getElementById("btnAgregar").style.display = "none";
-            document.getElementById("btnActualizar").style.display = "inline-block";
-
-            // Almacenar el ID del producto que se va a actualizar
+        // Función para abrir el modal de editar producto y cargar los datos
+        function abrirModalEditarProducto(id) {
             productoId = id;
+            fetch('obtener_producto.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: id })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.producto) {
+                    document.getElementById("editar_nombre").value = data.producto.Nombre;
+                    document.getElementById("editar_tipo").value = data.producto.ID_Categoría;
+                    document.getElementById("editar_descripcion").value = data.producto.Descripción;
+                    document.getElementById("editar_cantidad").value = data.producto.Stock;
+                    document.getElementById("editar_precio").value = data.producto.Precio;
+                    document.getElementById("editar_material").value = data.producto.Material;
+                    document.getElementById("editar_imagen_actual").value = data.producto.Imagen;
+                    document.getElementById("vista_previa_imagen").src = data.producto.Imagen;
+
+                    // Cargar las categorías en el combobox del modal de editar
+                    cargarCategoriasEditar(data.producto.ID_Categoría);
+
+                    var editarProductoModal = new bootstrap.Modal(document.getElementById('editarProductoModal'));
+                    editarProductoModal.show();
+                } else {
+                    mostrarMensaje("Error al cargar los datos del producto.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                mostrarMensaje("Error al cargar los datos del producto.");
+            });
+        }
+
+        // Función para cargar las categorías en el combobox del modal de editar
+        function cargarCategoriasEditar(categoriaSeleccionada) {
+            fetch('obtener_categorias.php')
+            .then(response => response.json())
+            .then(data => {
+                const editarTipo = document.getElementById("editar_tipo");
+                editarTipo.innerHTML = '<option value="">Seleccione categoria</option>';
+                data.categorias.forEach(categoria => {
+                    const option = document.createElement("option");
+                    option.value = categoria.ID_categoría;
+                    option.text = categoria.Nombre;
+                    if (categoria.ID_categoría == categoriaSeleccionada) {
+                        option.selected = true;
+                    }
+                    editarTipo.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                mostrarMensaje("Error al cargar las categorías.");
+            });
         }
 
         // Función para validar el formulario
-        function validarFormulario() {
-            const nombre = document.getElementById("nombre").value;
-            const tipo = document.getElementById("tipo").value;
-            const descripcion = document.getElementById("descripcion").value;
-            const cantidad = document.getElementById("cantidad").value;
-            const precio = document.getElementById("precio").value;
-            const material = document.getElementById("material").value;
-            const imagen = document.getElementById("imagen").value;
-
-            if (!nombre || !tipo || !descripcion || !cantidad || !precio || !material) {
-                mostrarMensaje("Todos los campos son obligatorios.");
-                return false;
+        function validarFormulario(formId) {
+            const form = document.getElementById(formId);
+            const inputs = form.querySelectorAll("input[required], select[required]");
+            for (let input of inputs) {
+                if (!input.value) {
+                    mostrarMensaje("Todos los campos son obligatorios.");
+                    return false;
+                }
             }
             return true;
         }
@@ -275,7 +377,7 @@ if (!$stmt_categorias) {
 
         // Función para agregar un producto
         function agregarProducto() {
-            if (!validarFormulario()) {
+            if (!validarFormulario("productoForm")) {
                 return;
             }
 
@@ -304,13 +406,13 @@ if (!$stmt_categorias) {
 
         // Función para actualizar un producto
         function actualizarProducto() {
-            if (!validarFormulario()) {
+            if (!validarFormulario("editarProductoForm")) {
                 return;
             }
 
-            let formData = new FormData(document.getElementById("productoForm"));
+            let formData = new FormData(document.getElementById("editarProductoForm"));
             formData.append("ID_Producto", productoId); // el ID del producto para actualizarlo
-            formData.append("imagen_actual", document.getElementById("imagen_actual").value); // Añadir la imagen actual
+            formData.append("imagen_actual", document.getElementById("editar_imagen_actual").value); // Añadir la imagen actual
 
             fetch("actualizar_producto.php", {
                 method: "POST",
@@ -372,7 +474,7 @@ if (!$stmt_categorias) {
         document.getElementById("productoForm").addEventListener("submit", function(event) {
             event.preventDefault();
 
-            if (!validarFormulario()) {
+            if (!validarFormulario("productoForm")) {
                 return;
             }
 
@@ -421,13 +523,16 @@ if (!$stmt_categorias) {
                     fila.style.display = "none";
                 }
             });
+
+            manejarPaginacion(); // Llamar a la función de paginación después de filtrar
         });
 
         // Función para manejar la paginación
         function manejarPaginacion() {
             const filasPorPagina = parseInt(document.getElementById("filasPorPagina").value);
             const filas = document.querySelectorAll("#productosLista tr");
-            const totalFilas = filas.length;
+            const filasVisibles = Array.from(filas).filter(fila => fila.style.display !== "none");
+            const totalFilas = filasVisibles.length;
             const totalPaginas = Math.ceil(totalFilas / filasPorPagina);
             const paginacion = document.getElementById("paginacion");
 
@@ -438,12 +543,12 @@ if (!$stmt_categorias) {
                 li.className = "page-item";
                 li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
                 li.addEventListener("click", function() {
-                    mostrarPagina(i, filasPorPagina, filas);
+                    mostrarPagina(i, filasPorPagina, filasVisibles);
                 });
                 paginacion.appendChild(li);
             }
 
-            mostrarPagina(1, filasPorPagina, filas);
+            mostrarPagina(1, filasPorPagina, filasVisibles);
         }
 
         // Función para mostrar una página específica
@@ -469,7 +574,9 @@ if (!$stmt_categorias) {
         document.getElementById("filasPorPagina").addEventListener("change", manejarPaginacion);
 
         // Inicializar la paginación
-        manejarPaginacion();
+        document.addEventListener("DOMContentLoaded", function() {
+            manejarPaginacion();
+        });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
