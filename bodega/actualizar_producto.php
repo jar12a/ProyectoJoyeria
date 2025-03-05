@@ -1,5 +1,5 @@
 <?php
-include 'conexion.php';
+include '../confi/conexionproductos.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificar si el id_producto está presente
@@ -31,24 +31,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Consulta SQL para actualizar el producto
         $sql = "UPDATE producto SET 
-                ID_Categoría = '$tipo', 
-                Nombre = '$nombre', 
-                Descripción = '$descripcion', 
-                Material = '$material', 
-                Precio = '$precio', 
-                Stock = '$cantidad', 
-                Imagen = '$imagenRuta' 
-                WHERE ID_Producto = '$id_producto'";
+                ID_Categoría = :tipo, 
+                Nombre = :nombre, 
+                Descripción = :descripcion, 
+                Material = :material, 
+                Precio = :precio, 
+                Stock = :cantidad, 
+                Imagen = :imagenRuta 
+                WHERE ID_Producto = :id_producto";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':tipo', $tipo);
+        $stmt->bindParam(':nombre', $nombre);
+        $stmt->bindParam(':descripcion', $descripcion);
+        $stmt->bindParam(':material', $material);
+        $stmt->bindParam(':precio', $precio);
+        $stmt->bindParam(':cantidad', $cantidad);
+        $stmt->bindParam(':imagenRuta', $imagenRuta);
+        $stmt->bindParam(':id_producto', $id_producto, PDO::PARAM_INT);
 
-        if ($conn->query($sql) === TRUE) {
+        if ($stmt->execute()) {
             echo json_encode(["success" => true]);
         } else {
-            echo json_encode(["success" => false, "error" => $conn->error]);
+            echo json_encode(["success" => false, "error" => $stmt->errorInfo()]);
         }
     } else {
         echo json_encode(["success" => false, "error" => "ID de producto no recibido"]);
     }
 
-    $conn->close();
+    $pdo = null;
 }
 ?>
