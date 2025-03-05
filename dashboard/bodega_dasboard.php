@@ -1,3 +1,46 @@
+<?php
+
+// consultas sql
+include '../confi/conexionproductos.php'; // Corrige la ruta del archivo
+
+// Obtener los valores de los filtros si existen
+$categoria_filtro = isset($_GET['categoria']) ? $_GET['categoria'] : '';
+$material_filtro = isset($_GET['material']) ? $_GET['material'] : '';
+
+// Construir la consulta SQL con los filtros
+$sql_productos = "SELECT p.ID_Producto, p.Nombre, c.Nombre AS Categoria, p.Descripción, p.Stock, p.Precio, p.Material, p.Imagen 
+                  FROM producto p
+                  JOIN categoría c ON p.ID_Categoría = c.ID_categoría
+                  WHERE 1=1";
+
+if ($categoria_filtro) {
+    $sql_productos .= " AND c.ID_categoría = :categoria_filtro";
+}
+
+if ($material_filtro) {
+    $sql_productos .= " AND p.Material = :material_filtro";
+}
+
+$stmt_productos = $pdo->prepare($sql_productos);
+
+if ($categoria_filtro) {
+    $stmt_productos->bindParam(':categoria_filtro', $categoria_filtro, PDO::PARAM_STR);
+}
+
+if ($material_filtro) {
+    $stmt_productos->bindParam(':material_filtro', $material_filtro, PDO::PARAM_STR);
+}
+
+$stmt_productos->execute();
+
+$sql_categorias = "SELECT ID_categoría, Nombre FROM categoría"; 
+$stmt_categorias = $pdo->query($sql_categorias);
+
+if (!$stmt_categorias) {
+    die("Error en la consulta de categorías: " . $pdo->errorInfo()[2]);
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -6,14 +49,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Static Navigation - SB Admin</title>
+        <title>Imperial Gems</title>
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
+            <a class="navbar-brand ps-3" href="principal.php">Start Bootstrap</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -28,10 +71,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Settings</a></li>
-                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                        <li><a class="dropdown-item" href="#!">Configuración</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#!">Logout</a></li>
+                        <li><a class="dropdown-item" href="logout.php">Salir</a></li>
                     </ul>
                 </li>
             </ul>
@@ -44,7 +86,7 @@
                             <div class="sb-sidenav-menu-heading">Core</div>
                             <a class="nav-link" href="index.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Dashboard
+                                Menú
                             </a>
                             <div class="sb-sidenav-menu-heading">Interface</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
@@ -71,9 +113,9 @@
                                     </a>
                                     <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="login.html">Login</a>
-                                            <a class="nav-link" href="register.html">Register</a>
-                                            <a class="nav-link" href="password.html">Forgot Password</a>
+                                            <a class="nav-link" href="login.php">Login</a>
+                                            <a class="nav-link" href="register.php">Register</a>
+                                            <a class="nav-link" href="password.php">Forgot Password</a>
                                         </nav>
                                     </div>
                                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
@@ -102,7 +144,7 @@
                     </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as:</div>
-                        Start Bootstrap
+                        Imperial Gems
                     </div>
                 </nav>
             </div>
@@ -111,22 +153,20 @@
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Static Navigation</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Static Navigation</li>
+                            <li class="breadcrumb-item"><a href="principal.php">Menú</a></li>
+                            <li class="breadcrumb-item active">Bienvenido a la bodega</li>
                         </ol>
                         <div class="card mb-4">
                             <div class="card-body">
                                 <p class="mb-0">
-                                    This page is an example of using static navigation. By removing the
-                                    <code>.sb-nav-fixed</code>
-                                    class from the
-                                    <code>body</code>
-                                    , the top navigation and side navigation will become static on scroll. Scroll down this page to see an example.
+                                    Bienvenido a la bodega
+                                    <?php 
+                                    require_once '../bodega/bodega.php'; // Corrige la ruta del archivo
+                                    ?>
                                 </p>
                             </div>
                         </div>
-                        <div style="height: 100vh"></div>
-                        <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>
+                       
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
