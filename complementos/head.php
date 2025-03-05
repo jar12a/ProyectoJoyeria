@@ -120,7 +120,7 @@
     // Llamar a la función para actualizar el contador del carrito al cargar la página
     document.addEventListener('DOMContentLoaded', actualizarContadorCarrito);
 </script>
-
+<script src="https://kit.fontawesome.com/45b2b3afef.js" crossorigin="anonymous"></script>
 </body>
 </html>
 

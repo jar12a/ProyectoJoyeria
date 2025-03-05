@@ -10,6 +10,9 @@ include 'complementos/head.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Imperial Gems</title>
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="styles.css">
+	<script src="https://kit.fontawesome.com/45b2b3afef.js" crossorigin="anonymous"></script>
+
     
 	
 </head>
