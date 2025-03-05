@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-03-2025 a las 01:19:44
+-- Tiempo de generación: 04-03-2025 a las 02:50:43
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -129,6 +129,26 @@ INSERT INTO `producto` (`ID_Producto`, `Nombre`, `Descripción`, `Material`, `Pr
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `rol`
+--
+
+CREATE TABLE `rol` (
+  `id` int(11) NOT NULL,
+  `Rol` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `rol`
+--
+
+INSERT INTO `rol` (`id`, `Rol`) VALUES
+(1, 'Administrador'),
+(2, 'Vendedor'),
+(3, 'Cliente');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `usuario`
 --
 
@@ -146,8 +166,11 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `usuario`, `password`, `nombre`, `tipo_usuario`, `correo`) VALUES
-(1, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'Administrador Web', 1, ''),
-(2, 'vendedor', '88d6818710e371b461efff33d271e0d2fb6ccf47', 'Juan Carlos Arguijo', 2, '');
+(1, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'Administrador Web', 1, 'admin@gmail.com'),
+(2, 'vendedor', '88d6818710e371b461efff33d271e0d2fb6ccf47', 'Juan Carlos Arguijo', 2, 'vendedor@gmail.com'),
+(3, 'admin', '$2y$10$Sd/1yM8Vgx8W9YbUIlQLbeuVXNQfh018V981iM/aN2ire24T.1tbu', 'Alex', 4, 'astomblakke51@gmail.com'),
+(5, 'admin1', '$2y$10$zjsS7xlCxI963K4Se6rmNuCcug3ez4GFbk/6mp1U0zdQguqiN0r8y', 'Administrador Web', 4, 'admin1@gmail.com'),
+(6, 'admin12', '$2y$10$ISU2LoPrlDAj5yrtnHbFCOgaBJ2aQRA8B/iQ3HiBJrog1K4fuVcDO', 'Administrador Web', 4, 'admin12@gmail.com');
 
 --
 -- Índices para tablas volcadas
@@ -181,6 +204,12 @@ ALTER TABLE `pedido`
 ALTER TABLE `producto`
   ADD PRIMARY KEY (`ID_Producto`),
   ADD KEY `ID_Categoría` (`ID_Categoría`);
+
+--
+-- Indices de la tabla `rol`
+--
+ALTER TABLE `rol`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `usuario`
@@ -217,10 +246,16 @@ ALTER TABLE `producto`
   MODIFY `ID_Producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
+-- AUTO_INCREMENT de la tabla `rol`
+--
+ALTER TABLE `rol`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas
