@@ -1,3 +1,14 @@
+<?php ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
 <footer class="footer">
     <div class="container container-footer">
         <div class="menu-footer">
@@ -68,7 +79,7 @@
             <p>
                 Desarrollado por Alex &copy; <?= date("Y"); ?>. Todos los derechos reservados.
             </p>
-            <img src="img/payment.png" alt="Pagos">
+            <img src="<?= '/ProyectoJoyeria/img/payment.png' ?>" alt="Pagos">
         </div>
     </div>
 </footer>
@@ -112,3 +123,6 @@
         }
     }
 </style>
+<script src="https://kit.fontawesome.com/45b2b3afef.js" crossorigin="anonymous"></script>
+</html>
+

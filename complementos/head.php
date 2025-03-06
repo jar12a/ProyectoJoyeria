@@ -39,7 +39,12 @@
                             <span class="visually-hidden">unread messages</span>
                         </span>
                     </button>
+                    
+
+                    <a href="/ProyectoJoyeria/dashboard/login.php" class="icon-link">
                     <i class="fa-solid fa-user"></i>
+                    </a>
+                    
                     <a href="/ProyectoJoyeria/listadedeseo.php" class="icon-link">
                         <i class="fa-solid fa-heart"></i>
                     </a>
@@ -69,7 +74,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/ProyectoJoyeria/login.php">Iniciar Sesion</a>
+                    <a class="nav-link active" aria-current="page" href="/ProyectoJoyeria/dashboard/login.php">Iniciar Sesion</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -115,7 +120,7 @@
     // Llamar a la función para actualizar el contador del carrito al cargar la página
     document.addEventListener('DOMContentLoaded', actualizarContadorCarrito);
 </script>
-
+<script src="https://kit.fontawesome.com/45b2b3afef.js" crossorigin="anonymous"></script>
 </body>
 </html>
 
