@@ -1,5 +1,5 @@
 <?php
-require "../config/conexion.php"; // Incluye la conexión PDO
+require "../confi/conexion.php"; // Incluye la conexión PDO
 
 session_start(); // Iniciar sesión
 
