@@ -52,18 +52,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Encriptar la contraseña
                 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-                // Definir tipo_usuario como 4
-                $tipo_usuario = 4;
+                // Definir idRol como 4
+                $idRol = 4;
 
                 // Preparar la consulta SQL para insertar los datos
-                $sql = "INSERT INTO usuario (usuario, password, nombre, tipo_usuario, correo) VALUES (?, ?, ?, ?, ?)";
+                $sql = "INSERT INTO usuario (usuario, password, nombre, idRol, correo) VALUES (?, ?, ?, ?, ?)";
 
                 // Preparar la declaración
                 $stmt = $pdo->prepare($sql);
 
                 // Ejecutar la declaración con los valores recibidos
                 try {
-                    $stmt->execute([$usuario, $passwordHash, $nombre, $tipo_usuario, $correo]);
+                    $stmt->execute([$usuario, $passwordHash, $nombre, $idRol, $correo]);
                     header("Location: login.php");
                     exit; // Asegura que el script se detenga después de la redirección
                 } catch (PDOException $e) {

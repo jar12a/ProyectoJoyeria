@@ -157,7 +157,7 @@ CREATE TABLE `usuario` (
   `usuario` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `nombre` varchar(100) NOT NULL,
-  `tipo_usuario` int(11) NOT NULL,
+  `idRol` int(11) NOT NULL,
   `correo` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -165,7 +165,7 @@ CREATE TABLE `usuario` (
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `usuario`, `password`, `nombre`, `tipo_usuario`, `correo`) VALUES
+INSERT INTO `usuario` (`id`, `usuario`, `password`, `nombre`, `idRol`, `correo`) VALUES
 (1, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'Administrador Web', 1, 'admin@gmail.com'),
 (2, 'vendedor', '88d6818710e371b461efff33d271e0d2fb6ccf47', 'Juan Carlos Arguijo', 2, 'vendedor@gmail.com'),
 (3, 'admin', '$2y$10$Sd/1yM8Vgx8W9YbUIlQLbeuVXNQfh018V981iM/aN2ire24T.1tbu', 'Alex', 4, 'astomblakke51@gmail.com'),

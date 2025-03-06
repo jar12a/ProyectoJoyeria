@@ -8,7 +8,7 @@ if ($_POST) {
     $password = $_POST['password'];
 
     // Preparar la consulta con PDO para evitar inyección SQL
-    $sql = "SELECT id, password, nombre, tipo_usuario FROM usuario WHERE usuario = :usuario";
+    $sql = "SELECT id, password, nombre, idRol FROM usuario WHERE usuario = :usuario";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':usuario', $usuario, PDO::PARAM_STR);
     $stmt->execute();
@@ -23,7 +23,7 @@ if ($_POST) {
         if ($password_bd == $pass_c) {
             $_SESSION['id'] = $row['id'];
             $_SESSION['nombre'] = $row['nombre'];
-            $_SESSION['tipo_usuario'] = $row['tipo_usuario'];
+            $_SESSION['idRol'] = $row['idRol'];
 
             header("Location: principal.php");
             exit;

@@ -4,7 +4,7 @@ if (!isset($_SESSION['id'])) {
     header("Location: login.php");
 }
 $nombre = $_SESSION['nombre'];
-$tipo_usuario = $_SESSION['tipo_usuario'];
+$idRol = $_SESSION['idRol'];
 
 
 
@@ -87,7 +87,7 @@ $tipo_usuario = $_SESSION['tipo_usuario'];
 
 
                         // si el usuario es administrador entonces mostrara esto
-                        if ($tipo_usuario == 1) { ?>
+                        if ($idRol == 1) { ?>
                             <div class="sb-sidenav-menu-heading">Interface</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
