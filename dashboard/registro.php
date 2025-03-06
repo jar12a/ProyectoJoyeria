@@ -52,8 +52,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Encriptar la contraseña
                 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-                // Definir idRol como 4
-                $idRol = 4;
+                // Definir idRol como 3
+                $idRol = 3;
 
                 // Preparar la consulta SQL para insertar los datos
                 $sql = "INSERT INTO usuario (usuario, password, nombre, idRol, correo) VALUES (?, ?, ?, ?, ?)";
