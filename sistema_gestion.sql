@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-03-2025 a las 02:50:43
+-- Tiempo de generación: 06-03-2025 a las 07:25:24
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -168,9 +168,7 @@ CREATE TABLE `usuario` (
 INSERT INTO `usuario` (`id`, `usuario`, `password`, `nombre`, `idRol`, `correo`) VALUES
 (1, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'Administrador Web', 1, 'admin@gmail.com'),
 (2, 'vendedor', '88d6818710e371b461efff33d271e0d2fb6ccf47', 'Juan Carlos Arguijo', 2, 'vendedor@gmail.com'),
-(3, 'admin', '$2y$10$Sd/1yM8Vgx8W9YbUIlQLbeuVXNQfh018V981iM/aN2ire24T.1tbu', 'Alex', 4, 'astomblakke51@gmail.com'),
-(5, 'admin1', '$2y$10$zjsS7xlCxI963K4Se6rmNuCcug3ez4GFbk/6mp1U0zdQguqiN0r8y', 'Administrador Web', 4, 'admin1@gmail.com'),
-(6, 'admin12', '$2y$10$ISU2LoPrlDAj5yrtnHbFCOgaBJ2aQRA8B/iQ3HiBJrog1K4fuVcDO', 'Administrador Web', 4, 'admin12@gmail.com');
+(3, 'Alex', 'c129b324aee662b04eccf68babba85851346dff9', 'Alex Jose Nuñez Salcedo', 2, 'alexjose@gmail.com');
 
 --
 -- Índices para tablas volcadas
@@ -215,7 +213,8 @@ ALTER TABLE `rol`
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idRol` (`idRol`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -255,7 +254,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restricciones para tablas volcadas
@@ -279,6 +278,12 @@ ALTER TABLE `pedido`
 --
 ALTER TABLE `producto`
   ADD CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`ID_Categoría`) REFERENCES `categoría` (`ID_Categoría`);
+
+--
+-- Filtros para la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`idRol`) REFERENCES `rol` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
