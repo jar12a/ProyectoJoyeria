@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             } else {
                 // Encriptar la contraseña
-                $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+                $passwordHash = SHA1($password);
 
                 // Definir idRol como 3
                 $idRol = 3;
