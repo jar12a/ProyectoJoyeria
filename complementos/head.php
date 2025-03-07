@@ -8,9 +8,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
 
-</head>
-
-<body>
 
     <div class="container-hero">
         <div class="container hero">
@@ -85,10 +82,10 @@
                             Catálogos
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="categoria_aritos.php">Aritos</a></li>
-                            <li><a class="dropdown-item" href="categoria_anillos.php">Anillos</a></li>
-                            <li><a class="dropdown-item" href="categoria_cadena.php">Cadenas</a></li>
-                            <li><a class="dropdown-item" href="categoria_brazaletes.php">Brazaletes</a></li>
+                            <li><a class="dropdown-item" href="/ProyectoJoyeria/categoria_aritos.php">Aritos</a></li>
+                            <li><a class="dropdown-item" href="/ProyectoJoyeria/categoria_anillos.php">Anillos</a></li>
+                            <li><a class="dropdown-item" href="/ProyectoJoyeria/categoria_cadena.php">Cadenas</a></li>
+                            <li><a class="dropdown-item" href="/ProyectoJoyeria/categoria_brazaletes.php">Brazaletes</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -161,6 +158,12 @@
         document.addEventListener('DOMContentLoaded', actualizarContadorCarrito);
     </script>
     <script src="https://kit.fontawesome.com/45b2b3afef.js" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body>
+
 </body>
 
 </html>

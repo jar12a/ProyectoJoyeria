@@ -49,9 +49,10 @@ if ($_POST) {
 
 ?>
 
+<?php include '../complementos/head.php'; ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8" />
@@ -62,7 +63,6 @@ if ($_POST) {
     <title>Login - SB Admin</title>
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <?php include '../complementos/head.php'; ?>
 </head>
 
 <body class="bg-primary">
