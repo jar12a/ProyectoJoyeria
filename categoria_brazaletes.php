@@ -1,5 +1,5 @@
-<?php
-session_start();
+<?php 
+session_start(); // Iniciar sesión
 include 'complementos/head.php';
 include 'confi/conexion.php';
 ?>

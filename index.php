@@ -1,6 +1,7 @@
 <?php 
-
+session_start(); // Iniciar sesión
 include 'complementos/head.php';
+
 
 
 
