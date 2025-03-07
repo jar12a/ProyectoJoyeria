@@ -45,6 +45,8 @@ if ($_POST) {
         $error_message = "No existe usuario";
     }
 }
+
+
 ?>
 
 
@@ -113,6 +115,7 @@ if ($_POST) {
                                         <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                             <a class="small" href="password.html">¿No recuerdas la contraseña?</a>
                                             <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                                            
                                         </div>
                                     </form>
                                 </div>

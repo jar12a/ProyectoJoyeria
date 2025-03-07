@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -74,7 +75,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/ProyectoJoyeria/dashboard/login.php">Iniciar Sesion</a>
+
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -93,8 +94,27 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/ProyectoJoyeria/catalago1.php">Productos</a>
                 </li>
+                    <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <?php
+                                echo $nombre; //imprime el nombre de quien esta conectado
+                                ?>
+                                <i class="fas fa-user fa-fw"></i></a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                
+                                    <hr class="dropdown-divider" />
+                                </li>
+                                <li><a class="dropdown-item" href="logout.php">Cerrar sesión</a>
+                                <a class="nav-link active" aria-current="page" href="/ProyectoJoyeria/dashboard/login.php">Iniciar Sesion</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    
                 <li class="nav-item">
                     <a class="nav-link disabled" aria-disabled="true">Imperial Gems</a>
+                    
                 </li>
             </ul>
             <form class="d-flex" role="search" action="filtradobusqueda.php" method="GET">
