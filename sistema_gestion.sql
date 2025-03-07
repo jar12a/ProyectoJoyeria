@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-03-2025 a las 07:25:24
+-- Tiempo de generación: 07-03-2025 a las 04:22:02
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -157,6 +157,8 @@ CREATE TABLE `usuario` (
   `usuario` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
   `nombre` varchar(100) NOT NULL,
+  `telefono` int(15) NOT NULL,
+  `direccion` varchar(300) NOT NULL,
   `idRol` int(11) NOT NULL,
   `correo` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -165,10 +167,13 @@ CREATE TABLE `usuario` (
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `usuario`, `password`, `nombre`, `idRol`, `correo`) VALUES
-(1, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'Administrador Web', 1, 'admin@gmail.com'),
-(2, 'vendedor', '88d6818710e371b461efff33d271e0d2fb6ccf47', 'Juan Carlos Arguijo', 2, 'vendedor@gmail.com'),
-(3, 'Alex', 'c129b324aee662b04eccf68babba85851346dff9', 'Alex Jose Nuñez Salcedo', 2, 'alexjose@gmail.com');
+INSERT INTO `usuario` (`id`, `usuario`, `password`, `nombre`, `telefono`, `direccion`, `idRol`, `correo`) VALUES
+(1, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'Administrador Web', 0, '0', 1, 'admin@gmail.com'),
+(2, 'vendedor', '88d6818710e371b461efff33d271e0d2fb6ccf47', 'Juan Carlos Arguijo', 0, '0', 2, 'vendedor@gmail.com'),
+(3, 'Alex', 'c129b324aee662b04eccf68babba85851346dff9', 'Alex Jose Nuñez Salcedo', 0, '0', 2, 'alexjose@gmail.com'),
+(8, 'Eduardo53', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', 'Eduardo Castillo', 0, '0', 3, 'eduardo@gmail.com'),
+(15, '123', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '123123', 0, '0', 3, '123@gmail.com'),
+(16, '1234', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', '1234', 0, '0', 3, '1234@gmail.com');
 
 --
 -- Índices para tablas volcadas
@@ -254,7 +259,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Restricciones para tablas volcadas

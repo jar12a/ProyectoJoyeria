@@ -1,7 +1,7 @@
 <?php
 
 // consultas sql
-include '../confi/conexionproductos.php'; // crea la conexion con la base de datos
+include '../confi/conexion.php'; // crea la conexion con la base de datos
 
 // Obtener los valores de los filtros si existen
 $categoria_filtro = isset($_GET['categoria']) ? $_GET['categoria'] : '';

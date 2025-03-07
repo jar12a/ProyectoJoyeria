@@ -1,23 +1,18 @@
 <?php
-
-require_once '../confi/conexionproductos.php'; // crea la conexion con la base de datos
-
-$error_message = [
-    'usuario' => '',
-    'correo' => '',
-    'password' => ''
-];
+require_once '../confi/conexion.php'; // crea la conexion con la base de datos
 
 // Verificar si el formulario fue enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificar si los campos existen en $_POST
-    if (isset($_POST['usuario'], $_POST['nombre'], $_POST['correo'], $_POST['password'], $_POST['passwordConfirm'])) {
+    if (isset($_POST['usuario'], $_POST['nombre'], $_POST['correo'], $_POST['password'], $_POST['passwordConfirm'], $_POST['telefono'], $_POST['direccion'])) {
         // Recibir los datos del formulario
         $usuario = $_POST['usuario'];
         $nombre = $_POST['nombre'];
         $correo = $_POST['correo'];
         $password = $_POST['password'];
         $passwordConfirm = $_POST['passwordConfirm'];
+        $telefono = $_POST['telefono'];
+        $direccion = $_POST['direccion'];
 
         // Verificar que las contraseñas coincidan
         if ($password !== $passwordConfirm) {
@@ -43,14 +38,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $idRol = 3;
 
                 // Preparar la consulta SQL para insertar los datos
-                $sql = "INSERT INTO usuario (usuario, password, nombre, idRol, correo) VALUES (?, ?, ?, ?, ?)";
+                $sql = "INSERT INTO usuario (usuario, password, nombre, telefono, direccion, idRol, correo) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
                 // Preparar la declaración
                 $stmt = $pdo->prepare($sql);
 
                 // Ejecutar la declaración con los valores recibidos
                 try {
-                    $stmt->execute([$usuario, $passwordHash, $nombre, $idRol, $correo]);
+                    $stmt->execute([$usuario, $passwordHash, $nombre, $telefono, $direccion, $idRol, $correo]);
                     echo "<script>
                             document.addEventListener('DOMContentLoaded', function() {
                                 var myModal = new bootstrap.Modal(document.getElementById('successModal'));
@@ -72,6 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -85,9 +81,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <?php include '../complementos/head.php'; ?>
+
+    <!-- Incluye los estilos de Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+
+
 </head>
 
 <body class="bg-primary">
+
+    <!-- Estilos adicionales para centrar el modal en la pantalla -->
+    <style>
+        /* Centrar el modal en la pantalla, tanto en dispositivos grandes como pequeños */
+        .modal-dialog {
+            max-width: 300px;
+            /* Ancho máximo del modal */
+            margin: 1.75rem auto;
+            /* Centramos el modal */
+        }
+    </style>
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
             <main>
@@ -114,6 +127,70 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <input class="form-control" id="nombre" name="nombre" type="text" placeholder="Ingrese su nombre" required />
                                             <label for="nombre">Nombre completo</label>
                                         </div>
+
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" id="telefono" name="telefono" type="text" placeholder="Ingrese su número de celular o teléfono" required maxlength="15" oninput="soloNumeros(event)" />
+                                            <label for="telefono">Número de teléfono o celular</label>
+                                        </div>
+
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" id="direccion" name="direccion" type="text" placeholder="Ingrese su dirección" required />
+                                            <label for="direccion">Ingrese su dirección</label>
+                                        </div>
+
+
+                                        <!-- Modal de advertencia (Bootstrap 4) -->
+                                        <div class="modal fade" id="modalError" tabindex="-1" aria-labelledby="modalErrorLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="modalErrorLabel">Advertencia</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        ¡Solo se permite ingresar números!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <script>
+                                                // Función para permitir solo números y limitar a 15 caracteres
+                                                function soloNumeros(event) {
+                                                    const input = event.target;
+                                                    let valor = input.value;
+
+                                                    // Verificar si se ha ingresado algo que no sea un número
+                                                    if (/\D/.test(valor)) {
+                                                        mostrarModal(); // Mostrar el modal de advertencia si hay caracteres no numéricos
+                                                    }
+
+                                                    // Eliminar caracteres que no sean números
+                                                    valor = valor.replace(/\D/g, ''); // Reemplaza todo lo que no sea dígito por vacío
+
+                                                    // Limitar la longitud del valor a 15 caracteres
+                                                    if (valor.length > 15) {
+                                                        valor = valor.substring(0, 15); // Mantener solo los primeros 15 caracteres
+                                                    }
+
+                                                    // Establecer el valor del campo con los números válidos
+                                                    input.value = valor;
+                                                }
+
+                                                // Función para mostrar el modal
+                                                function mostrarModal() {
+                                                    var myModal = new bootstrap.Modal(document.getElementById('modalError'));
+                                                    myModal.show(); // Mostrar el modal
+
+                                                    // Ocultar el modal después de 3 segundos
+                                                    setTimeout(function() {
+                                                        myModal.hide();
+                                                    }, 2000);
+                                                }
+                                            </script>
+                                        </div>
+                                        
+
                                         <div class="form-floating mb-3">
                                             <input class="form-control <?php echo !empty($error_message['correo']) ? 'is-invalid' : ''; ?>" id="email" name="correo" type="email" placeholder="correo@example.com" required />
                                             <label for="email">Correo Electrónico</label>
@@ -141,7 +218,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                     <label for="passwordConfirm">Confirmar Contraseña</label>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
                                         <div class="mt-4 mb-0">
                                             <div class="d-grid">
@@ -196,7 +273,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
-    
+
 </body>
 <?php include '../complementos/footer.php'; ?>
+
 </html>
