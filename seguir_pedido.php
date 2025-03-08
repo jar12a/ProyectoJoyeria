@@ -46,13 +46,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute([$idUsuario, $total_final, $fecha_pedido]);
     $idPedido = $pdo->lastInsertId();
 
-    // Insertar los detalles del pedido en la tabla detalle_pedido
+    // Insertar los detalles del pedido en la tabla detalle_pedido y actualizar el stock
     foreach ($_SESSION['carrito'] as $producto) {
         $idProducto = $producto['id'];
         $cantidad = $producto['cantidad'];
         $subtotal = $producto['precio'] * $producto['cantidad'];
         $stmt = $pdo->prepare("INSERT INTO detalle_pedido (ID_Pedido, ID_Producto, Cantidad, Subtotal, Total) VALUES (?, ?, ?, ?, ?)");
         $stmt->execute([$idPedido, $idProducto, $cantidad, $subtotal, $total_final]);
+
+        // Actualizar el stock del producto
+        $stmt = $pdo->prepare("UPDATE producto SET Stock = Stock - ? WHERE ID_Producto = ?");
+        $stmt->execute([$cantidad, $idProducto]);
     }
 
     // Limpiar el carrito

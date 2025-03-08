@@ -135,12 +135,16 @@ include 'confi/conexion.php';
                 echo '            <h6 class="card-title">' . $row['Nombre'] . '</h6>';
                 echo '            <p class="card-text">LPS.' . $row['Precio'] . '</p>';
                 echo '            <div class="input-group mb-3">';
-                echo '                <input type="number" class="form-control" placeholder="Cantidad" min="1" value="1" id="cantidad-' . $row['ID_Producto'] . '">';
-                echo '                <div class="input-group-append">';
-                echo '                                    <button class="btn btn-primary" type="button" id="btn-carrito4-' . $row['ID_Producto'] . '" onclick="agregarAlCarrito(' . $row['ID_Producto'] . ', \'' . $row['Nombre'] . '\', ' . $row['Precio'] . ', \'' . $row['Imagen'] . '\')">';
-                echo '                        <i class="bi bi-cart"></i>Agregar al carrito';
-                echo '                    </button>';
-                echo '                </div>';
+                if ($row['Stock'] > 0) {
+                    echo '                <input type="number" class="form-control" placeholder="Cantidad" min="1" value="1" id="cantidad-' . $row['ID_Producto'] . '">';
+                    echo '                <div class="input-group-append">';
+                    echo '                    <button class="btn btn-primary" type="button" id="btn-carrito4-' . $row['ID_Producto'] . '" onclick="agregarAlCarrito(' . $row['ID_Producto'] . ', \'' . $row['Nombre'] . '\', ' . $row['Precio'] . ', \'' . $row['Imagen'] . '\')">';
+                    echo '                        <i class="bi bi-cart"></i>Agregar al carrito';
+                    echo '                    </button>';
+                    echo '                </div>';
+                } else {
+                    echo '                <button class="btn btn-secondary" type="button" disabled>AGOTADO</button>';
+                }
                 echo '            </div>';
                 echo '        </div>';
                 echo '    </div>';
@@ -167,12 +171,16 @@ include 'confi/conexion.php';
                 echo '                        <p>Material: ' . $row['Material'] . '</p>';
                 echo '                        <p>Descripción: ' . $row['Descripción'] . '</p>';
                 echo '                        <div class="input-group mb-1">';
-                echo '                            <input type="number" class="form-control" placeholder="Cantidad" min="1" value="1" id="modal-cantidad-' . $row['ID_Producto'] . '" style="width: 100px;">';
-                echo '                            <div class="input-group-append">';
-                echo '                                 <button class="btn btn-primary" type="button" id="btn-modal-carrito4-' . $row['ID_Producto'] . '" onclick="agregarAlCarrito(' . $row['ID_Producto'] . ', \'' . $row['Nombre'] . '\', ' . $row['Precio'] . ', \'' . $row['Imagen'] . '\', true)">';
-                echo '                                    <i class="bi bi-cart"></i> Agregar al carrito';
-                echo '                                </button>';
-                echo '                            </div>';
+                if ($row['Stock'] > 0) {
+                    echo '                            <input type="number" class="form-control" placeholder="Cantidad" min="1" value="1" id="modal-cantidad-' . $row['ID_Producto'] . '" style="width: 100px;">';
+                    echo '                            <div class="input-group-append">';
+                    echo '                                <button class="btn btn-primary" type="button" id="btn-modal-carrito4-' . $row['ID_Producto'] . '" onclick="agregarAlCarrito(' . $row['ID_Producto'] . ', \'' . $row['Nombre'] . '\', ' . $row['Precio'] . ', \'' . $row['Imagen'] . '\', true)">';
+                    echo '                                    <i class="bi bi-cart"></i> Agregar al carrito';
+                    echo '                                </button>';
+                    echo '                            </div>';
+                } else {
+                    echo '                            <button class="btn btn-secondary" type="button" disabled>AGOTADO</button>';
+                }
                 echo '                        </div>';
                 echo '                        <div class="d-flex justify-content-between mt-3">';
                 echo '                            <button class="btn btn-outline-danger" onclick="agregarAListaDeseos(' . $row['ID_Producto'] . ', \'' . $row['Nombre'] . '\', ' . $row['Precio'] . ', \'' . $row['Imagen'] . '\')"><i class="fa-solid fa-heart"></i></button>';
