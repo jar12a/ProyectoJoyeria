@@ -7,7 +7,7 @@
     <title>Imperial Gems</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
-
+   
 
     <div class="container-hero">
         <div class="container hero">
@@ -29,7 +29,7 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end">
+                <div class="col-10 col-md-4 d-flex justify-content-center justify-content-md-end">
                     <div class="container-user">
                         <button type="button" class="btn btn-primary position-relative">
                             Mensajes
@@ -40,9 +40,28 @@
                         </button>
 
 
-                        <a href="/ProyectoJoyeria/dashboard/login.php" class="icon-link">
-                            <i class="fa-solid fa-user"></i>
-                        </a>
+                        <div class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i>
+                                <?php
+                                if (isset($_SESSION['nombre']) && !empty($_SESSION['nombre'])) {
+                                    echo htmlspecialchars($_SESSION['nombre']);
+                                } else {
+                                    echo 'Usuario';
+                                }
+                                ?>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <?php
+                                if (isset($_SESSION['nombre']) && !empty($_SESSION['nombre'])) {
+                                    echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/ver_pedido.php">Ver Pedidos</a></li>';
+                                    echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/dashboard/logout.php">Cerrar sesión</a></li>';
+                                } else {
+                                    echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/dashboard/login.php">Iniciar sesión</a></li>';
+                                }
+                                ?>
+                            </ul>
+                        </div>
 
                         <a href="/ProyectoJoyeria/listadedeseo.php" class="icon-link">
                             <i class="fa-solid fa-heart"></i>
