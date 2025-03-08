@@ -151,9 +151,34 @@ include 'confi/conexion.php';
 
         // Función para finalizar el pedido
         function finalizarPedido() {
-            window.location.href = 'seguir_pedido.php'; // Redirigir a la página de finalizar pedido
+            <?php if (!isset($_SESSION['id'])): ?>
+                var myModal = new bootstrap.Modal(document.getElementById('loginModal'));
+                myModal.show();
+                setTimeout(function() {
+                    myModal.hide();
+                    window.location.href = 'dashboard/login.php?redirect=continuar_pedido.php';
+                }, 1500);
+            <?php else: ?>
+                window.location.href = 'seguir_pedido.php'; // Redirigir a la página de finalizar pedido
+            <?php endif; ?>
         }
     </script>
+
+    <!-- Modal de inicio de sesión requerido -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Inicio de sesión requerido</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <p>Debes iniciar sesión para continuar con tu pedido.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://kit.fontawesome.com/45b2b3afef.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
