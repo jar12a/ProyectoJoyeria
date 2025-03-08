@@ -27,6 +27,13 @@ if ($_POST) {
             $_SESSION['nombre'] = $row['nombre'];
             $_SESSION['idRol'] = $row['idRol'];
             
+            // Redirigir según el rol del usuario
+            if ($row['idRol'] == 3) {
+                $redirect = '../index.php';
+            } else {
+                $redirect = isset($_GET['redirect']) ? $_GET['redirect'] : 'principal.php';
+            }
+            
             // función del modal de inicio de session correctamente
             echo "<script>
                     document.addEventListener('DOMContentLoaded', function() {
@@ -34,7 +41,7 @@ if ($_POST) {
                         myModal.show();
                         setTimeout(function() {
                             myModal.hide();
-                            window.location.href = 'principal.php';
+                            window.location.href = '$redirect';
                         }, 2000);
                     });
                   </script>";
@@ -45,8 +52,6 @@ if ($_POST) {
         $error_message = "No existe usuario";
     }
 }
-
-
 ?>
 
 <?php include '../complementos/head.php'; ?>
