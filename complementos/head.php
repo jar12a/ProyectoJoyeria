@@ -1,3 +1,19 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+include __DIR__ . '/../confi/conexion.php'; // Corregir la ruta del archivo
+
+// Obtener el nombre de usuario desde la base de datos si la sesión está iniciada
+if (isset($_SESSION['id'])) {
+    $stmt = $pdo->prepare("SELECT usuario FROM usuario WHERE id = ?");
+    $stmt->execute([$_SESSION['id']]);
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($usuario) {
+        $_SESSION['usuario'] = $usuario['usuario'];
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -7,8 +23,20 @@
     <title>Imperial Gems</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
-   
+    <style>
+        .container-user {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Espacio entre los elementos */
+        }
+        .icon-link {
+            margin-left: 10px; /* Espacio entre los iconos */
+        }
+    </style>
+    <script src="https://kit.fontawesome.com/45b2b3afef.js" crossorigin="anonymous"></script>
+</head>
 
+<body>
     <div class="container-hero">
         <div class="container hero">
             <div class="row align-items-center">
@@ -28,7 +56,9 @@
                         <h1 class="logo"><a href="index.php">Imperial Gems</a></h1>
                     </div>
                 </div>
-
+                
+            </div>
+            <div class="row align-items-center mt-3">
                 <div class="col-10 col-md-4 d-flex justify-content-center justify-content-md-end">
                     <div class="container-user">
                         <button type="button" class="btn btn-primary position-relative">
@@ -44,8 +74,8 @@
                             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa-solid fa-user"></i>
                                 <?php
-                                if (isset($_SESSION['nombre']) && !empty($_SESSION['nombre'])) {
-                                    echo htmlspecialchars($_SESSION['nombre']);
+                                if (isset($_SESSION['usuario']) && !empty($_SESSION['usuario'])) {
+                                    echo htmlspecialchars($_SESSION['usuario']); // Mostrar el nombre de usuario
                                 } else {
                                     echo 'Usuario';
                                 }
@@ -53,7 +83,7 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 <?php
-                                if (isset($_SESSION['nombre']) && !empty($_SESSION['nombre'])) {
+                                if (isset($_SESSION['usuario']) && !empty($_SESSION['usuario'])) {
                                     echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/ver_pedido.php">Ver Pedidos</a></li>';
                                     echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/dashboard/logout.php">Cerrar sesión</a></li>';
                                 } else {
@@ -176,13 +206,5 @@
         // Llamar a la función para actualizar el contador del carrito al cargar la página
         document.addEventListener('DOMContentLoaded', actualizarContadorCarrito);
     </script>
-    <script src="https://kit.fontawesome.com/45b2b3afef.js" crossorigin="anonymous"></script>
-
-
-</head>
-
-<body>
-
 </body>
-
 </html>
