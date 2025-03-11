@@ -2,6 +2,12 @@
 session_start();
 include 'complementos/head.php';
 include 'confi/conexion.php';
+require 'forma1/PHPMailer.php';
+require 'forma1/SMTP.php';
+require 'forma1/Exception.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 // Establecer la zona horaria
 date_default_timezone_set('America/Tegucigalpa'); // Ajusta la zona horaria según tu ubicación
@@ -14,7 +20,7 @@ if (!isset($_SESSION['id'])) {
 
 // Obtener los datos del usuario desde la base de datos
 $idUsuario = $_SESSION['id'];
-$stmt = $pdo->prepare("SELECT nombre, telefono, direccion FROM usuario WHERE id = ?");
+$stmt = $pdo->prepare("SELECT nombre, telefono, direccion, correo FROM usuario WHERE id = ?");
 $stmt->execute([$idUsuario]);
 $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -59,6 +65,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->execute([$cantidad, $idProducto]);
     }
 
+    // Enviar correo al cliente utilizando PHPMailer
+    $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com'; // Cambia esto por tu servidor SMTP
+        $mail->SMTPAuth = true;
+        $mail->Username = 'imperialgems057@gmail.com'; // Cambia esto por tu correo
+        $mail->Password = 'xdjs xfjy csuf iatd'; // Cambia esto por tu contraseña de aplicación generada
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+
+        $mail->setFrom('imperialgems057@gmail.com', 'Imperial Gems'); // Cambia esto por tu correo y nombre
+        $mail->addAddress($usuario['correo'], $nombre);
+
+        $mail->isHTML(true);
+        $mail->Subject = 'Confirmación de Pedido - Imperial Gems';
+        $mail->Body    = "Estimado/a $nombre,<br><br>Su pedido se ha pagado correctamente y su pedido llegará en 2-3 días.<br><br>Gracias por su compra.<br><br>Saludos,<br>Imperial Gems";
+
+        $mail->send();
+        echo "Correo enviado exitosamente.";
+    } catch (Exception $e) {
+        echo "Error al enviar el correo: {$mail->ErrorInfo}";
+    }
+
     // Limpiar el carrito
     unset($_SESSION['carrito']);
 
@@ -79,7 +109,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $iva = 0.15; // 15% de IVA
 $costo_envio = 200;
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -197,5 +226,4 @@ $costo_envio = 200;
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 </body>
-
 </html>
