@@ -1,5 +1,11 @@
 <?php
 require "../confi/conexion.php"; // Incluye la conexión PDO
+require '../enviarcorreo/PHPMailer.php';
+require '../enviarcorreo/SMTP.php';
+require '../enviarcorreo/Exception.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 session_start(); // Iniciar sesión
 
@@ -10,7 +16,7 @@ if ($_POST) {
     $password = $_POST['password'];
 
     // Preparar la consulta con PDO para evitar inyección SQL
-    $sql = "SELECT id, password, nombre, idRol FROM usuario WHERE usuario = :usuario";
+    $sql = "SELECT id, password, nombre, idRol, correo FROM usuario WHERE usuario = :usuario";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':usuario', $usuario, PDO::PARAM_STR);
     $stmt->execute();
@@ -27,6 +33,29 @@ if ($_POST) {
             $_SESSION['nombre'] = $row['nombre'];
             $_SESSION['idRol'] = $row['idRol'];
             
+            // Enviar correo de inicio de sesión utilizando PHPMailer
+            $mail = new PHPMailer(true);
+            try {
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com'; // Cambia esto por tu servidor SMTP
+                $mail->SMTPAuth = true;
+                $mail->Username = 'imperialgems057@gmail.com'; // Cambia esto por tu correo
+                $mail->Password = 'xdjs xfjy csuf iatd'; // Cambia esto por tu contraseña de aplicación generada
+                $mail->SMTPSecure = 'tls';
+                $mail->Port = 587;
+
+                $mail->setFrom('imperialgems057@gmail.com', 'Imperial Gems'); // Cambia esto por tu correo y nombre
+                $mail->addAddress($row['correo'], $row['nombre']);
+
+                $mail->isHTML(true);
+                $mail->Subject = 'Inicio de sesión en Imperial Gems';
+                $mail->Body    = "Estimado/a {$row['nombre']},<br><br>Ha iniciado sesión en Imperial Gems.<br><br>Saludos,<br>Imperial Gems";
+
+                $mail->send();
+            } catch (Exception $e) {
+                // Manejar el error si el correo no se envía
+            }
+
             // Redirigir según el rol del usuario
             if ($row['idRol'] == 3) {
                 $redirect = '../index.php';
