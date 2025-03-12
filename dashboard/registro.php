@@ -1,5 +1,11 @@
 <?php
 require_once '../confi/conexion.php'; // crea la conexion con la base de datos
+require '../enviarcorreo/PHPMailer.php';
+require '../enviarcorreo/SMTP.php';
+require '../enviarcorreo/Exception.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 // Verificar si el formulario fue enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -46,6 +52,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Ejecutar la declaración con los valores recibidos
                 try {
                     $stmt->execute([$usuario, $passwordHash, $nombre, $telefono, $direccion, $idRol, $correo]);
+
+                    // Enviar correo de bienvenida utilizando PHPMailer
+                    $mail = new PHPMailer(true);
+                    try {
+                        $mail->isSMTP();
+                        $mail->Host = 'smtp.gmail.com'; // Cambia esto por tu servidor SMTP
+                        $mail->SMTPAuth = true;
+                        $mail->Username = 'imperialgems057@gmail.com'; // Cambia esto por tu correo
+                        $mail->Password = 'xdjs xfjy csuf iatd'; // Cambia esto por tu contraseña de aplicación generada
+                        $mail->SMTPSecure = 'tls';
+                        $mail->Port = 587;
+
+                        $mail->setFrom('imperialgems057@gmail.com', 'Imperial Gems'); // Cambia esto por tu correo y nombre
+                        $mail->addAddress($correo, $nombre);
+
+                        $mail->isHTML(true);
+                        $mail->Subject = 'Bienvenido a Imperial Gems';
+                        $mail->Body    = "Estimado/a $nombre,<br><br>Gracias por registrarse en Imperial Gems.<br>Su usuario es: $usuario<br><br>Esperamos que disfrute de nuestra colección de joyas.<br><br>Saludos,<br>Imperial Gems";
+
+                        $mail->send();
+                        echo "Correo de bienvenida enviado exitosamente.";
+                    } catch (Exception $e) {
+                        echo "Error al enviar el correo de bienvenida: {$mail->ErrorInfo}";
+                    }
+
                     echo "<script>
                             document.addEventListener('DOMContentLoaded', function() {
                                 var myModal = new bootstrap.Modal(document.getElementById('successModal'));
