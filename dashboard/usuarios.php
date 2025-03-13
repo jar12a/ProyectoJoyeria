@@ -1,5 +1,5 @@
 <?php
-include '../complementos/confi/conexion.php';
+include '../confi/conexion.php';
 
 $sql = "SELECT id, usuario, nombre, telefono, direccion, correo FROM usuario";
 $result = $conn->query($sql);
