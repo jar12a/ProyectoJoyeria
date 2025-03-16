@@ -84,10 +84,22 @@ if (isset($_SESSION['id'])) {
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 <?php
                                 if (isset($_SESSION['usuario']) && !empty($_SESSION['usuario'])) {
+                                    // Mostrar enlaces según el rol del usuario
+                                    if (isset($_SESSION['idRol'])) {
+                                        if ($_SESSION['idRol'] == 1) { // Admin
+                                            echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/dashboard/admin.php">Panel Administrador</a></li>';
+                                        }
+                                        if ($_SESSION['idRol'] == 1 || $_SESSION['idRol'] == 2) { // Admin o Vendedor
+                                            echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/dashboard/vendedor.php">Panel Vendedor</a></li>';
+                                        }
+                                        // Todos los usuarios pueden ver el panel de cliente
+                                        echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/dashboard/cliente.php">Mi Cuenta</a></li>';
+                                    }
                                     echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/ver_pedido.php">Ver Pedidos</a></li>';
                                     echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/dashboard/logout.php">Cerrar sesión</a></li>';
                                 } else {
                                     echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/dashboard/login.php">Iniciar sesión</a></li>';
+                                    echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/dashboard/registro.php">Registrarse</a></li>';
                                 }
                                 ?>
                             </ul>
@@ -159,6 +171,19 @@ if (isset($_SESSION['id'])) {
                                 <i class="fas fa-user fa-fw"></i></a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
+                                <?php
+                                // Mostrar enlaces según el rol del usuario
+                                if (isset($_SESSION['idRol'])) {
+                                    if ($_SESSION['idRol'] == 1) { // Admin
+                                        echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/dashboard/admin.php">Panel Administrador</a></li>';
+                                    }
+                                    if ($_SESSION['idRol'] == 1 || $_SESSION['idRol'] == 2) { // Admin o Vendedor
+                                        echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/dashboard/vendedor.php">Panel Vendedor</a></li>';
+                                    }
+                                    // Todos los usuarios pueden ver el panel de cliente
+                                    echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/dashboard/cliente.php">Mi Cuenta</a></li>';
+                                }
+                                ?>
                                 <hr class="dropdown-divider" />
                         </li>
                         <li>

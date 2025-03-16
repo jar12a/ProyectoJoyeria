@@ -57,10 +57,23 @@ if ($_POST) {
             }
 
             // Redirigir según el rol del usuario
-            if ($row['idRol'] == 3) {
-                $redirect = '../index.php';
-            } else {
-                $redirect = isset($_GET['redirect']) ? $_GET['redirect'] : 'principal.php';
+            $redirect = isset($_GET['redirect']) ? $_GET['redirect'] : '';
+            
+            if (empty($redirect)) {
+                // Si no hay redirección específica, usar el rol para determinar
+                switch ($row['idRol']) {
+                    case ROL_ADMIN:
+                        $redirect = 'admin.php';
+                        break;
+                    case ROL_VENDEDOR:
+                        $redirect = 'vendedor.php';
+                        break;
+                    case ROL_CLIENTE:
+                        $redirect = '../index.php';
+                        break;
+                    default:
+                        $redirect = '../index.php';
+                }
             }
             
             // función del modal de inicio de session correctamente
