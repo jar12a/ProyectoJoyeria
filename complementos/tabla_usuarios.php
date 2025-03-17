@@ -16,6 +16,19 @@
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
 
+
+
+                        
+<?php 
+//
+include_once 'agregar_usuario.php';
+
+?>
+
+
+
+
+
                         <!--//tabla de usuarios-->
                         <div class="card mb-4">
                             <div class="card-header">
@@ -111,10 +124,9 @@
                                                 <tr>
                                                     <th>ID</th>
                                                     <th>Usuario</th>
-                                                    <th>Contraseña</th>
+                                                   
                                                     <th>Nombre</th>
-                                                    <th>Teléfono</th>
-                                                    <th>Dirección</th>
+                                                    
                                                     <th>Correo</th>
                                                     <th>Rol</th>
                                                     <th>Acciones</th> <!-- Para editar o eliminar -->
@@ -125,10 +137,10 @@
                                                     <tr>
                                                         <td><?= htmlspecialchars($usuario['id']); ?></td>
                                                         <td><?= htmlspecialchars($usuario['usuario']); ?></td>
-                                                        <td>*****</td> <!-- Contraseña oculta -->
+                                                       
                                                         <td><?= htmlspecialchars($usuario['nombre']); ?></td>
-                                                        <td><?= htmlspecialchars($usuario['telefono']); ?></td>
-                                                        <td><?= htmlspecialchars($usuario['direccion']); ?></td>
+                                                        
+                                                        
                                                         <td><?= htmlspecialchars($usuario['correo']); ?></td>
                                                         <td><?= htmlspecialchars($usuario['Rol']); ?></td>
                                                         <td>
