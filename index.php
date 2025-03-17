@@ -112,7 +112,7 @@ include 'complementos/head.php';
         <div class="content-banner">
             <p>Las mejores joyas</p>
             <h2>Al mejor precio <br />Envios a cualquier parte del mundo</h2>
-            <a href="catalago.html">Ver catalogos</a>
+            <a href="catalago1.php">Ver catalogos</a>
         </div>
     </section>
 
