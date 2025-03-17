@@ -61,7 +61,7 @@
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="bodega_dasboard.php">Bodega</a>
-                                <a class="nav-link" href="layout-sidenav-light.html">Pedidos</a>
+                                <a class="nav-link" href="pedidos_dashboard.php">Pedidos</a>
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
