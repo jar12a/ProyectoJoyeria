@@ -1,8 +1,8 @@
 <?php
 require_once '../confi/conexion.php'; // crea la conexion con la base de datos
-require '../enviarcorreo/PHPMailer.php';
-require '../enviarcorreo/SMTP.php';
-require '../enviarcorreo/Exception.php';
+require '../confi/PHPMailer.php';
+require '../confi/SMTP.php';
+require '../confi/Exception.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
