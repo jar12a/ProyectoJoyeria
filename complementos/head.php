@@ -157,18 +157,7 @@ if (isset($_SESSION['id'])) {
                         <a class="nav-link" href="/ProyectoJoyeria/catalago1.php">Productos</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0">
-                        
-                        
-                    </ul>
-                    </li>
-                </ul>
-
-
-                <li class="nav-item">
-                    <a class="nav-link disabled" aria-disabled="true">Imperial Gems</a>
-
-                </li>
+              
                 </ul>
                 <form class="d-flex" role="search" action="filtradobusqueda.php" method="GET">
                     <input class="form-control me-2" type="search" name="busqueda" placeholder="Buscar" aria-label="Search">
