@@ -32,7 +32,7 @@ if ($_POST) {
             $_SESSION['id'] = $row['id'];
             $_SESSION['nombre'] = $row['nombre'];
             $_SESSION['idRol'] = $row['idRol'];
-            
+
             // Enviar correo de inicio de sesión utilizando PHPMailer
             $mail = new PHPMailer(true);
             try {
@@ -58,24 +58,26 @@ if ($_POST) {
 
             // Redirigir según el rol del usuario
             $redirect = isset($_GET['redirect']) ? $_GET['redirect'] : '';
-            
+
             if (empty($redirect)) {
                 // Si no hay redirección específica, usar el rol para determinar
+                
                 switch ($row['idRol']) {
-                    case ROL_ADMIN:
-                        $redirect = 'admin.php';
+                    case 1: // ROL_ADMIN
+                        $redirect = 'principal.php';
                         break;
-                    case ROL_VENDEDOR:
-                        $redirect = 'vendedor.php';
+                    case 2: // ROL_VENDEDOR
+                        $redirect = 'principal.php';
                         break;
-                    case ROL_CLIENTE:
+                    case 3: // ROL_CLIENTE
                         $redirect = '../index.php';
                         break;
                     default:
                         $redirect = '../index.php';
+                        break;
                 }
             }
-            
+
             // función del modal de inicio de session correctamente
             echo "<script>
                     document.addEventListener('DOMContentLoaded', function() {
@@ -162,7 +164,7 @@ if ($_POST) {
                                         <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                             <a class="small" href="password.html">¿No recuerdas la contraseña?</a>
                                             <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-                                            
+
                                         </div>
                                     </form>
                                 </div>

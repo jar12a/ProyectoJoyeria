@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 if (!isset($_SESSION['id']) || !isset($_SESSION['idRol'])) {
     // Si no hay sesión activa, redirige al login
