@@ -156,57 +156,8 @@ if (isset($_SESSION['id'])) {
                     <li class="nav-item">
                         <a class="nav-link" href="/ProyectoJoyeria/catalago1.php">Productos</a>
                     </li>
-                    <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <?php
-                                // Verifica si la variable de sesión 'nombre' está definida y no está vacía
-                                if (isset($_SESSION['nombre']) && !empty($_SESSION['nombre'])) {
-                                    echo $_SESSION['nombre']; // Imprime el nombre de quien está conectado
-                                } else {
-                                    echo 'Iniciar sesión'; // No imprime nada si no hay nadie conectado
-                                }
-                                ?>
-
-                                <i class="fas fa-user fa-fw"></i></a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-
-                                <?php
-                                // Mostrar enlaces según el rol del usuario
-                                if (isset($_SESSION['idRol'])) {
-                                    if ($_SESSION['idRol'] == 1) { // Admin
-                                        echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/dashboard/admin.php">Panel Administrador</a></li>';
-                                    }
-                                    if ($_SESSION['idRol'] == 1 || $_SESSION['idRol'] == 2) { // Admin o Vendedor
-                                        echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/dashboard/vendedor.php">Panel Vendedor</a></li>';
-                                    }
-                                    // Todos los usuarios pueden ver el panel de cliente
-                                    echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/dashboard/cliente.php">Mi Cuenta</a></li>';
-                                }
-                                ?>
-                                <hr class="dropdown-divider" />
-                        </li>
-                        <li>
-                            <?php
-                            // Verifica si la sesión está iniciada (por ejemplo, si 'nombre' está en la sesión)
-                            if (isset($_SESSION['nombre']) && !empty($_SESSION['nombre'])) {
-                                // Si está conectado, muestra el enlace para cerrar sesión
-                                echo '<a class="dropdown-item" href="/ProyectoJoyeria/dashboard/logout.php">Cerrar sesión</a>';
-                            } else {
-                                // Si no está conectado, muestra el enlace para iniciar sesión
-                                echo '<a class="nav-link active" aria-current="page" href="/ProyectoJoyeria/dashboard/login.php">Iniciar sesión</a>';
-                            }
-                            ?>
-                        </li>
-                    </ul>
-                    </li>
                 </ul>
-
-
-                <li class="nav-item">
-                    <a class="nav-link disabled" aria-disabled="true">Imperial Gems</a>
-
-                </li>
+                
                 </ul>
                 <form class="d-flex" role="search" action="filtradobusqueda.php" method="GET">
                     <input class="form-control me-2" type="search" name="busqueda" placeholder="Buscar" aria-label="Search">
