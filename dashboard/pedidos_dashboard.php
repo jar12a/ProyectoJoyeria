@@ -1,45 +1,63 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+include '../confi/conexion.php'; // Asegúrate de que este archivo existe y define la variable $pdo
 
-// consultas sql
-include '../confi/conexion.php'; // crea la conexion con la base de datos
+// Obtener el número de filas a mostrar por página
+$rows_per_page = isset($_GET['rows_per_page']) ? (int)$_GET['rows_per_page'] : 10;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $rows_per_page;
 
-// Obtener los valores de los filtros si existen
-$categoria_filtro = isset($_GET['categoria']) ? $_GET['categoria'] : '';
-$material_filtro = isset($_GET['material']) ? $_GET['material'] : '';
+// Obtener los filtros de búsqueda
+$search_cliente = isset($_GET['search_cliente']) ? $_GET['search_cliente'] : '';
+$search_fecha = isset($_GET['search_fecha']) ? $_GET['search_fecha'] : '';
 
 // Construir la consulta SQL con los filtros
-$sql_productos = "SELECT p.ID_Producto, p.Nombre, c.Nombre AS Categoria, p.Descripción, p.Stock, p.Precio, p.Material, p.Imagen 
-                  FROM producto p
-                  JOIN categoría c ON p.ID_Categoría = c.ID_categoría
+$query_pedidos = "SELECT p.ID_Pedido, p.Fecha, u.nombre AS Cliente, u.direccion, u.telefono 
+                  FROM pedido p 
+                  JOIN usuario u ON p.ID_usuario = u.id 
                   WHERE 1=1";
 
-if ($categoria_filtro) {
-    $sql_productos .= " AND c.ID_categoría = :categoria_filtro";
+if ($search_cliente) {
+    $query_pedidos .= " AND u.nombre LIKE :search_cliente";
+}
+if ($search_fecha) {
+    $query_pedidos .= " AND DATE(p.Fecha) = :search_fecha";
 }
 
-if ($material_filtro) {
-    $sql_productos .= " AND p.Material = :material_filtro";
+$query_pedidos .= " LIMIT :rows_per_page OFFSET :offset";
+$stmt_pedidos = $pdo->prepare($query_pedidos);
+
+if ($search_cliente) {
+    $stmt_pedidos->bindValue(':search_cliente', '%' . $search_cliente . '%', PDO::PARAM_STR);
 }
-
-$stmt_productos = $pdo->prepare($sql_productos);
-
-if ($categoria_filtro) {
-    $stmt_productos->bindParam(':categoria_filtro', $categoria_filtro, PDO::PARAM_STR);
+if ($search_fecha) {
+    $stmt_pedidos->bindValue(':search_fecha', $search_fecha, PDO::PARAM_STR);
 }
+$stmt_pedidos->bindValue(':rows_per_page', $rows_per_page, PDO::PARAM_INT);
+$stmt_pedidos->bindValue(':offset', $offset, PDO::PARAM_INT);
+$stmt_pedidos->execute();
+$pedidos = $stmt_pedidos->fetchAll(PDO::FETCH_ASSOC);
 
-if ($material_filtro) {
-    $stmt_productos->bindParam(':material_filtro', $material_filtro, PDO::PARAM_STR);
+// Obtener el total de pedidos para la paginación
+$query_total_pedidos = "SELECT COUNT(*) FROM pedido p JOIN usuario u ON p.ID_usuario = u.id WHERE 1=1";
+if ($search_cliente) {
+    $query_total_pedidos .= " AND u.nombre LIKE :search_cliente";
 }
-
-$stmt_productos->execute();
-
-$sql_categorias = "SELECT ID_categoría, Nombre FROM categoría"; 
-$stmt_categorias = $pdo->query($sql_categorias);
-
-if (!$stmt_categorias) {
-    die("Error en la consulta de categorías: " . $pdo->errorInfo()[2]);
+if ($search_fecha) {
+    $query_total_pedidos .= " AND DATE(p.Fecha) = :search_fecha";
 }
-
+$stmt_total_pedidos = $pdo->prepare($query_total_pedidos);
+if ($search_cliente) {
+    $stmt_total_pedidos->bindValue(':search_cliente', '%' . $search_cliente . '%', PDO::PARAM_STR);
+}
+if ($search_fecha) {
+    $stmt_total_pedidos->bindValue(':search_fecha', $search_fecha, PDO::PARAM_STR);
+}
+$stmt_total_pedidos->execute();
+$total_pedidos = $stmt_total_pedidos->fetchColumn();
+$total_pages = ceil($total_pedidos / $rows_per_page);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -115,7 +133,7 @@ if (!$stmt_categorias) {
                                         <nav class="sb-sidenav-menu-nested nav">
                                             <a class="nav-link" href="login.php">Inicio de sesion</a>
                                             <a class="nav-link" href="register.php">Registrar</a>
-                                            <a class="nav-link" href="password.php">¿Olvido la contraseña?</a>
+                                            <a class="nav-link" href="password.php">Olvido su contraseña?</a>
                                         </nav>
                                     </div>
                                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
@@ -131,37 +149,34 @@ if (!$stmt_categorias) {
                                     </div>
                                 </nav>
                             </div>
-                            <div class="sb-sidenav-menu-heading">Addons</div>
+                            <div class="sb-sidenav-menu-heading">Parametros</div>
                             <a class="nav-link" href="charts.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                                Charts
+                                Datos Estadisticas
                             </a>
                             <a class="nav-link" href="tables.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Tables
+                                Tablas
                             </a>
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Imperial Gems
-                    </div>
+                   
                 </nav>
             </div>
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Static Navigation</h1>
+                        <h1 class="mt-4">PEDIDOS</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="principal.php">Menú</a></li>
-                            <li class="breadcrumb-item active">Bienvenido a la bodega</li>
+                            <li class="breadcrumb-item active">Bienvenidos</li>
                         </ol>
                         <div class="card mb-4">
                             <div class="card-body">
                                 <p class="mb-0">
-                                    Bienvenido a la bodega
+                                    Bienvenido al registro general de pedidos
                                     <?php 
-                                    require_once '../bodega/bodega.php'; // Corrige la ruta del archivo
+                                    require_once '../dashboard/verpedido_adm.php'; // Corrige la ruta del archivo
                                     ?>
                                 </p>
                             </div>

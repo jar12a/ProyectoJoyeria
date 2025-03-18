@@ -2,9 +2,9 @@
 session_start();
 include 'complementos/head.php';
 include 'confi/conexion.php';
-require 'enviarcorreo/PHPMailer.php';
-require 'enviarcorreo/SMTP.php';
-require 'enviarcorreo/Exception.php';
+require 'confi/PHPMailer.php';
+require 'confi/SMTP.php';
+require 'confi/Exception.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;

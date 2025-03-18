@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 include '../confi/conexion.php'; // Asegúrate de que este archivo existe y define la variable $pdo
 
 // Obtener el número de filas a mostrar por página

@@ -1,8 +1,8 @@
 <?php
 require "../confi/conexion.php"; // Incluye la conexión PDO
-require '../enviarcorreo/PHPMailer.php';
-require '../enviarcorreo/SMTP.php';
-require '../enviarcorreo/Exception.php';
+require '../confi/PHPMailer.php';
+require '../confi/SMTP.php';
+require '../confi/Exception.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
