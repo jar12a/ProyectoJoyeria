@@ -1,6 +1,6 @@
 <?php
 // Configuración de la base de datos
-$host = 'localhost';  // Dirección del servidor de base de datos
+$host = 'localhost: 3307';  // Dirección del servidor de base de datos
 $dbname = 'sistema_gestion';  // Nombre de la base de datos
 $username = 'root';  // Usuario de la base de datos
 $password = "";  // Contraseña del usuario

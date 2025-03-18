@@ -63,7 +63,6 @@
                                 <a class="nav-link" href="bodega_dasboard.php">Bodega</a>
                                 <a class="nav-link" href="../ver_pedido.php">Pedidos</a>
                                 <a class="nav-link" href="principal.php">Usuarios</a>
-                                <a class="nav-link" href="pedidos_dashboard.php">Pedidos</a>
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
