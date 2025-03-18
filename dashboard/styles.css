@@ -760,8 +760,8 @@ border-radius: 10px; /* Opcional, para las esquinas redondeadas */
 }
 
 .contact-info ul li,
-.information ul li,
-.my-account ul li {
+	information ul li,
+	my-account ul li {
 	list-style: none;
 	color: #fff;
 	font-size: 1.4rem;
@@ -882,6 +882,36 @@ border-radius: 10px; /* Opcional, para las esquinas redondeadas */
 .copyright p {
 	font-weight: 400;
 	font-size: 1.6rem;
+}
+
+.footer-custom {
+	background-color: var(--primary-color);
+	color: #fff;
+	padding: 2rem 0;
+}
+
+.footer-custom .container-fluid {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	gap: 1rem;
+}
+
+.footer-custom .text-muted {
+	color: #fff;
+	font-size: 1.4rem;
+}
+
+.footer-custom a {
+	color: #fff;
+	text-decoration: none;
+	font-size: 1.4rem;
+}
+
+.footer-custom a:hover {
+	color: var(--dark-color);
+	text-decoration: underline;
 }
 
 /* ********************************** */
