@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-
+<br>
 <!-- Modal de Agregar Usuario -->
 <div class="modal fade" id="agregarUsuarioModal" tabindex="-1" aria-labelledby="agregarUsuarioModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -144,4 +144,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <?php
 // Finaliza el buffer de salida y lo limpia
 ob_end_flush();
-?> 
+?>
+<br><br>
