@@ -17,7 +17,7 @@
 </div>
 
 <script>
-    let tiempoMaxInactivo = 20000; // 20 segundos antes de mostrar el modal
+    let tiempoMaxInactivo = 2000000; // 20 segundos antes de mostrar el modal (cada mil milisegundo es un segundo)
     let tiempoParaCerrar = 10000; // 10 segundos para cerrar sesión tras el aviso
     let inactivo;
     let cuentaRegresiva;
@@ -44,7 +44,7 @@
 
                 if (tiempoRestante <= 0) {
                     clearInterval(cuentaRegresiva);
-                    window.location.href = "logout.php"; // Cierra sesión
+                    window.location.href = "/ProyectoJoyeria/confi/logout.php"; // Cierra sesión
                 }
             }, 1000);
         } else {

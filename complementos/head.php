@@ -1,6 +1,9 @@
 <?php
+ 
+
+
 if (session_status() == PHP_SESSION_NONE) {
-    session_start();
+    include "../confi/cierre_sesion.php";
 }
 include __DIR__ . '/../confi/conexion.php'; // Corregir la ruta del archivo
 
@@ -188,6 +191,3 @@ if (isset($_SESSION['id'])) {
     
 </body>
 </html>
-<?php 
-    include "../confi/cierre_sesion.php";
-    ?>
