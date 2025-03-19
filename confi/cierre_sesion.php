@@ -1,6 +1,6 @@
 <script>
         // Código para cerrar sesión por inactividad
-        let tiempoMaxInactivo = 2000000000; // 20 segundos antes de mostrar el modal
+        let tiempoMaxInactivo = 20000; // 20 segundos antes de mostrar el modal
         let tiempoParaCerrar = 10000; // 10 segundos para cerrar sesión tras el aviso
         let inactivo;
         let cuentaRegresiva;

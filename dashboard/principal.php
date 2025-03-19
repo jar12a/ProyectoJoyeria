@@ -22,7 +22,7 @@ include "../confi/session_start.php";
         ?>
 
         <?php
-        include "../complementos/tabla_usuarios.php";
+        include "../dashboard/bodega_dasboard.php";
         ?>
     </div>
 
