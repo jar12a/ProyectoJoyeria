@@ -129,7 +129,7 @@ $head_only = substr($header_content, 0, strpos($header_content, '</head>') + 7);
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Configuración</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a></li>
+                            <li><a class="dropdown-item" href="../confi/logout.php"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a></li>
                         </ul>
                     </li>
                 </ul>
