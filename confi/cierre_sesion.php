@@ -44,7 +44,7 @@
 
                 if (tiempoRestante <= 0) {
                     clearInterval(cuentaRegresiva);
-                    window.location.href = "../confi/logout.php"; // Cierra sesión
+                    window.location.href = "logout.php"; // Cierra sesión
                 }
             }, 1000);
         } else {
