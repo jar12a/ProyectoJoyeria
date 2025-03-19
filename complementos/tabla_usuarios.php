@@ -3,8 +3,6 @@ include "../confi/session_start.php";
 // consultas sql
 include '../confi/conexion.php'; // crea la conexion con la base de datos
 
-// Obtener los valores de los filtros si existen y Construir la consulta SQL con los filtros
-include '../confi/filtro_bodega.php';
 ?>
 
 <!DOCTYPE html>

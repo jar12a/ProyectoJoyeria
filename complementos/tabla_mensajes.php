@@ -114,7 +114,7 @@ $resultado = $pdo->query($query);
             </div>
             <div class="modal-body">
                 <p id="mensajeOriginal"></p>
-                <form action="enviar_respuesta.php" method="POST">
+                <form action="../complementos/enviar_respuesta.php" method="POST">
                     <input type="hidden" name="id" id="mensajeId">
                     <input type="hidden" name="email" id="mensajeEmail">
                     <div class="mb-3">

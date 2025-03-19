@@ -18,13 +18,6 @@
 
 
 
-                        
-
-
-
-
-
-
                         <!--//tabla de usuarios-->
                         <div class="card mb-4">
                             <div class="card-header">
