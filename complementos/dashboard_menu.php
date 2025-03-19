@@ -22,7 +22,7 @@
                 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" href="../dashboard/bodega_dasboard.php">Bodega</a>
-                        <a class="nav-link" href="../ver_pedido.php">Pedidos</a>
+                        <a class="nav-link" href="../complementos/dashboard_verpedido_adm.php">Pedidos</a>
                         <a class="nav-link" href="../complementos/tabla_usuarios.php">Usuarios</a>
                         
                     </nav>
