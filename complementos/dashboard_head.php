@@ -34,13 +34,8 @@
         }
     </style>
 
-    <!-- Modal de aviso de cierre de sesión -->
-    <div id="modal">
-        <div id="modal-content">
-            <p>Se cerrará la sesión en <span id="countdown">10</span> segundos por inactividad.</p>
-            <button onclick="continuarSesion()">Continuar Sesión</button>
-        </div>
-    </div>
+    
+    
 
     </div>
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -63,8 +58,12 @@
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
-                    <li><a class="dropdown-item" href="logout.php">Salir</a></li>
+                    <li><a class="dropdown-item" href="../dashboard/logout.php">Salir</a></li>
                 </ul>
             </li>
         </ul>
     </nav>
+
+    <?php 
+    include "../confi/cierre_sesion.php";
+    ?>

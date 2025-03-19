@@ -188,3 +188,6 @@ if (isset($_SESSION['id'])) {
     
 </body>
 </html>
+<?php 
+    include "../confi/cierre_sesion.php";
+    ?>
