@@ -162,7 +162,7 @@ if ($_POST) {
                                         </script>
 
                                         <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                            <a class="small" href="password.html">¿No recuerdas la contraseña?</a>
+                                            <a class="small" href="password.php">¿No recuerdas la contraseña?</a>
                                             <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
 
                                         </div>

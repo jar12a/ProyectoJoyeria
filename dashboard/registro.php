@@ -234,8 +234,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3">
-                                                    <input class="form-control <?php echo !empty($error_message['password']) ? 'is-invalid' : ''; ?>" id="password" name="password" type="password" placeholder="Crear una contraseña" required />
+                                                    <input class="form-control <?php echo !empty($error_message['password']) ? 'is-invalid' : ''; ?>" 
+                                                           id="password" name="password" type="password" 
+                                                           placeholder="Crear una contraseña" required 
+                                                           minlength="8" oninput="actualizarContador()" />
                                                     <label for="password">Contraseña</label>
+                                                    <small id="passwordCounter" class="form-text text-muted">0/8 caracteres</small>
                                                     <?php if (!empty($error_message['password'])): ?>
                                                         <div class="invalid-feedback">
                                                             <?php echo $error_message['password']; ?>
@@ -245,12 +249,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3">
-                                                    <input class="form-control <?php echo !empty($error_message['password']) ? 'is-invalid' : ''; ?>" id="passwordConfirm" name="passwordConfirm" type="password" placeholder="Confirmar contraseña" required />
+                                                    <input class="form-control <?php echo !empty($error_message['password']) ? 'is-invalid' : ''; ?>" 
+                                                           id="passwordConfirm" name="passwordConfirm" type="password" 
+                                                           placeholder="Confirmar contraseña" required />
                                                     <label for="passwordConfirm">Confirmar Contraseña</label>
                                                 </div>
                                             </div>
-
                                         </div>
+                                        <script>
+                                            function actualizarContador() {
+                                                const passwordInput = document.getElementById('password');
+                                                const counter = document.getElementById('passwordCounter');
+                                                counter.textContent = `${passwordInput.value.length}/8 caracteres`;
+                                            }
+                                        </script>
                                         <div class="mt-4 mb-0">
                                             <div class="d-grid">
                                                 <button type="submit" class="btn btn-primary btn-block">Crear Cuenta</button>

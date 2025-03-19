@@ -621,6 +621,6 @@ include 'complementos/head.php';
 		<script src="https://kit.fontawesome.com/45b2b3afef.js" crossorigin="anonymous"></script>
 </body>
 <?php include 'complementos/footer.php'; 
-include 'complementos/cierre_sesion.php';
+include 'confi/cierre_sesion.php';
 ?>
 </html>

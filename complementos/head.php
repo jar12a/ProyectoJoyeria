@@ -27,10 +27,10 @@ if (isset($_SESSION['id'])) {
         .container-user {
             display: flex;
             align-items: center;
-            gap: 10px; /* Espacio entre los elementos */
+            gap: 1px; /* Espacio entre los elementos */
         }
         .icon-link {
-            margin-left: 10px; /* Espacio entre los iconos */
+            margin-left: 5px; /* Espacio entre los iconos */
         }
     </style>
     <script src="https://kit.fontawesome.com/45b2b3afef.js" crossorigin="anonymous"></script>
