@@ -156,6 +156,9 @@ if (isset($_SESSION['id'])) {
                     <li class="nav-item">
                         <a class="nav-link" href="/ProyectoJoyeria/catalago1.php">Productos</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ProyectoJoyeria/Contacto.php">Contáctanos</a>
+                    </li>
                 </ul>
               
                 </ul>

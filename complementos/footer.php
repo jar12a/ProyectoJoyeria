@@ -46,7 +46,7 @@
                     <li><a href="#">Información Delivery</a></li>
                     <li><a href="#">Políticas de Privacidad</a></li>
                     <li><a href="#">Términos y condiciones</a></li>
-                    <li><a href="<?= 'http://localhost/ProyectoJoyeria/Contacto.html' ?>">Contáctanos</a></li>
+                    <li><a href="<?= '/ProyectoJoyeria/Contacto.php' ?>">Contáctanos</a></li>
                 </ul>
             </div>
 
