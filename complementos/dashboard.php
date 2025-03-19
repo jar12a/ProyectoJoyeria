@@ -5,13 +5,7 @@
         <a class="navbar-brand ps-3" href="../index.php">Imperial Gems</a>
         <!-- Sidebar Toggle para mostrar el menú principal-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-        <!-- Navbar Search para buscar
-            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
-                </div>
-            </form>-->
+        
         <!-- Navbar de usuario-->
         <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0">
             <li class="nav-item dropdown">
@@ -63,6 +57,7 @@
                                 <a class="nav-link" href="bodega_dasboard.php">Bodega</a>
                                 <a class="nav-link" href="../ver_pedido.php">Pedidos</a>
                                 <a class="nav-link" href="principal.php">Usuarios</a>
+                                <a class="nav-link" href="../complementos/dashboard_bodega.php">ver bodega en el dashboard</a>
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -80,7 +75,7 @@
                                     <nav class="sb-sidenav-menu-nested nav">
                                         <a class="nav-link" href="login.php">Inicio de sesión</a>
                                         <a class="nav-link" href="../dashboard/registro.php">Registrar</a>
-                                        <a class="nav-link" href="password.html">Forgot Password</a>
+                                        <a class="nav-link" href="password.php">Recuperar contraseña</a>
                                     </nav>
                                 </div>
                                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
@@ -113,5 +108,6 @@
         </div>
         <?php 
             include "../complementos/tabla_usuarios.php";
+            
         ?>
     </div>
