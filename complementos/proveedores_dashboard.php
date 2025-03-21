@@ -1,4 +1,4 @@
-<!--//Agregar todo para el cuerpo-->
+<!--//Agregar todo para el cuerpo proveedores-->
 <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
@@ -44,7 +44,7 @@
                                             </div>
                                             <div class="modal-body">
                                                 <!-- Formulario de edición de usuario -->
-                                                <form action="principal.php" method="POST">
+                                                <form action="../complementos/principal.php" method="POST">
                                                     <input type="hidden" name="id" id="usuario_id">
                                                     <div class="mb-3">
                                                         <label for="usuario" class="form-label">Usuario</label>

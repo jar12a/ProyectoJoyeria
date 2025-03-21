@@ -24,6 +24,8 @@
                         <a class="nav-link" href="../dashboard/bodega_dasboard.php">Bodega</a>
                         <a class="nav-link" href="../complementos/dashboard_verpedido_adm.php">Pedidos</a>
                         <a class="nav-link" href="../complementos/tabla_usuarios.php">Usuarios</a>
+                        <a class="nav-link" href="../complementos/tabla_usuarios.php">Empleados</a>
+                        <a class="nav-link" href="../complementos/tabla_usuarios.php">Proveedores</a>
                         
                     </nav>
                 </div>
