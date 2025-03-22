@@ -3,6 +3,40 @@ include "../confi/session_start.php";
 // consultas sql
 include '../confi/conexion.php'; // crea la conexion con la base de datos
 
+// Manejar la actualización de datos
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
+    $id = $_POST['id'];
+    $usuario = htmlspecialchars($_POST['usuario']);
+    $password = !empty($_POST['password']) ? password_hash($_POST['password'], PASSWORD_DEFAULT) : null;
+    $nombre = htmlspecialchars($_POST['nombre']);
+    $telefono = htmlspecialchars($_POST['telefono']);
+    $direccion = htmlspecialchars($_POST['direccion']);
+    $correo = htmlspecialchars($_POST['correo']);
+    $rol = htmlspecialchars($_POST['rol']);
+
+    try {
+        $query = "UPDATE usuario SET usuario = ?, nombre = ?, telefono = ?, direccion = ?, correo = ?, idRol = (SELECT id FROM rol WHERE Rol = ?)";
+        $params = [$usuario, $nombre, $telefono, $direccion, $correo, $rol];
+
+        // Si se proporciona una nueva contraseña, incluirla en la consulta
+        if ($password) {
+            $query .= ", password = ?";
+            $params[] = $password;
+        }
+
+        $query .= " WHERE id = ?";
+        $params[] = $id;
+
+        $stmt = $pdo->prepare($query);
+        $stmt->execute($params);
+
+        // Redirigir para evitar reenvío de datos
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
+    } catch (PDOException $e) {
+        die("Error al actualizar los datos: " . $e->getMessage());
+    }
+}
 ?>
 <?php if (isset($_GET['msg'])): ?>
     <div class="alert alert-success">
@@ -85,7 +119,7 @@ include '../confi/conexion.php'; // crea la conexion con la base de datos
                                             </div>
                                             <div class="modal-body">
                                                 <!-- Formulario de edición de usuario -->
-                                                <form action="../complementos/tabla_usuarios.php" method="POST">
+                                                <form action="" method="POST">
                                                     <input type="hidden" name="id" id="usuario_id">
                                                     <div class="mb-3">
                                                         <label for="usuario" class="form-label">Usuario</label>
@@ -225,3 +259,7 @@ include '../confi/conexion.php'; // crea la conexion con la base de datos
             include "../complementos/footer_dashboard.php";
             ?>
         </div>
+    </div>
+</body>
+
+</html>
