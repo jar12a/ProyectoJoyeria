@@ -4,7 +4,7 @@ include "../confi/session_start.php";
 include '../confi/conexion.php'; // crea la conexion con la base de datos
 
 // Obtener los valores de los filtros si existen y Construir la consulta SQL con los filtros
-include '../confi/filtro_bodega.php'; 
+include '../confi/filtro_bodega.php';
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +41,7 @@ include '../confi/filtro_bodega.php';
                                 Bienvenido a la bodega
                                 <?php
                                 //include "../bodega/bodega.php"; // Corrige la ruta del archivo
-include "../complementos/tabla_usuarios.php"; // Corrige la ruta del archivo
+                                include "../complementos/tabla_usuarios.php"; // Corrige la ruta del archivo
                                 ?>
                             </p>
                         </div>
