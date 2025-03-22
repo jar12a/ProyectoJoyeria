@@ -1,6 +1,6 @@
 <?php 
 // Incluir el archivo de conexión
-$host = 'localhost: 3306'; // host de base de datos
+$host = 'localhost'; // host de base de datos
 $usuario = 'root';   // usuario de base de datos
 $contrasena = '';    // contraseña de base de datos
 $nombre_bd = 'sistema_gestion'; // El nombre de la base de datos
