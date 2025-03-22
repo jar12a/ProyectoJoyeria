@@ -1,11 +1,36 @@
-<!--//Agregar todo para el cuerpo-->
-<div id="layoutSidenav_content">
+<?php
+include "../confi/session_start.php";
+// consultas sql
+include '../confi/conexion.php'; // crea la conexion con la base de datos
+
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <?php
+    include "../complementos/head_html.php";
+    ?>
+</head>
+
+<body class="sb-nav-fixed">
+    <?php
+    include "../complementos/dashboard_head.php";
+    ?>
+
+    <!--Barra de navegación -->
+    <div id="layoutSidenav">
+        <?php
+        include "../complementos/dashboard_menu.php";
+        ?><!--//Agregar todo para el cuerpo-->
+        <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Barra de navegación</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="principal.php">Menú</a></li>
+                            <li class="breadcrumb-item"><a href="../dashboard/principal.php">Menú</a></li>
                             <li class="breadcrumb-item active">Inicio</li>
                         </ol>
                         <div class="card mb-4">
@@ -18,12 +43,12 @@
 
 
 
-                        
-<?php 
-//
-include_once 'agregar_usuario.php';
 
-?>
+                        <?php
+                        //
+                        include_once 'agregar_usuario.php';
+
+                        ?>
 
 
 
@@ -55,7 +80,7 @@ include_once 'agregar_usuario.php';
                                             </div>
                                             <div class="modal-body">
                                                 <!-- Formulario de edición de usuario -->
-                                                <form action="principal.php" method="POST">
+                                                <form action="../dashboard/principal.php" method="POST">
                                                     <input type="hidden" name="id" id="usuario_id">
                                                     <div class="mb-3">
                                                         <label for="usuario" class="form-label">Usuario</label>
@@ -124,9 +149,9 @@ include_once 'agregar_usuario.php';
                                                 <tr>
                                                     <th>ID</th>
                                                     <th>Usuario</th>
-                                                   
+
                                                     <th>Nombre</th>
-                                                    
+
                                                     <th>Correo</th>
                                                     <th>Rol</th>
                                                     <th>Acciones</th> <!-- Para editar o eliminar -->
@@ -137,10 +162,10 @@ include_once 'agregar_usuario.php';
                                                     <tr>
                                                         <td><?= htmlspecialchars($usuario['id']); ?></td>
                                                         <td><?= htmlspecialchars($usuario['usuario']); ?></td>
-                                                       
+
                                                         <td><?= htmlspecialchars($usuario['nombre']); ?></td>
-                                                        
-                                                        
+
+
                                                         <td><?= htmlspecialchars($usuario['correo']); ?></td>
                                                         <td><?= htmlspecialchars($usuario['Rol']); ?></td>
                                                         <td>
@@ -191,16 +216,7 @@ include_once 'agregar_usuario.php';
                         </div>
                     </div>
             </main>
-            <footer class="py-4 bg-light mt-auto">
-                <div class="container-fluid px-4">
-                    <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                        <div>
-                            <a href="#">Privacy Policy</a>
-                            &middot;
-                            <a href="#">Terms &amp; Conditions</a>
-                        </div>
-                    </div>
-                </div>
-            </footer>
+            <?php
+            include "../complementos/footer_dashboard.php";
+            ?>
         </div>

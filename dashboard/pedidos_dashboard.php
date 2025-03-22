@@ -91,7 +91,7 @@ $total_pages = ceil($total_pedidos / $rows_per_page);
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#!">Configuración</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="logout.php">Salir</a></li>
+                        <li><a class="dropdown-item" href="../confi/logout.php">Salir</a></li>
                     </ul>
                 </li>
             </ul>

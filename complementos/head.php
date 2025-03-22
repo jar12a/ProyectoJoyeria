@@ -1,6 +1,9 @@
 <?php
+ 
+
+
 if (session_status() == PHP_SESSION_NONE) {
-    session_start();
+    include "../confi/cierre_sesion.php";
 }
 include __DIR__ . '/../confi/conexion.php'; // Corregir la ruta del archivo
 
@@ -96,7 +99,7 @@ if (isset($_SESSION['id'])) {
                                         echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/dashboard/cliente.php">Mi Cuenta</a></li>';
                                     }
                                     echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/ver_pedido.php">Ver Pedidos</a></li>';
-                                    echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/dashboard/logout.php">Cerrar sesión</a></li>';
+                                    echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/confi/logout.php">Cerrar sesión</a></li>';
                                 } else {
                                     echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/dashboard/login.php">Iniciar sesión</a></li>';
                                     echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/dashboard/registro.php">Registrarse</a></li>';

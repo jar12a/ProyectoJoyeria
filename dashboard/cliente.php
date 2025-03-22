@@ -40,7 +40,7 @@ $idRol = $_SESSION['idRol'];
                         <a href="../index.php" class="btn btn-primary">
                             <i class="fas fa-store"></i> Ir a la Tienda
                         </a>
-                        <a href="logout.php" class="btn btn-danger float-right">
+                        <a href="../confi/logout.php" class="btn btn-danger float-right">
                             <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
                         </a>
                     </div>

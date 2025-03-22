@@ -295,7 +295,7 @@ if (!$stmt_categorias) {
         // Función para abrir el modal de editar producto y cargar los datos
         function abrirModalEditarProducto(id) {
             productoId = id;
-            fetch('obtener_producto.php', {
+            fetch('../bodega/obtener_producto.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -331,7 +331,7 @@ if (!$stmt_categorias) {
 
         // Función para cargar las categorías en el combobox del modal de editar
         function cargarCategoriasEditar(categoriaSeleccionada) {
-            fetch('obtener_categorias.php')
+            fetch('../bodega/obtener_categorias.php')
             .then(response => response.json())
             .then(data => {
                 const editarTipo = document.getElementById("editar_tipo");
@@ -383,7 +383,7 @@ if (!$stmt_categorias) {
 
             let formData = new FormData(document.getElementById("productoForm"));
 
-            fetch("guardar_producto.php", {
+            fetch("../bodega/guardar_producto.php", {
                 method: "POST",
                 body: formData
             })
@@ -414,7 +414,7 @@ if (!$stmt_categorias) {
             formData.append("ID_Producto", productoId); // el ID del producto para actualizarlo
             formData.append("imagen_actual", document.getElementById("editar_imagen_actual").value); // Añadir la imagen actual
 
-            fetch("actualizar_producto.php", {
+            fetch("../bodega/actualizar_producto.php", {
                 method: "POST",
                 body: formData
             })
@@ -438,7 +438,7 @@ if (!$stmt_categorias) {
         // Función para eliminar un producto
         function eliminarProducto(id) {
             if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
-                fetch("eliminar_producto.php", {
+                fetch("../bodega/eliminar_producto.php", {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json'
@@ -480,7 +480,7 @@ if (!$stmt_categorias) {
 
             let formData = new FormData(this);
 
-            fetch("guardar_producto.php", {
+            fetch("../bodega/guardar_producto.php", {
                 method: "POST",
                 body: formData
             })
