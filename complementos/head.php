@@ -1,10 +1,12 @@
 <?php
- 
 
-
-if (session_status() == PHP_SESSION_NONE) {
-    include "../confi/cierre_sesion.php";
+// Verificar si el archivo cierre_sesion.php existe antes de incluirlo
+if (file_exists('../confi/cierre_sesion.php')) {
+    include '../confi/cierre_sesion.php';
+} else {
+    error_log("Archivo cierre_sesion.php no encontrado en la ruta especificada.");
 }
+
 include __DIR__ . '/../confi/conexion.php'; // Corregir la ruta del archivo
 
 // Obtener el nombre de usuario desde la base de datos si la sesión está iniciada
