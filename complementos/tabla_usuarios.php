@@ -62,7 +62,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     <div id="layoutSidenav">
         <?php
         include "../complementos/dashboard_menu.php";
-        ?><!--//Agregar todo para el cuerpo-->
+        ?>
+        <!--//Agregar todo para el cuerpo del usuario-->
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
@@ -83,11 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
 
 
 
-                        <?php
-                        //
-                        include_once 'agregar_usuario.php';
 
-                        ?>
 
 
 
@@ -95,6 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
 
                         <!--//tabla de usuarios-->
                         <div class="card mb-4">
+
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
                                 Usuarios
@@ -105,6 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
                                 // include "usuarios.php";
                                 //hace posible la edicion de datos y que carguen sus datos
                                 include "../complementos/cargar_usuarios.php";
+                                include "../complementos/agregar_usuario.php";
                                 ?>
 
 
@@ -259,6 +258,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
             include "../complementos/footer_dashboard.php";
             ?>
         </div>
+        <!--//fin del usuario-->
     </div>
 </body>
 

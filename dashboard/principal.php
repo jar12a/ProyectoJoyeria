@@ -26,33 +26,37 @@ include '../confi/filtro_bodega.php';
         <?php
         include "../complementos/dashboard_menu.php";
         ?>
-        <!--//Agregar todo para el cuerpo-->
+        <!--//Agregar todo para el cuerpo del principal-->
         <div id="layoutSidenav_content">
-            <main>
-                <div class="container-fluid px-4">
-                    <h1 class="mt-4">Bodega</h1>
-                    <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item"><a href="../dashboard/principal.php">Menú</a></li>
-                        <li class="breadcrumb-item active">Bienvenido a la bodega</li>
-                    </ol>
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <p class="mb-0">
-                                Bienvenido a la bodega
-                                <?php
-                                //include "../bodega/bodega.php"; // Corrige la ruta del archivo
-                                include "../complementos/tabla_usuarios.php"; // Corrige la ruta del archivo
-                                ?>
-                            </p>
-                        </div>
-                    </div>
+    <!-- Hero Section -->
+    <div class="hero-section" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../img/gem-background.jpg'); background-size: cover; background-position: center; padding: 100px 20px; text-align: center; color: white;">
+        <h1 class="display-4">Bienvenido a Imperial Gems</h1>
+        <p class="lead">Descubre la elegancia y el lujo en cada una de nuestras joyas y gemas exclusivas.</p>
+        <a href="#nuestros-productos" class="btn btn-primary btn-lg">Explorar Colección</a>
+    </div>
 
-                </div>
-            </main>
-            <?php
-            include "../complementos/footer_dashboard.php";
-            ?>
+    <!-- Contenido adicional (opcional) -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <h3>Calidad Inigualable</h3>
+                <p>Nuestras gemas son seleccionadas cuidadosamente para garantizar la máxima calidad y brillo.</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <h3>Diseños Exclusivos</h3>
+                <p>Cada pieza es creada por artesanos expertos, combinando tradición y modernidad.</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <h3>Compromiso con el Cliente</h3>
+                <p>Ofrecemos un servicio personalizado para satisfacer todas tus necesidades.</p>
+            </div>
         </div>
+    </div>
+
+    <?php
+    include "../complementos/footer_dashboard.php";
+    ?>
+</div>
     </div>
     </div>
     <?php
