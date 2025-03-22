@@ -1,5 +1,7 @@
 <?php
+include 'complementos/head.php';
 require_once 'confi/conexion.php'; // Asegúrate de que la conexión esté configurada correctamente
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = htmlspecialchars($_POST["nombre"]);
@@ -16,11 +18,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         try {
             $stmt->execute([$nombre, $apellido, $email, $telefono, $mensaje]);
             echo '<div class="alert alert-success">Gracias, ' . $nombre . ' ' . $apellido . '. Tu mensaje ha sido enviado con éxito.</div>';
+            
+           
         } catch (PDOException $e) {
             echo '<div class="alert alert-danger">Error al enviar el mensaje: ' . $e->getMessage() . '</div>';
         }
     }
 }
+
 ?>
 
 <!DOCTYPE html>
