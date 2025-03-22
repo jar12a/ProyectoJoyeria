@@ -1,5 +1,5 @@
 <?php
-include('Conexion/conexion.php');
+include 'confi/conexion.php';
 
 // Verificar si el formulario se ha enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -43,23 +43,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Verificar correo
     $sql = "SELECT correo FROM proveedores WHERE correo = '$correo'";
-    $result = $conexion->query($sql);
-    if ($result->num_rows > 0) {
+    $result = $pdo->query($sql); // Cambiar $conexion por $pdo
+    if ($result->rowCount() > 0) { // Cambiar num_rows por rowCount
         $errores[] = "El correo electrónico ya está registrado.";
     }
 
     // Verificar teléfono
     $sql = "SELECT telefono FROM proveedores WHERE telefono = '$telefono'";
-    $result = $conexion->query($sql);
-    if ($result->num_rows > 0) {
+    $result = $pdo->query($sql); // Cambiar $conexion por $pdo
+    if ($result->rowCount() > 0) { // Cambiar num_rows por rowCount
         $errores[] = "El número de teléfono ya está registrado.";
     }
 
     // Verificar número de cuenta bancaria
     if ($numCuenta != '') {
         $sql = "SELECT numCuenta FROM proveedores WHERE numCuenta = '$numCuenta'";
-        $result = $conexion->query($sql);
-        if ($result->num_rows > 0) {
+        $result = $pdo->query($sql); // Cambiar $conexion por $pdo
+        if ($result->rowCount() > 0) { // Cambiar num_rows por rowCount
             $errores[] = "El número de cuenta bancaria ya está registrado.";
         }
     }
@@ -67,16 +67,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificar correo PayPal
     if ($correoPayPal != '') {
         $sql = "SELECT correoPayPal FROM proveedores WHERE correoPayPal = '$correoPayPal'";
-        $result = $conexion->query($sql);
-        if ($result->num_rows > 0) {
+        $result = $pdo->query($sql); // Cambiar $conexion por $pdo
+        if ($result->rowCount() > 0) { // Cambiar num_rows por rowCount
             $errores[] = "El correo de PayPal ya está registrado.";
         }
     }
 
     // Verificar empresa
     $sql = "SELECT empresa FROM proveedores WHERE empresa = '$empresa'";
-    $result = $conexion->query($sql);
-    if ($result->num_rows > 0) {
+    $result = $pdo->query($sql); // Cambiar $conexion por $pdo
+    if ($result->rowCount() > 0) { // Cambiar num_rows por rowCount
         $errores[] = "El nombre de la empresa ya está registrado.";
     }
 
@@ -102,17 +102,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 '$direccionPagoEfectivo', '$horarioPagoEfectivo', '$banco', '$numCuenta', '$nombreTitular', 
                 '$tipoCuenta', '$correoPayPal', '$confirmarCuentaPayPal')";
 
-        if ($conexion->query($sql) === TRUE) {
+        if ($pdo->exec($sql)) { // Cambiar $conexion->query por $pdo->exec
             echo "<script>
                     alert('Proveedor agregado con éxito!');
                     window.location.href = window.location.href;  // Redirige a la misma página
                  </script>";
         } else {
-            echo "<p style='color:red;'>Error: " . $conexion->error . "</p>";
+            echo "<p style='color:red;'>Error: " . $pdo->errorInfo()[2] . "</p>"; // Cambiar $conexion->error por $pdo->errorInfo()
         }
     }
 
-    $conexion->close();
+    $pdo = null; // Close the PDO connection
 }
 ?>
 
