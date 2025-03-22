@@ -40,8 +40,8 @@ include '../confi/filtro_bodega.php';
                             <p class="mb-0">
                                 Bienvenido a la bodega
                                 <?php
-                                include "../bodega/bodega.php"; // Corrige la ruta del archivo
-
+                                //include "../bodega/bodega.php"; // Corrige la ruta del archivo
+include "../complementos/tabla_usuarios.php"; // Corrige la ruta del archivo
                                 ?>
                             </p>
                         </div>

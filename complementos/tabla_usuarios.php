@@ -4,6 +4,11 @@ include "../confi/session_start.php";
 include '../confi/conexion.php'; // crea la conexion con la base de datos
 
 ?>
+<?php if (isset($_GET['msg'])): ?>
+    <div class="alert alert-success">
+        <?= htmlspecialchars($_GET['msg']); ?>
+    </div>
+<?php endif; ?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -80,7 +85,7 @@ include '../confi/conexion.php'; // crea la conexion con la base de datos
                                             </div>
                                             <div class="modal-body">
                                                 <!-- Formulario de edición de usuario -->
-                                                <form action="../dashboard/principal.php" method="POST">
+                                                <form action="../complementos/tabla_usuarios.php" method="POST">
                                                     <input type="hidden" name="id" id="usuario_id">
                                                     <div class="mb-3">
                                                         <label for="usuario" class="form-label">Usuario</label>
@@ -190,7 +195,7 @@ include '../confi/conexion.php'; // crea la conexion con la base de datos
                                                 document.getElementById('usuario_id').value = id;
                                                 document.getElementById('usuario').value = usuario;
                                                 document.getElementById('password').value = ''; // Campo de contraseña vacío para encriptar cuando se edite
-                                                document.getElementById('password').setAttribute('placeholder', '*****'); // Para que aparezca oculto como ***** si no se edita
+                                                document.getElementById('password').setAttribute('placeholder', '*********'); // Para que aparezca oculto como ***** si no se edita
                                                 document.getElementById('nombre').value = nombre;
                                                 document.getElementById('telefono').value = telefono;
                                                 document.getElementById('direccion').value = direccion;

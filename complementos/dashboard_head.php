@@ -1,43 +1,4 @@
-<style>
-        /* Hacer que la tabla sea responsiva */
-        .table-wrapper {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        table th,
-        table td {
-            padding: 10px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-
-        table th {
-            background-color: #f4f4f4;
-        }
-
-        @media (max-width: 768px) {
-            table {
-                font-size: 12px;
-                /* Reducir el tamaño de la fuente en pantallas pequeñas */
-            }
-
-            table th,
-            table td {
-                padding: 5px;
-            }
-        }
-    </style>
-
-    
-    
-
-    </div>
+</div>
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
         <a class="navbar-brand ps-3" href="../index.php">Imperial Gems</a>
