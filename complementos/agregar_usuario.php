@@ -64,8 +64,7 @@ include_once '../confi/conexion.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_usuario'])) {
     // Obtener los datos del formulario
     $usuario = $_POST['usuario'];
-    // Encriptar la contraseña
-    $passwordHash = SHA1($password);
+    $password = sha1($_POST['password']); // Convertir la contraseña a SHA1
     $nombre = $_POST['nombre'];
     $telefono = $_POST['telefono'];
     $direccion = $_POST['direccion'];
@@ -79,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_usuario'])) {
     $stmt = $pdo->prepare($query);
     $stmt->execute([
         'usuario' => $usuario,
-        'password' => $password,
+        'password' => $password, // Contraseña en SHA1
         'nombre' => $nombre,
         'telefono' => $telefono,
         'direccion' => $direccion,
