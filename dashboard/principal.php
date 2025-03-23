@@ -50,7 +50,7 @@ include '../confi/filtro_bodega.php';
                         <i class="fas fa-truck fa-3x mb-3"></i> <!-- Ícono -->
                         <h5 class="card-title">Proveedores</h5>
                         <p class="card-text">Gestiona proveedores y pedidos.</p>
-                        <a href="../proveedores/index.php" class="btn btn-light">Ver Proveedores</a>
+                        <a href="../complementos/proveedores_dashboard.php" class="btn btn-light">Ver Proveedores</a>
                     </div>
                 </div>
             </div>
@@ -62,7 +62,7 @@ include '../confi/filtro_bodega.php';
                         <i class="fas fa-users fa-3x mb-3"></i> <!-- Ícono -->
                         <h5 class="card-title">Empleados</h5>
                         <p class="card-text">Administra el personal.</p>
-                        <a href="../empleados/index.php" class="btn btn-light">Ver Empleados</a>
+                        <a href="../complementos/tabla_empleados.php" class="btn btn-light">Ver Empleados</a>
                     </div>
                 </div>
             </div>
@@ -74,7 +74,7 @@ include '../confi/filtro_bodega.php';
                         <i class="fas fa-envelope fa-3x mb-3"></i> <!-- Ícono -->
                         <h5 class="card-title">Mensajes</h5>
                         <p class="card-text">Revisa y envía mensajes.</p>
-                        <a href="../mensajes/index.php" class="btn btn-light">Ver Mensajes</a>
+                        <a href="../complementos/dashboard_mensajes.php" class="btn btn-light">Ver Mensajes</a>
                     </div>
                 </div>
             </div>
@@ -86,7 +86,7 @@ include '../confi/filtro_bodega.php';
                         <i class="fas fa-user-cog fa-3x mb-3"></i> <!-- Ícono -->
                         <h5 class="card-title">Usuarios</h5>
                         <p class="card-text">Gestiona los usuarios del sistema.</p>
-                        <a href="../usuarios/index.php" class="btn btn-light">Ver Usuarios</a>
+                        <a href="../complementos/tabla_usuarios.php" class="btn btn-light">Ver Usuarios</a>
                     </div>
                 </div>
             </div>
@@ -98,7 +98,7 @@ include '../confi/filtro_bodega.php';
                         <i class="fas fa-warehouse fa-3x mb-3"></i> <!-- Ícono -->
                         <h5 class="card-title">Bodega</h5>
                         <p class="card-text">Gestiona el inventario en bodega.</p>
-                        <a href="../bodega/index.php" class="btn btn-light">Ver Bodega</a>
+                        <a href="../dashboard/bodega_dasboard.php" class="btn btn-light">Ver Bodega</a>
                     </div>
                 </div>
             </div>
@@ -110,7 +110,7 @@ include '../confi/filtro_bodega.php';
                         <i class="fas fa-clipboard-list fa-3x mb-3"></i> <!-- Ícono -->
                         <h5 class="card-title">Pedidos</h5>
                         <p class="card-text">Revisa y gestiona los pedidos.</p>
-                        <a href="../pedidos/index.php" class="btn btn-light">Ver Pedidos</a>
+                        <a href="../complementos/dashboard_verpedido_adm.php" class="btn btn-light">Ver Pedidos</a>
                     </div>
                 </div>
             </div>

@@ -44,6 +44,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     </div>
 <?php endif; ?>
 
+<?php
+// Mostrar mensajes de éxito o error
+if (isset($_GET['success']) && $_GET['success'] == 1) {
+    echo '<div class="alert alert-success">Usuario agregado/actualizado correctamente.</div>';
+}
+if (isset($_GET['error']) && $_GET['error'] == 1) {
+    echo '<div class="alert alert-danger">Error al agregar/actualizar el usuario.</div>';
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -181,7 +191,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
                                             die("Error al obtener los datos: " . $e->getMessage());
                                         }
                                         ?>
-
+                                        <!-- Mostrar la tabla de usuario -->
                                         <table id="datatablesSimple" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>

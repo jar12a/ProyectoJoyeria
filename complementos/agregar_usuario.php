@@ -64,22 +64,8 @@ include_once '../confi/conexion.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_usuario'])) {
     // Obtener los datos del formulario
     $usuario = $_POST['usuario'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Encriptar la contraseña
-    $nombre = $_POST['nombre'];
-    $telefono = $_POST['telefono'];
-    $direccion = $_POST['direccion'];
-    $correo = $_POST['correo'];
-    $rol = $_POST['rol'];
-
-   
-// Incluir la conexión a la base de datos
-include_once '../confi/conexion.php';
-
-// Procesar el formulario de agregar usuario
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_usuario'])) {
-    // Obtener los datos del formulario
-    $usuario = $_POST['usuario'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Encriptar la contraseña
+    // Encriptar la contraseña
+    $passwordHash = SHA1($password);
     $nombre = $_POST['nombre'];
     $telefono = $_POST['telefono'];
     $direccion = $_POST['direccion'];
@@ -101,24 +87,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_usuario'])) {
         'rol' => $rol
     ]);
 
-    // Redirigir para evitar el reenvío del formulario
+    // Redirigir usando JavaScript
     if ($stmt->rowCount() > 0) {
-        header("Location: principal.php?success=1"); // Redirige a la misma página con un mensaje de éxito
+        echo '<script>window.location.href = "tabla_usuarios.php?success=1";</script>'; // Redirige con mensaje de éxito
         exit;
     } else {
-        header("Location: principal.php?error=1"); // Redirige a la misma página con un mensaje de error
+        echo '<script>window.location.href = "tabla_usuarios?error=1";</script>'; // Redirige con mensaje de error
         exit;
     }
 }
 
-    // Mostrar mensaje de éxito o error
-    if ($stmt->rowCount() > 0) {
-        echo '<div class="alert alert-success">Usuario agregado correctamente.</div>';
-    } else {
-        echo '<div class="alert alert-danger">Error al agregar el usuario.</div>';
-    }
+// Mostrar mensaje de éxito o error (esto solo se ejecutará si no se redirige)
+if (isset($_GET['success']) && $_GET['success'] == 1) {
+    echo '<div class="alert alert-success">Usuario agregado correctamente.</div>';
+}
+if (isset($_GET['error']) && $_GET['error'] == 1) {
+    echo '<div class="alert alert-danger">Error al agregar el usuario.</div>';
 }
 
+// Incluir el archivo para cargar los usuarios
 include '../complementos/cargar_usuarios.php';
 ?>
-
