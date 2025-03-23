@@ -35,11 +35,7 @@ include '../confi/conexion.php'; // crea la conexion con la base de datos
                         </ol>
                         <div class="card mb-4">
 
-                        </div>
-                        <h1 class="mt-4">Imperial Gems</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Dashboard</li>
-                        </ol>
+                        
 
 
 

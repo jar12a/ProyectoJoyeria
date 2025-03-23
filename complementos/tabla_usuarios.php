@@ -68,12 +68,12 @@ if (isset($_GET['error']) && $_GET['error'] == 1) {
     include "../complementos/dashboard_head.php";
     ?>
 
-    <!--Barra de navegación -->
-    <div id="layoutSidenav">
+
+        <!--Barra de navegación -->
+        <div id="layoutSidenav">
         <?php
         include "../complementos/dashboard_menu.php";
-        ?>
-        <!--//Agregar todo para el cuerpo del usuario-->
+        ?><!--//Agregar todo para el cuerpo-->
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
@@ -269,13 +269,15 @@ if (isset($_GET['error']) && $_GET['error'] == 1) {
             ?>
         </div>
         <!--//fin del usuario-->
-    </div>
-</body>
+        <!-- Scripts para validaciones en tiempo real -->
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Bootstrap JS y dependencias -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </div>
+</body>
+
 </html>

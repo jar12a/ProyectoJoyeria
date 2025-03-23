@@ -4,8 +4,13 @@ include "../confi/session_start.php";
 include '../confi/conexion.php'; // crea la conexion con la base de datos
 
 // Obtener los valores de los filtros si existen y Construir la consulta SQL con los filtros
-include '../confi/filtro_bodega.php'; 
+include '../confi/filtro_bodega.php';
 ?>
+
+
+
+
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -25,39 +30,37 @@ include '../confi/filtro_bodega.php';
     <div id="layoutSidenav">
         <?php
         include "../complementos/dashboard_menu.php";
-        ?>
-        <!--//Agregar todo para el cuerpo-->
+        ?><!--//Agregar todo para el cuerpo-->
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Bodega</h1>
-                    <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item"><a href="../dashboard/principal.php">Menú</a></li>
-                        <li class="breadcrumb-item active">Bienvenido a la bodega</li>
-                    </ol>
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <p class="mb-0">
-                                Bienvenido a la bodega
-                                <?php
-                                include "../bodega/bodega.php"; // Corrige la ruta del archivo
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Barra de navegación</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item"><a href="../dashboard/principal.php">Menú</a></li>
+                            <li class="breadcrumb-item active">Inicio</li>
+                        </ol>
+                        <div class="card mb-4">
 
-                                ?>
-                            </p>
                         </div>
-                    </div>
+                        <h1 class="mt-4">Imperial Gems</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item active">Dashboard</li>
+                        </ol>
 
-                </div>
+
+
+
+                        <?php
+                        //
+                        include_once '../bodega/bodega.php';
+                        ?>
+
+
+
+                    </div>
             </main>
             <?php
             include "../complementos/footer_dashboard.php";
             ?>
         </div>
-    </div>
-    </div>
-    <?php
-    include "../confi/cierre_sesion.php";
-    ?>
-</body>
-
-</html>
