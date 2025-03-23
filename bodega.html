@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bodega Virtual - Joyas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2 class="text-center">Bodega Virtual - Joyas</h2>
+        
+        <!-- Formulario para agregar joyas -->
+        <form id="productoForm" class="mb-4">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" id="nombre" class="form-control" placeholder="Nombre de la joya" required>
+                </div>
+                <div class="col-md-2">
+                    <select id="tipo" class="form-control" required>
+                        <option value="">Selecciona tipo</option>
+                        <option value="Anillo">Anillo</option>
+                        <option value="Collar">Collar</option>
+                        <option value="Pulsera">Pulsera</option>
+                        <option value="Aretes">Aretes</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <input type="number" id="cantidad" class="form-control" placeholder="Cantidad disponible" required>
+                </div>
+                <div class="col-md-2">
+                    <input type="number" id="precio" class="form-control" placeholder="Precio" required>
+                </div>
+                <div class="col-md-2">
+                    <select id="material" class="form-control" required>
+                        <option value="">Selecciona material</option>
+                        <option value="Oro">Oro</option>
+                        <option value="Plata">Plata</option>
+                        <option value="Platino">Platino</option>
+                        <option value="Acero">Acero</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-primary">Agregar</button>
+                </div>
+            </div>
+        </form>
+        
+        <!-- Tabla para mostrar joyas -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Material</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="productosLista">
+                <!-- Aquí se mostrarán las joyas -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.getElementById("productoForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            let nombre = document.getElementById("nombre").value;
+            let tipo = document.getElementById("tipo").value;
+            let cantidad = document.getElementById("cantidad").value;
+            let precio = document.getElementById("precio").value;
+            let material = document.getElementById("material").value;
+            
+            let fila = `<tr>
+                            <td>${nombre}</td>
+                            <td>${tipo}</td>
+                            <td>${cantidad}</td>
+                            <td>${precio}</td>
+                            <td>${material}</td>
+                            <td>
+                                <button class='btn btn-warning btn-sm'>Editar</button>
+                                <button class='btn btn-danger btn-sm'>Eliminar</button>
+                            </td>
+                        </tr>`;
+            
+            document.getElementById("productosLista").innerHTML += fila;
+            
+            document.getElementById("productoForm").reset();
+        });
+    </script>
+</body>
+</html>
