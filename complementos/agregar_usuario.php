@@ -64,32 +64,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_usuario'])) {
 
     // Redirigir usando JavaScript
     if ($stmt->rowCount() > 0) {
-        echo json_encode(['status' => 'success', 'message' => 'Usuario agregado correctamente.']);
-        exit;
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var myModal = new bootstrap.Modal(document.getElementById('successModal'));
+                myModal.show();
+                setTimeout(function() {
+                    myModal.hide();
+                    window.location.href = '../complementos/tabla_usuarios.php?success=1';
+                }, 2000);
+            });
+        </script>";
     } else {
-        echo json_encode(['status' => 'error', 'message' => 'Error al agregar el usuario.']);
-        exit;
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var myModal = new bootstrap.Modal(document.getElementById('modalError'));
+                myModal.show();
+                setTimeout(function() {
+                    myModal.hide();
+                    window.location.href = '../complementos/tabla_usuarios.php?error=1';
+                }, 2000);
+            });
+        </script>";
     }
 }
-?>
 
-<!-- Modal de error -->
+
+?>
+<!-- Modal de Éxito -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Éxito</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Usuario registrado con exito.
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Error -->
 <div class="modal fade" id="modalError" tabindex="-1" aria-labelledby="modalErrorLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalErrorLabel">Error</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p id="errorMensaje"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                Hubo un error al registrar al usuario.
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- Botón para agregar nuevo usuario -->
 <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#agregarUsuarioModal">
@@ -156,6 +186,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_usuario'])) {
 </div>
 
 <!-- Scripts para validaciones en tiempo real -->
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap JS y dependencias -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
@@ -171,6 +207,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_usuario'])) {
             }
         }
 
+
+        // Mostrar/ocultar contraseña
+        $('#mostrarPassword').change(function() {
+            const passwordInput = $('#nuevo_password');
+            if (this.checked) {
+                passwordInput.attr('type', 'text');
+            } else {
+                passwordInput.attr('type', 'password');
+            }
+        });
+        
+        // Validar que solo se ingresen números en el campo de teléfono
+        $("#nuevo_telefono").on("input", function() {
+            let telefono = $(this).val();
+            
+            // Permitir solo números (elimina cualquier otro carácter)
+            telefono = telefono.replace(/\D/g, ""); 
+
+            // Actualiza el campo con el valor filtrado
+            $(this).val(telefono);
+
+            // Verifica si el campo está vacío
+            if (telefono === "") {
+                $("#telefonoError").text("El teléfono solo debe contener números.");
+            } else {
+                $("#telefonoError").text("");
+            }
+        });
+        
         // Validar usuario en tiempo real
         $('#nuevo_usuario').on('blur', function() {
             const usuario = $(this).val();
@@ -221,6 +286,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_usuario'])) {
         function validateEmail(email) {
             const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return regex.test(email);
+        }
+
+        // Función para mostrar el modal
+        function mostrarModal() {
+            var myModal = new bootstrap.Modal(document.getElementById('modalError'));
+            myModal.show(); // Mostrar el modal
+
+            // Ocultar el modal después de 3 segundos
+            setTimeout(function() {
+                myModal.hide();
+            }, 3000);
         }
     });
 </script>
