@@ -38,6 +38,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     }
 }
 ?>
+<?php if (isset($_GET['msg'])): ?>
+    <div class="alert alert-success">
+        <?= htmlspecialchars($_GET['msg']); ?>
+    </div>
+<?php endif; ?>
+
+<?php
+// Mostrar mensajes de éxito o error
+if (isset($_GET['success']) && $_GET['success'] == 1) {
+    echo '<div class="alert alert-success">Usuario agregado/actualizado correctamente.</div>';
+}
+if (isset($_GET['error']) && $_GET['error'] == 1) {
+    echo '<div class="alert alert-danger">Error al agregar/actualizar el usuario.</div>';
+}
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -57,7 +72,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     <div id="layoutSidenav">
         <?php
         include "../complementos/dashboard_menu.php";
-        ?><!--//Agregar todo para el cuerpo-->
+        ?>
+        <!--//Agregar todo para el cuerpo del usuario-->
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
@@ -78,11 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
 
 
 
-                        <?php
-                        //
-                        include_once 'agregar_usuario.php';
 
-                        ?>
 
 
 
@@ -90,6 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
 
                         <!--//tabla de usuarios-->
                         <div class="card mb-4">
+
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
                                 Usuarios
@@ -100,6 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
                                 // include "usuarios.php";
                                 //hace posible la edicion de datos y que carguen sus datos
                                 include "../complementos/cargar_usuarios.php";
+                                include "../complementos/agregar_usuario.php";
                                 ?>
 
 
@@ -177,7 +191,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
                                             die("Error al obtener los datos: " . $e->getMessage());
                                         }
                                         ?>
-
+                                        <!-- Mostrar la tabla de usuario -->
                                         <table id="datatablesSimple" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
@@ -224,7 +238,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
                                                 document.getElementById('usuario_id').value = id;
                                                 document.getElementById('usuario').value = usuario;
                                                 document.getElementById('password').value = ''; // Campo de contraseña vacío para encriptar cuando se edite
-                                                document.getElementById('password').setAttribute('placeholder', '*****'); // Para que aparezca oculto como ***** si no se edita
+                                                document.getElementById('password').setAttribute('placeholder', '*********'); // Para que aparezca oculto como ***** si no se edita
                                                 document.getElementById('nombre').value = nombre;
                                                 document.getElementById('telefono').value = telefono;
                                                 document.getElementById('direccion').value = direccion;
@@ -254,7 +268,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
             include "../complementos/footer_dashboard.php";
             ?>
         </div>
+        <!--//fin del usuario-->
     </div>
 </body>
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+<!-- Bootstrap JS y dependencias -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </html>
