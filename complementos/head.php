@@ -35,7 +35,7 @@ if (isset($_SESSION['id'])) {
             gap: 1px; /* Espacio entre los elementos */
         }
         .icon-link {
-            margin-left: 5px; /* Espacio entre los iconos */
+            margin-left: 10px; /* Espacio entre los iconos */
         }
     </style>
     <script src="https://kit.fontawesome.com/45b2b3afef.js" crossorigin="anonymous"></script>
@@ -66,13 +66,7 @@ if (isset($_SESSION['id'])) {
             <div class="row align-items-center mt-3">
                 <div class="col-10 col-md-4 d-flex justify-content-center justify-content-md-end">
                     <div class="container-user">
-                        <button type="button" class="btn btn-primary position-relative">
-                            Mensajes
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                0
-                                <span class="visually-hidden">unread messages</span>
-                            </span>
-                        </button>
+                       
 
 
                         <div class="dropdown">
