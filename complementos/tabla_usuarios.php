@@ -44,6 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     </div>
 <?php endif; ?>
 
+<<<<<<< HEAD
 <?php
 // Mostrar mensajes de éxito o error
 if (isset($_GET['success']) && $_GET['success'] == 1) {
@@ -54,6 +55,8 @@ if (isset($_GET['error']) && $_GET['error'] == 1) {
 }
 ?>
 
+=======
+>>>>>>> rol-+-extras
 <!DOCTYPE html>
 <html lang="es">
 
@@ -191,7 +194,11 @@ if (isset($_GET['error']) && $_GET['error'] == 1) {
                                             die("Error al obtener los datos: " . $e->getMessage());
                                         }
                                         ?>
+<<<<<<< HEAD
                                         <!-- Mostrar la tabla de usuario -->
+=======
+
+>>>>>>> rol-+-extras
                                         <table id="datatablesSimple" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
@@ -271,6 +278,7 @@ if (isset($_GET['error']) && $_GET['error'] == 1) {
         <!--//fin del usuario-->
     </div>
 </body>
+<<<<<<< HEAD
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -278,4 +286,7 @@ if (isset($_GET['error']) && $_GET['error'] == 1) {
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+=======
+
+>>>>>>> rol-+-extras
 </html>

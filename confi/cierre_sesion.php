@@ -69,4 +69,8 @@
 
     document.addEventListener("mousemove", reiniciarTiempo);
     document.addEventListener("keypress", reiniciarTiempo);
+<<<<<<< HEAD
 </script>
+=======
+</script>
+>>>>>>> rol-+-extras

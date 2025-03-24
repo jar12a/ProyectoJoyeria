@@ -1,4 +1,13 @@
+<<<<<<< HEAD
 
+=======
+<?php
+// Include the privileges file if not already included
+if (!function_exists('tienePermiso')) {
+    include_once "../dashboard/privilegios.php";
+}
+?>
+>>>>>>> rol-+-extras
 
 <div id="layoutSidenav_nav">
     <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -11,9 +20,16 @@
                     Menú
                 </a>
 
+<<<<<<< HEAD
 
 
                 <div class="sb-sidenav-menu-heading"></div>
+=======
+                <div class="sb-sidenav-menu-heading"></div>
+                
+                <?php if (mostrarElementoSegunRol(ROL_ADMIN)): ?>
+                <!-- Sección de Administración - solo visible para administradores -->
+>>>>>>> rol-+-extras
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                     Administrar
@@ -21,6 +37,7 @@
                 </a>
                 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
+<<<<<<< HEAD
                         <a class="nav-link" href="../dashboard/bodega_dasboard.php">Bodega</a>
                         <a class="nav-link" href="../complementos/dashboard_verpedido_adm.php">Pedidos</a>
                         <a class="nav-link" href="../complementos/tabla_usuarios.php">Usuarios</a>
@@ -29,6 +46,18 @@
                         
                     </nav>
                 </div>
+=======
+                        <a class="nav-link <?php echo claseAccesoSegunRol('bodega_dasboard.php'); ?>" href="../dashboard/bodega_dasboard.php">Bodega</a>
+                        <a class="nav-link <?php echo claseAccesoSegunRol('dashboard_verpedido_adm.php'); ?>" href="../complementos/dashboard_verpedido_adm.php">Pedidos</a>
+                        <a class="nav-link <?php echo claseAccesoSegunRol('tabla_usuarios.php'); ?>" href="../complementos/tabla_usuarios.php">Usuarios</a>
+                        <a class="nav-link <?php echo claseAccesoSegunRol('tabla_usuarios.php'); ?>" href="../complementos/tabla_usuarios.php">Empleados</a>
+                        <a class="nav-link <?php echo claseAccesoSegunRol('tabla_usuarios.php'); ?>" href="../complementos/tabla_usuarios.php">Proveedores</a>
+                    </nav>
+                </div>
+                <?php endif; ?>
+                
+                <!-- Sección de Páginas - visible para todos pero con acceso controlado -->
+>>>>>>> rol-+-extras
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                     <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                     Páginas
@@ -36,7 +65,15 @@
                 </a>
                 <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+<<<<<<< HEAD
                     <a class="nav-link" href="../complementos/dashboard_mensajes.php">Mensajes </a>    
+=======
+                    <?php if (tienePermiso('dashboard_mensajes.php', $_SESSION['idRol'])): ?>
+                    <a class="nav-link" href="../complementos/dashboard_mensajes.php">Mensajes </a>
+                    <?php endif; ?>
+                        
+                    <?php if (mostrarElementoSegunRol(ROL_ADMIN) || mostrarElementoSegunRol(ROL_VENDEDOR)): ?>
+>>>>>>> rol-+-extras
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
                             Autentificación
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -44,10 +81,22 @@
                         <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="../dashboard/login.php">Inicio de sesión</a>
+<<<<<<< HEAD
                                 <a class="nav-link" href="../dashboard/registro.php">Registrar</a>
                                 <a class="nav-link" href="../dashboard/password.php">Recuperar contraseña</a>
                             </nav>
                         </div>
+=======
+                                <?php if (mostrarElementoSegunRol(ROL_ADMIN)): ?>
+                                <a class="nav-link" href="../dashboard/registro.php">Registrar</a>
+                                <?php endif; ?>
+                                <a class="nav-link" href="../dashboard/password.php">Recuperar contraseña</a>
+                            </nav>
+                        </div>
+                    <?php endif; ?>
+                    
+                    <?php if (mostrarElementoSegunRol(ROL_ADMIN)): ?>
+>>>>>>> rol-+-extras
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
                             Error
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -59,9 +108,17 @@
                                 <a class="nav-link" href="500.html">500 Page</a>
                             </nav>
                         </div>
+<<<<<<< HEAD
                     </nav>
                 </div>
 
+=======
+                    <?php endif; ?>
+                    </nav>
+                </div>
+
+                <?php if (mostrarElementoSegunRol(ROL_ADMIN)): ?>
+>>>>>>> rol-+-extras
                 <div class="sb-sidenav-menu-heading">Addons</div>
                 <a class="nav-link" href="charts.html">
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
@@ -71,6 +128,10 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                     Tables
                 </a>
+<<<<<<< HEAD
+=======
+                <?php endif; ?>
+>>>>>>> rol-+-extras
             </div>
         </div>
     </nav>

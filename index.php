@@ -1,6 +1,16 @@
 <?php 
 session_start(); // Iniciar sesión
 include 'complementos/head.php';
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+
+>>>>>>> rol-+-extras
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +25,20 @@ include 'complementos/head.php';
 	<script src="https://kit.fontawesome.com/45b2b3afef.js" crossorigin="anonymous"></script>
 
     
+<<<<<<< HEAD
 	<style>
+=======
+	
+</head>
+
+<body>
+
+
+
+    <br>
+
+    <style>
+>>>>>>> rol-+-extras
         .carousel-inner img {
             width: 100vw;
             /* Asegura que el carrusel ocupe todo el ancho de la pantalla */
@@ -138,10 +161,76 @@ include 'complementos/head.php';
         
     </section>
 
+<<<<<<< HEAD
+=======
+        <div class="card" style="width: 18rem;">
+            <img src="product/1.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Aretes Flor de Diamante en Oro Rosado</h5>
+                <p class="card-text">Estos deslumbrantes aretes en forma de flor cuentan con pétalos de oro rosado y un
+                    centro de brillantes diamantes. Su diseño sofisticado los convierte en el complemento perfecto para
+                    ocasiones especiales o para añadir un toque de lujo a tu día a día.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+
+        <div class="div">
+            <div class="card" style="width: 18rem;">
+                <img src="http://localhost/ProyectoJoyeria/product/2.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Moneda de Oro Clásica del Rey Jorge V – Edición Coleccionista</h5>
+                    <p class="card-text">Adquiere esta emblemática moneda de oro, una auténtica pieza de historia que
+                        destaca por su diseño elegante y su inconfundible retrato del Rey Jorge V. Fabricada con
+                        precisión y
+                        detalles exquisitos, esta moneda es perfecta para coleccionistas, inversores y amantes de la
+                        numismática. Su acabado brillante y su alto contenido en oro la convierten en un símbolo de
+                        valor y
+                        tradición. ¡Asegura la tuya y añade un toque de distinción a tu colección!</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="div">
+            <div class="card" style="width: 18rem;">
+                <img src="product/3.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Moneda de Oro con Diseño de Divinidad Hindú – Arte y Espiritualidad</h5>
+                    <p class="card-text">Descubre esta extraordinaria moneda de oro, una obra maestra que combina el
+                        arte y
+                        la espiritualidad. Con un intrincado grabado de una divinidad hindú, esta pieza simboliza la
+                        riqueza
+                        cultural y el misticismo de la tradición india. Elaborada con precisión en oro puro, esta moneda
+                        es
+                        ideal para coleccionistas y para quienes buscan un símbolo de prosperidad y buena fortuna. Un
+                        artículo único que trasciende lo material para conectar con lo sagrado. ¡Hazla parte de tu
+                        colección
+                        ahora!</p>
+                </div>
+            </div>
+
+            <nav aria-label="...">
+                <ul class="pagination">
+                    <li class="page-item disabled">
+                        <span class="page-link">Anterior</span>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link">2</span>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Siguiente</a>
+                    </li>
+                </ul>
+            </nav>
+
+>>>>>>> rol-+-extras
             <section class="container top-categories">
 				<h1 class="heading-1">Mejores Precios</h1>
 				<div class="container-categories">
 					<div class="card-category Joya-1">
+<<<<<<< HEAD
 						<p>ARITOS DE ORO</p>
 						<a href="categoria_aritos.php"><span>Ver más</span></a>
 					</div>
@@ -152,6 +241,18 @@ include 'complementos/head.php';
 					<div class="card-category Joya-3">
 						<p>ANILLOS DE ORO ROSADO</p>
 						<a href="categoria_anillos.php"><span>Ver más</span></a>
+=======
+						<p>joya 1</p>
+						<span>Ver más</span>
+					</div>
+					<div class="card-category Joya-2">
+						<p>joya 2</p>
+						<span>Ver más</span>
+					</div>
+					<div class="card-category Joya-3">
+						<p>joya 3</p>
+						<span>Ver más</span>
+>>>>>>> rol-+-extras
 					</div>
 				</div>
 			</section>
@@ -161,14 +262,23 @@ include 'complementos/head.php';
 
 				<div class="container-options">
 					<span class="active">Destacados</span>
+<<<<<<< HEAD
 					
+=======
+					<span>Más recientes</span>
+					<span>Mejores Vendidos</span>
+>>>>>>> rol-+-extras
 				</div>
 
 				<div class="container-products">
 					<!-- Producto 1 -->
 					<div class="card-product">
 						<div class="container-img">
+<<<<<<< HEAD
 							<img src="product/75.jpg" alt="Cafe Irish" />
+=======
+							<img src="product/4.jpg" alt="Cafe Irish" />
+>>>>>>> rol-+-extras
 							<span class="discount">-13%</span>
 							<div class="button-group">
 								<span>
@@ -190,18 +300,30 @@ include 'complementos/head.php';
 								<i class="fa-solid fa-star"></i>
 								<i class="fa-regular fa-star"></i>
 							</div>
+<<<<<<< HEAD
 							<h3>BRAZALETE DE ORO ROSADO</h3>
 							<span class="add-cart">
 								<i class="fa-solid fa-basket-shopping"></i>
 							</span>
 							<p class="price">LPS.5000 <span>LPS.6000</span></p>
+=======
+							<h3>Joya 4</h3>
+							<span class="add-cart">
+								<i class="fa-solid fa-basket-shopping"></i>
+							</span>
+							<p class="price">L500 <span>L600</span></p>
+>>>>>>> rol-+-extras
 						</div>
 					</div>
 					<!-- Producto 2 -->
 					<div class="card-product">
 						<div class="container-img">
 							<img
+<<<<<<< HEAD
 								src="product/18.jpg"
+=======
+								src="product/5.jpg"
+>>>>>>> rol-+-extras
 								alt="Cafe incafe-ingles.jpg"
 							/>
 							<span class="discount">-22%</span>
@@ -225,18 +347,30 @@ include 'complementos/head.php';
 								<i class="fa-regular fa-star"></i>
 								<i class="fa-regular fa-star"></i>
 							</div>
+<<<<<<< HEAD
 							<h3>ARITOS DE ORO ROSADO</h3>
 							<span class="add-cart">
 								<i class="fa-solid fa-basket-shopping"></i>
 							</span>
 							<p class="price">LPS.1200.00<span>LPS.1500.00</span></p>
+=======
+							<h3>Joya5</h3>
+							<span class="add-cart">
+								<i class="fa-solid fa-basket-shopping"></i>
+							</span>
+							<p class="price">L700.00<span>L780.00</span></p>
+>>>>>>> rol-+-extras
 						</div>
 					</div>
 					<!--  -->
 					<div class="card-product">
 						<div class="container-img">
 							<img
+<<<<<<< HEAD
 								src="product/29.jpg"
+=======
+								src="product/6.jpg"
+>>>>>>> rol-+-extras
 								alt="Cafe Australiano"
 							/>
 							<div class="button-group">
@@ -259,11 +393,19 @@ include 'complementos/head.php';
 								<i class="fa-solid fa-star"></i>
 								<i class="fa-solid fa-star"></i>
 							</div>
+<<<<<<< HEAD
 							<h3>CADENA DE ORO 14K</h3>
 							<span class="add-cart">
 								<i class="fa-solid fa-basket-shopping"></i>
 							</span>
 							<p class="price">LPS.5000.00</p>
+=======
+							<h3>Joya 6</h3>
+							<span class="add-cart">
+								<i class="fa-solid fa-basket-shopping"></i>
+							</span>
+							<p class="price">L500.00</p>
+>>>>>>> rol-+-extras
 						</div>
 					</div>
 					<!--  -->
@@ -290,16 +432,25 @@ include 'complementos/head.php';
 								<i class="fa-solid fa-star"></i>
 								<i class="fa-regular fa-star"></i>
 							</div>
+<<<<<<< HEAD
 							<h3>ARITOS DE PERLAS </h3>
 							<span class="add-cart">
 								<i class="fa-solid fa-basket-shopping"></i>
 							</span>
 							<p class="price">LPS.7000.00</p>
+=======
+							<h3>Joya 7</h3>
+							<span class="add-cart">
+								<i class="fa-solid fa-basket-shopping"></i>
+							</span>
+							<p class="price">L700.00</p>
+>>>>>>> rol-+-extras
 						</div>
 					</div>
 				</div>
 			</section>
 
+<<<<<<< HEAD
 			
 
 			<section class="container specials">
@@ -307,6 +458,35 @@ include 'complementos/head.php';
 					<span class="active">Especiales</span>
 					
 				</div>
+=======
+			<section class="gallery">
+				<img
+					src="product/8.jpg"
+					alt="Gallery Img1"
+					class="gallery-img-1"
+				/><img
+					src="product/9.jpg"
+					alt="Gallery Img2"
+					class="gallery-img-2"
+				/><img
+					src="product/12.jpg"
+					alt="Gallery Img3"
+					class="product/8.jpg"
+				/><img
+					src="product/13.jpg"
+					alt="Gallery Img4"
+					class="gallery-img-4"
+				/><img
+					src="product/14.jpg"
+					alt="Gallery Img5"
+					class="gallery-img-5"
+				/>
+			</section>
+
+			<section class="container specials">
+				<h1 class="heading-1">Especiales</h1>
+
+>>>>>>> rol-+-extras
 				<div class="container-products">
 					<!-- Producto 1 -->
 					<div class="card-product">
@@ -333,11 +513,19 @@ include 'complementos/head.php';
 								<i class="fa-solid fa-star"></i>
 								<i class="fa-regular fa-star"></i>
 							</div>
+<<<<<<< HEAD
 							<h3>CADENA DE ZAFIRO CON ORO</h3>
 							<span class="add-cart">
 								<i class="fa-solid fa-basket-shopping"></i>
 							</span>
 							<p class="price">LPS.5000 <span>LPS.5200</span></p>
+=======
+							<h3>joya 15</h3>
+							<span class="add-cart">
+								<i class="fa-solid fa-basket-shopping"></i>
+							</span>
+							<p class="price">$4.60 <span>$5.30</span></p>
+>>>>>>> rol-+-extras
 						</div>
 					</div>
 					<!-- Producto 2 -->
@@ -368,11 +556,19 @@ include 'complementos/head.php';
 								<i class="fa-regular fa-star"></i>
 								<i class="fa-regular fa-star"></i>
 							</div>
+<<<<<<< HEAD
 							<h3>BRAZALETE DE ORO 24K</h3>
 							<span class="add-cart">
 								<i class="fa-solid fa-basket-shopping"></i>
 							</span>
 							<p class="price">LPS.2500 <span>LPS.3000</span></p>
+=======
+							<h3>Joya 16</h3>
+							<span class="add-cart">
+								<i class="fa-solid fa-basket-shopping"></i>
+							</span>
+							<p class="price">$5.70 <span>$7.30</span></p>
+>>>>>>> rol-+-extras
 						</div>
 					</div>
 					<!--  -->
@@ -400,11 +596,19 @@ include 'complementos/head.php';
 								<i class="fa-solid fa-star"></i>
 								<i class="fa-solid fa-star"></i>
 							</div>
+<<<<<<< HEAD
 							<h3>CADENA DE ORO 18K</h3>
 							<span class="add-cart">
 								<i class="fa-solid fa-basket-shopping"></i>
 							</span>
 							<p class="price">LPS.2000 <span>LPS.3000</span></p>
+=======
+							<h3>Joya 17</h3>
+							<span class="add-cart">
+								<i class="fa-solid fa-basket-shopping"></i>
+							</span>
+							<p class="price">$3.85 <span>$5.50</span></p>
+>>>>>>> rol-+-extras
 						</div>
 					</div>
 					<!--  -->
@@ -431,11 +635,19 @@ include 'complementos/head.php';
 								<i class="fa-solid fa-star"></i>
 								<i class="fa-regular fa-star"></i>
 							</div>
+<<<<<<< HEAD
 							<h3>ARITOS DE ORO ROSADO</h3>
 							<span class="add-cart">
 								<i class="fa-solid fa-basket-shopping"></i>
 							</span>
 							<p class="price">LPS.2000</p>
+=======
+							<h3>Joya 18</h3>
+							<span class="add-cart">
+								<i class="fa-solid fa-basket-shopping"></i>
+							</span>
+							<p class="price">$5.60</p>
+>>>>>>> rol-+-extras
 						</div>
 					</div>
 				</div>
