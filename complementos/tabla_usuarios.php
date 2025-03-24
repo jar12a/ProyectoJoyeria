@@ -191,7 +191,11 @@ if (isset($_GET['error']) && $_GET['error'] == 1) {
                                             die("Error al obtener los datos: " . $e->getMessage());
                                         }
                                         ?>
+<<<<<<< HEAD
                                         <!-- Mostrar la tabla de usuario -->
+=======
+
+>>>>>>> rol-+-extras
                                         <table id="datatablesSimple" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
@@ -269,7 +273,13 @@ if (isset($_GET['error']) && $_GET['error'] == 1) {
             ?>
         </div>
         <!--//fin del usuario-->
+<<<<<<< HEAD
         <!-- Scripts para validaciones en tiempo real -->
+=======
+    </div>
+</body>
+<<<<<<< HEAD
+>>>>>>> origin/catalogo-productos
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -277,7 +287,13 @@ if (isset($_GET['error']) && $_GET['error'] == 1) {
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<<<<<<< HEAD
     </div>
 </body>
 
+=======
+=======
+
+>>>>>>> rol-+-extras
+>>>>>>> origin/catalogo-productos
 </html>
