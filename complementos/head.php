@@ -27,7 +27,7 @@ if (isset($_SESSION['id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Imperial Gems</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
     <style>
         .container-user {
             display: flex;
@@ -38,7 +38,7 @@ if (isset($_SESSION['id'])) {
             margin-left: 10px; /* Espacio entre los iconos */
         }
     </style>
-    <script src="https://kit.fontawesome.com/45b2b3afef.js" crossorigin="anonymous"></script>
+    
 </head>
 
 <body>
@@ -58,7 +58,7 @@ if (isset($_SESSION['id'])) {
                 <div class="col-12 col-md-4 d-flex justify-content-center">
                     <div class="container-logo">
                         <i class="fa-regular fa-gem fa-beat-fade"></i>
-                        <h1 class="logo"><a href="index.php">Imperial Gems</a></h1>
+                        <h1 class="logo"><a href="../index.php">Imperial Gems</a></h1>
                     </div>
                 </div>
                 
