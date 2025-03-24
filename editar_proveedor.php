@@ -1,6 +1,6 @@
 <?php
 // Incluir el archivo de conexión
-include 'Conexion/conexion.php';
+include 'confi/conexion.php';
 
 // Leer los datos enviados en formato JSON
 $data = json_decode(file_get_contents("php://input"), true);

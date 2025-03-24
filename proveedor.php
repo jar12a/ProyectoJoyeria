@@ -43,23 +43,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Verificar correo
     $sql = "SELECT correo FROM proveedores WHERE correo = '$correo'";
-    $result = $pdo->query($sql); // Cambiar $conexion por $pdo
-    if ($result->rowCount() > 0) { // Cambiar num_rows por rowCount
+    $result = $conexion->query($sql);
+    if ($result->num_rows > 0) {
         $errores[] = "El correo electrónico ya está registrado.";
     }
 
     // Verificar teléfono
     $sql = "SELECT telefono FROM proveedores WHERE telefono = '$telefono'";
-    $result = $pdo->query($sql); // Cambiar $conexion por $pdo
-    if ($result->rowCount() > 0) { // Cambiar num_rows por rowCount
+    $result = $conexion->query($sql);
+    if ($result->num_rows > 0) {
         $errores[] = "El número de teléfono ya está registrado.";
     }
 
     // Verificar número de cuenta bancaria
     if ($numCuenta != '') {
         $sql = "SELECT numCuenta FROM proveedores WHERE numCuenta = '$numCuenta'";
-        $result = $pdo->query($sql); // Cambiar $conexion por $pdo
-        if ($result->rowCount() > 0) { // Cambiar num_rows por rowCount
+        $result = $conexion->query($sql);
+        if ($result->num_rows > 0) {
             $errores[] = "El número de cuenta bancaria ya está registrado.";
         }
     }
@@ -67,16 +67,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificar correo PayPal
     if ($correoPayPal != '') {
         $sql = "SELECT correoPayPal FROM proveedores WHERE correoPayPal = '$correoPayPal'";
-        $result = $pdo->query($sql); // Cambiar $conexion por $pdo
-        if ($result->rowCount() > 0) { // Cambiar num_rows por rowCount
+        $result = $conexion->query($sql);
+        if ($result->num_rows > 0) {
             $errores[] = "El correo de PayPal ya está registrado.";
         }
     }
 
     // Verificar empresa
     $sql = "SELECT empresa FROM proveedores WHERE empresa = '$empresa'";
-    $result = $pdo->query($sql); // Cambiar $conexion por $pdo
-    if ($result->rowCount() > 0) { // Cambiar num_rows por rowCount
+    $result = $conexion->query($sql);
+    if ($result->num_rows > 0) {
         $errores[] = "El nombre de la empresa ya está registrado.";
     }
 
@@ -102,53 +102,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 '$direccionPagoEfectivo', '$horarioPagoEfectivo', '$banco', '$numCuenta', '$nombreTitular', 
                 '$tipoCuenta', '$correoPayPal', '$confirmarCuentaPayPal')";
 
-        if ($pdo->exec($sql)) { // Cambiar $conexion->query por $pdo->exec
+        if ($conexion->query($sql) === TRUE) {
             echo "<script>
                     alert('Proveedor agregado con éxito!');
                     window.location.href = window.location.href;  // Redirige a la misma página
                  </script>";
         } else {
-            echo "<p style='color:red;'>Error: " . $pdo->errorInfo()[2] . "</p>"; // Cambiar $conexion->error por $pdo->errorInfo()
+            echo "<p style='color:red;'>Error: " . $conexion->error . "</p>";
         }
     }
 
-    $pdo = null; // Close the PDO connection
+    $conexion->close();
 }
 ?>
 
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Proveedores - Joyería</title>
+
     <style>
-        /* Estilo general de la página */
-        body {
-            background-color: #f8f8f8; /* Fondo suave y elegante */
-            font-family: 'Georgia', serif; /* Fuente elegante */
-            color: #333333;
-            margin: 0;
-            padding: 0;
-        }
-
-        header {
-            background-color: #b58900; /* Color dorado elegante */
-            text-align: center;
-            padding: 40px 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        header h1 {
-            font-size: 42px;
-            color: white;
-            font-weight: bold;
-            margin: 0;
-            text-transform: uppercase; /* Título en mayúsculas */
-            letter-spacing: 2px;
-        }
-
         .container {
             width: 70%;
             margin: 0 auto;
@@ -160,7 +136,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         h2 {
             font-size: 28px;
-            color: #b58900; /* Color dorado para subtítulos */
+            color: #b58900;
+            /* Color dorado para subtítulos */
             text-align: center;
             margin-bottom: 20px;
         }
@@ -172,7 +149,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             font-size: 16px;
         }
 
-        input, select, textarea {
+        input,
+        select,
+        textarea {
             padding: 12px;
             font-size: 16px;
             border: 2px solid #ddd;
@@ -182,8 +161,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             transition: border-color 0.3s ease;
         }
 
-        input:focus, select:focus, textarea:focus {
-            border-color: #b58900; /* Borde dorado al enfocarse */
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #b58900;
+            /* Borde dorado al enfocarse */
             outline: none;
         }
 
@@ -199,7 +181,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         input[type="submit"] {
-            background-color: #b58900; /* Fondo dorado para el botón */
+            background-color: #b58900;
+            /* Fondo dorado para el botón */
             color: white;
             padding: 15px 30px;
             font-size: 18px;
@@ -210,8 +193,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         input[type="submit"]:hover {
-            background-color: #9e7c00; /* Sombra dorada más oscura al hacer hover */
-            transform: translateY(-2px); /* Efecto de elevación */
+            background-color: #9e7c00;
+            /* Sombra dorada más oscura al hacer hover */
+            transform: translateY(-2px);
+            /* Efecto de elevación */
         }
 
         footer {
@@ -246,9 +231,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-    <header>
-        <h1>Gestión de Proveedores - Joyería</h1>
-    </header>
+
 
     <div class="container">
         <h2>Agregar Proveedor</h2>
@@ -273,6 +256,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" id="telefono" name="telefono" value="<?= isset($_POST['telefono']) ? htmlspecialchars($_POST['telefono']) : ''; ?>" placeholder="Ej. +123 4567-8900" required>
             </div>
 
+          
             <div class="form-group">
                 <label for="direccion">Dirección:</label>
                 <textarea id="direccion" name="direccion" rows="4" placeholder="Ej. Colonia Palmira, Tegucigalpa, Honduras." required><?= isset($_POST['direccion']) ? htmlspecialchars($_POST['direccion']) : ''; ?></textarea>
@@ -351,9 +335,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </div>
 
-    <footer>
-        <p>&copy; 2025 Joyería | Todos los derechos reservados</p>
-    </footer>
+
+<!-- Scripts para validaciones en tiempo real -->
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap JS y dependencias -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 
 
     <script>
@@ -363,72 +354,90 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             document.getElementById('banco_fields').style.display = (tipoPago === 'transferencia') ? 'block' : 'none';
             document.getElementById('paypal_fields').style.display = (tipoPago === 'paypal') ? 'block' : 'none';
         }
+        // Validar que solo se ingresen números en el campo de teléfono
+        $("#telefono").on("input", function() {
+            let telefono = $(this).val();
+
+            // Permitir solo números (elimina cualquier otro carácter)
+            telefono = telefono.replace(/\D/g, "");
+
+            // Actualiza el campo con el valor filtrado
+            $(this).val(telefono);
+
+            // Verifica si el campo está vacío
+            if (telefono === "") {
+                $("#telefonoError").text("El teléfono solo debe contener números.");
+            } else {
+                $("#telefonoError").text("");
+            }
+        });
 
         function validarFormulario() {
-        // Muestra un mensaje de confirmación antes de enviar el formulario
-        var confirmarEnvio = confirm("¿Está seguro de que desea enviar los datos?");
-        if (!confirmarEnvio) {
-            return false;  // Si el usuario elige "No", no se envía el formulario
-        }
+            // Muestra un mensaje de confirmación antes de enviar el formulario
+            var confirmarEnvio = confirm("¿Está seguro de que desea enviar los datos?");
+            if (!confirmarEnvio) {
+                return false; // Si el usuario elige "No", no se envía el formulario
+            }
 
-        var tipoPago = document.getElementById('tipo_pago').value;
-        if (tipoPago === 'Selecciona') {
-            alert('Por favor, seleccione un tipo de pago.');
-            return false;
-        }
-
-        var metodoEnvio = document.getElementById('envio').value;
-        if (metodoEnvio === 'Seleccion') {
-            alert('Por favor, seleccione un método de envío.');
-            return false;
-        }
-
-        // Validaciones para los campos según el tipo de pago
-        if (tipoPago === 'efectivo') {
-            var direccionPagoEfectivo = document.getElementById('direccion_pago_efectivo').value;
-            var horarioPagoEfectivo = document.getElementById('horario_pago_efectivo').value;
-            if (direccionPagoEfectivo === '') {
-                alert('Por favor, ingrese la dirección de pago en efectivo.');
+            var tipoPago = document.getElementById('tipo_pago').value;
+            if (tipoPago === 'Selecciona') {
+                alert('Por favor, seleccione un tipo de pago.');
                 return false;
             }
-            if (horarioPagoEfectivo === '') {
-                alert('Por favor, ingrese el horario de atención para el pago en efectivo.');
+
+            var metodoEnvio = document.getElementById('envio').value;
+            if (metodoEnvio === 'Seleccion') {
+                alert('Por favor, seleccione un método de envío.');
                 return false;
             }
+
+            // Validaciones para los campos según el tipo de pago
+            if (tipoPago === 'efectivo') {
+                var direccionPagoEfectivo = document.getElementById('direccion_pago_efectivo').value;
+                var horarioPagoEfectivo = document.getElementById('horario_pago_efectivo').value;
+                if (direccionPagoEfectivo === '') {
+                    alert('Por favor, ingrese la dirección de pago en efectivo.');
+                    return false;
+                }
+                if (horarioPagoEfectivo === '') {
+                    alert('Por favor, ingrese el horario de atención para el pago en efectivo.');
+                    return false;
+                }
+            }
+
+            if (tipoPago === 'transferencia') {
+                var banco = document.getElementById('banco').value;
+                var numCuenta = document.getElementById('numCuenta').value;
+                if (banco === 'Seleccion_ cuenta') {
+                    alert('Por favor, seleccione un banco.');
+                    return false;
+                }
+                if (numCuenta === '') {
+                    alert('Por favor, ingrese el número de cuenta bancaria.');
+                    return false;
+                }
+            }
+
+            if (tipoPago === 'paypal') {
+                var correoPayPal = document.getElementById('correoPayPal').value;
+                var confirmarCuentaPayPal = document.getElementById('confirmarCuentaPayPal').value;
+                if (correoPayPal === '') {
+                    alert('Por favor, ingrese el correo electrónico de PayPal.');
+                    return false;
+                }
+                if (confirmarCuentaPayPal === 'Seleccioneverificacion') {
+                    alert('Por favor, seleccione la verificación de la cuenta PayPal.');
+                    return false;
+                }
+            }
+
+            return true; // Si todo es correcto, el formulario se envía
         }
 
-        if (tipoPago === 'transferencia') {
-            var banco = document.getElementById('banco').value;
-            var numCuenta = document.getElementById('numCuenta').value;
-            if (banco === 'Seleccion_ cuenta') {
-                alert('Por favor, seleccione un banco.');
-                return false;
-            }
-            if (numCuenta === '') {
-                alert('Por favor, ingrese el número de cuenta bancaria.');
-                return false;
-            }
-        }
-
-        if (tipoPago === 'paypal') {
-            var correoPayPal = document.getElementById('correoPayPal').value;
-            var confirmarCuentaPayPal = document.getElementById('confirmarCuentaPayPal').value;
-            if (correoPayPal === '') {
-                alert('Por favor, ingrese el correo electrónico de PayPal.');
-                return false;
-            }
-            if (confirmarCuentaPayPal === 'Seleccioneverificacion') {
-                alert('Por favor, seleccione la verificación de la cuenta PayPal.');
-                return false;
-            }
-        }
-
-        return true; // Si todo es correcto, el formulario se envía
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        showPaymentFields();
-    });
+        document.addEventListener('DOMContentLoaded', function() {
+            showPaymentFields();
+        });
     </script>
 </body>
+
 </html>

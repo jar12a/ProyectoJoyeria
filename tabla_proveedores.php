@@ -1,6 +1,6 @@
 <?php
 // Incluir el archivo de conexión
-include 'Conexion/conexion.php';
+include 'confi/conexion.php';
 
 // Número de registros por página
 $registros_por_pagina = 10;
