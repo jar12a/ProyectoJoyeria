@@ -8,6 +8,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 session_start(); // Iniciar sesión
+include '../complementos/head.php';
 
 $error_message = '';
 
@@ -98,7 +99,7 @@ if ($_POST) {
 }
 ?>
 
-<?php include '../complementos/head.php'; ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -110,8 +111,9 @@ if ($_POST) {
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Login - SB Admin</title>
-    <link href="css/styles.css" rel="stylesheet" />
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link href="css/styles_dashboard" rel="stylesheet" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css" rel="stylesheet">
 </head>
 
 <body class="bg-primary">

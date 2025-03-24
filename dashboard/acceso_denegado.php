@@ -41,7 +41,7 @@ $pagina_inicio = paginaInicio($rol_usuario); // Obtener página de inicio según
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Acceso Denegado - Imperial Gems</title>
-    <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/styles_dashboard" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <?php include '../complementos/head.php'; ?>
 </head>

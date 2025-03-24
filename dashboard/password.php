@@ -7,9 +7,9 @@ $error_message = '';
 $success_message = '';
 
 // Incluir privilegios para manejar visitantes adecuadamente
-if (!function_exists('getRolActual')) {
-    include_once 'privilegios.php';
-}
+//if (!function_exists('getRolActual')) {
+//    include_once 'privilegios.php';
+//}
 
 // Verificar si hay un mensaje de error de otra página
 if (isset($_SESSION['error_message'])) {
@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email'])) {
     <meta name="description" content="Recuperación de contraseña para Imperial Gems" />
     <meta name="author" content="Imperial Gems" />
     <title>Restablecer la contraseña - Imperial Gems</title>
-    <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/styles_dashboard.css" rel="stylesheet" />
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css" rel="stylesheet">
     

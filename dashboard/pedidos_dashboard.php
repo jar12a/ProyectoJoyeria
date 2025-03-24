@@ -68,7 +68,7 @@ $total_pages = ceil($total_pedidos / $rows_per_page);
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Imperial Gems</title>
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="css/styles_dashboard.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body>

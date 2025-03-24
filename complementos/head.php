@@ -27,7 +27,7 @@ if (isset($_SESSION['id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Imperial Gems</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/ProyectoJoyeria/styles.css">
     <style>
         .container-user {
             display: flex;
@@ -149,7 +149,7 @@ if (isset($_SESSION['id'])) {
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Algo más aquí</a></li>
+                            
                         </ul>
                     </li>
                     <li class="nav-item">
