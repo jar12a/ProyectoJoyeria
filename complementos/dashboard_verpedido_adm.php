@@ -31,11 +31,19 @@ include '../confi/conexion.php'; // crea la conexion con la base de datos
                         <h1 class="mt-4">Barra de navegación</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="../dashboard/principal.php">Menú</a></li>
-                            <li class="breadcrumb-item active">Pedidos</li>
+                            <li class="breadcrumb-item active">Inicio</li>
                         </ol>
                         <div class="card mb-4">
 
-                        
+                        </div>
+                        <h1 class="mt-4">Imperial Gems</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item active">Dashboard</li>
+                        </ol>
+
+
+
+
                         <?php
                         //
                         include_once '../complementos/verpedido_adm.php';

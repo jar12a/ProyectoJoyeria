@@ -1,5 +1,9 @@
 <?php
 include "../confi/session_start.php";
+// Include privileges
+if (!function_exists('tienePermiso')) {
+    include_once "./privilegios.php";
+}
 // consultas sql
 include '../confi/conexion.php'; // crea la conexion con la base de datos
 
@@ -43,6 +47,7 @@ include '../confi/filtro_bodega.php';
                 </div>
             </div>
 
+            <?php if (tienePermiso('complementos/proveedores_dashboard.php', $_SESSION['idRol']) && $_SESSION['idRol'] == 1): ?>
             <!-- Tarjeta para Proveedores -->
             <div class="col-md-3 mb-4">
                 <div class="card bg-success text-white text-center">
@@ -54,7 +59,9 @@ include '../confi/filtro_bodega.php';
                     </div>
                 </div>
             </div>
+            <?php endif; ?>
 
+            <?php if (tienePermiso('complementos/tabla_empleados.php', $_SESSION['idRol']) && $_SESSION['idRol'] == 1): ?>
             <!-- Tarjeta para Empleados -->
             <div class="col-md-3 mb-4">
                 <div class="card bg-warning text-dark text-center">
@@ -66,7 +73,9 @@ include '../confi/filtro_bodega.php';
                     </div>
                 </div>
             </div>
+            <?php endif; ?>
 
+            <?php if (tienePermiso('complementos/dashboard_mensajes.php', $_SESSION['idRol'])): ?>
             <!-- Tarjeta para Mensajes -->
             <div class="col-md-3 mb-4">
                 <div class="card bg-danger text-white text-center">
@@ -78,7 +87,9 @@ include '../confi/filtro_bodega.php';
                     </div>
                 </div>
             </div>
+            <?php endif; ?>
 
+            <?php if (tienePermiso('complementos/tabla_usuarios.php', $_SESSION['idRol']) && $_SESSION['idRol'] == 1): ?>
             <!-- Tarjeta para Usuarios -->
             <div class="col-md-3 mb-4">
                 <div class="card bg-info text-white text-center">
@@ -90,7 +101,9 @@ include '../confi/filtro_bodega.php';
                     </div>
                 </div>
             </div>
+            <?php endif; ?>
 
+            <?php if (tienePermiso('bodega_dasboard.php', $_SESSION['idRol']) && $_SESSION['idRol'] == 1): ?>
             <!-- Tarjeta para Bodega -->
             <div class="col-md-3 mb-4">
                 <div class="card bg-secondary text-white text-center">
@@ -98,12 +111,14 @@ include '../confi/filtro_bodega.php';
                         <i class="fas fa-warehouse fa-3x mb-3"></i> <!-- Ícono -->
                         <h5 class="card-title">Bodega</h5>
                         <p class="card-text">Gestiona el inventario en bodega.</p>
-                        <a href="../dashboard/bodega_dasboard.php" class="btn btn-light">Ver Bodega</a>
+                        <a href="bodega_dasboard.php" class="btn btn-light">Ver Bodega</a>
                     </div>
                 </div>
             </div>
+            <?php endif; ?>
 
-            <!-- Tarjeta para Pedidos -->
+            <?php if (tienePermiso('complementos/dashboard_verpedido_adm.php', $_SESSION['idRol'])): ?>
+            <!-- Tarjeta para Pedidos - Visible para admin y vendedor -->
             <div class="col-md-3 mb-4">
                 <div class="card bg-dark text-white text-center">
                     <div class="card-body">
@@ -114,6 +129,7 @@ include '../confi/filtro_bodega.php';
                     </div>
                 </div>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 
@@ -129,3 +145,4 @@ include '../confi/filtro_bodega.php';
 </body>
 
 </html>
+

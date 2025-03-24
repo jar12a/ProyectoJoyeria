@@ -1,80 +1,21 @@
-<?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-include '../confi/conexion.php'; // Asegúrate de que este archivo existe y define la variable $pdo
 
-// Obtener el número de filas a mostrar por página
-$rows_per_page = isset($_GET['rows_per_page']) ? (int)$_GET['rows_per_page'] : 10;
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $rows_per_page;
-
-// Obtener los filtros de búsqueda
-$search_cliente = isset($_GET['search_cliente']) ? $_GET['search_cliente'] : '';
-$search_fecha = isset($_GET['search_fecha']) ? $_GET['search_fecha'] : '';
-
-// Construir la consulta SQL con los filtros
-$query_pedidos = "SELECT p.ID_Pedido, p.Fecha, u.nombre AS Cliente, u.direccion, u.telefono 
-                  FROM pedido p 
-                  JOIN usuario u ON p.ID_usuario = u.id 
-                  WHERE 1=1";
-
-if ($search_cliente) {
-    $query_pedidos .= " AND u.nombre LIKE :search_cliente";
-}
-if ($search_fecha) {
-    $query_pedidos .= " AND DATE(p.Fecha) = :search_fecha";
-}
-
-$query_pedidos .= " LIMIT :rows_per_page OFFSET :offset";
-$stmt_pedidos = $pdo->prepare($query_pedidos);
-
-if ($search_cliente) {
-    $stmt_pedidos->bindValue(':search_cliente', '%' . $search_cliente . '%', PDO::PARAM_STR);
-}
-if ($search_fecha) {
-    $stmt_pedidos->bindValue(':search_fecha', $search_fecha, PDO::PARAM_STR);
-}
-$stmt_pedidos->bindValue(':rows_per_page', $rows_per_page, PDO::PARAM_INT);
-$stmt_pedidos->bindValue(':offset', $offset, PDO::PARAM_INT);
-$stmt_pedidos->execute();
-$pedidos = $stmt_pedidos->fetchAll(PDO::FETCH_ASSOC);
-
-// Obtener el total de pedidos para la paginación
-$query_total_pedidos = "SELECT COUNT(*) FROM pedido p JOIN usuario u ON p.ID_usuario = u.id WHERE 1=1";
-if ($search_cliente) {
-    $query_total_pedidos .= " AND u.nombre LIKE :search_cliente";
-}
-if ($search_fecha) {
-    $query_total_pedidos .= " AND DATE(p.Fecha) = :search_fecha";
-}
-$stmt_total_pedidos = $pdo->prepare($query_total_pedidos);
-if ($search_cliente) {
-    $stmt_total_pedidos->bindValue(':search_cliente', '%' . $search_cliente . '%', PDO::PARAM_STR);
-}
-if ($search_fecha) {
-    $stmt_total_pedidos->bindValue(':search_fecha', $search_fecha, PDO::PARAM_STR);
-}
-$stmt_total_pedidos->execute();
-$total_pedidos = $stmt_total_pedidos->fetchColumn();
-$total_pages = ceil($total_pedidos / $rows_per_page);
-?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Imperial Gems</title>
+        <title>Tables - SB Admin</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
-    <body>
+    <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="principal.php">Start Bootstrap</a>
+            <a class="navbar-brand ps-3" href="principal.php">Principal</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -89,9 +30,10 @@ $total_pages = ceil($total_pedidos / $rows_per_page);
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Configuración</a></li>
+                        <li><a class="dropdown-item" href="#!">Configuraciones</a></li>
+                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="../confi/logout.php">Salir</a></li>
+                        <li><a class="dropdown-item" href="#!">Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -104,7 +46,7 @@ $total_pages = ceil($total_pedidos / $rows_per_page);
                             <div class="sb-sidenav-menu-heading">Core</div>
                             <a class="nav-link" href="index.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Menú
+                                Dashboard
                             </a>
                             <div class="sb-sidenav-menu-heading">Interface</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
@@ -131,9 +73,9 @@ $total_pages = ceil($total_pedidos / $rows_per_page);
                                     </a>
                                     <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="login.php">Inicio de sesion</a>
-                                            <a class="nav-link" href="register.php">Registrar</a>
-                                            <a class="nav-link" href="password.php">Olvido su contraseña?</a>
+                                            <a class="nav-link" href="login.html">Login</a>
+                                            <a class="nav-link" href="register.html">Register</a>
+                                            <a class="nav-link" href="password.html">Forgot Password</a>
                                         </nav>
                                     </div>
                                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
@@ -149,39 +91,77 @@ $total_pages = ceil($total_pedidos / $rows_per_page);
                                     </div>
                                 </nav>
                             </div>
-                            <div class="sb-sidenav-menu-heading">Parametros</div>
+                            <div class="sb-sidenav-menu-heading">Addons</div>
                             <a class="nav-link" href="charts.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                                Datos Estadisticas
+                                Charts
                             </a>
                             <a class="nav-link" href="tables.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Tablas
+                                Tables
                             </a>
                         </div>
                     </div>
-                   
+                    <div class="sb-sidenav-footer">
+                        <div class="small">Logged in as:</div>
+                        Start Bootstrap
+                    </div>
                 </nav>
             </div>
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">PEDIDOS</h1>
+                        <h1 class="mt-4">Tables</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="principal.php">Menú</a></li>
-                            <li class="breadcrumb-item active">Bienvenidos</li>
+                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Tables</li>
                         </ol>
                         <div class="card mb-4">
                             <div class="card-body">
-                                <p class="mb-0">
-                                    Bienvenido al registro general de pedidos
-                                    <?php 
-                                    require_once '../dashboard/verpedido_adm.php'; // Corrige la ruta del archivo
-                                    ?>
-                                </p>
+
+
+                            
+                                DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the
+                                <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
+                                .
                             </div>
                         </div>
-                       
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                DataTable Example
+                            </div>
+                           
+                            
+                            <div class="card-body">
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Usuario</th>
+                                            <th>telefono</th>
+                                            <th>direccion</th>
+                                            <th>contraseña</th>
+                                            <th>id Rol</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                        <?php
+                                        include 'usuarios.php';
+                                        ?>
+
+
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                    
+                                </table>
+                            </div>
+                        </div>
+                        
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
@@ -198,7 +178,14 @@ $total_pages = ceil($total_pedidos / $rows_per_page);
                 </footer>
             </div>
         </div>
+
+
+
+
+        
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+        <script src="js/datatables-simple-demo.js"></script>
     </body>
 </html>

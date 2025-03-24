@@ -31,7 +31,7 @@ include '../confi/conexion.php'; // crea la conexion con la base de datos
                         <h1 class="mt-4">Barra de navegación</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="../dashboard/principal.php">Menú</a></li>
-                            <li class="breadcrumb-item active">Mensajes</li>
+                            <li class="breadcrumb-item active">Inicio</li>
                         </ol>
                         <div class="card mb-4">
 

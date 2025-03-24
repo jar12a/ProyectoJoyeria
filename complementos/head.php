@@ -9,6 +9,13 @@ if (file_exists('../confi/cierre_sesion.php')) {
 
 include __DIR__ . '/../confi/conexion.php'; // Corregir la ruta del archivo
 
+// Incluir privilegios.php para tener acceso a sus funciones
+if (!function_exists('tienePermiso')) {
+    if (file_exists(__DIR__ . '/../dashboard/privilegios.php')) {
+        include_once __DIR__ . '/../dashboard/privilegios.php';
+    }
+}
+
 // Obtener el nombre de usuario desde la base de datos si la sesión está iniciada
 if (isset($_SESSION['id'])) {
     $stmt = $pdo->prepare("SELECT usuario FROM usuario WHERE id = ?");
@@ -27,7 +34,7 @@ if (isset($_SESSION['id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Imperial Gems</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/ProyectoJoyeria/styles.css">
+    <link rel="stylesheet" href="styles.css">
     <style>
         .container-user {
             display: flex;
@@ -35,10 +42,18 @@ if (isset($_SESSION['id'])) {
             gap: 1px; /* Espacio entre los elementos */
         }
         .icon-link {
-            margin-left: 10px; /* Espacio entre los iconos */
+            margin-left: 5px; /* Espacio entre los iconos */
+        }
+        /* Estilo para el indicador de rol */
+        .role-badge {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 0.8rem;
+            margin-left: 5px;
         }
     </style>
-    
+    <script src="https://kit.fontawesome.com/45b2b3afef.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -58,7 +73,7 @@ if (isset($_SESSION['id'])) {
                 <div class="col-12 col-md-4 d-flex justify-content-center">
                     <div class="container-logo">
                         <i class="fa-regular fa-gem fa-beat-fade"></i>
-                        <h1 class="logo"><a href="../index.php">Imperial Gems</a></h1>
+                        <h1 class="logo"><a href="index.php">Imperial Gems</a></h1>
                     </div>
                 </div>
                 
@@ -66,8 +81,23 @@ if (isset($_SESSION['id'])) {
             <div class="row align-items-center mt-3">
                 <div class="col-10 col-md-4 d-flex justify-content-center justify-content-md-end">
                     <div class="container-user">
-                       
-
+                        <?php if (isset($_SESSION['id']) && isset($_SESSION['idRol']) && ($_SESSION['idRol'] == 1 || $_SESSION['idRol'] == 2)): ?>
+                        <a href="/ProyectoJoyeria/complementos/dashboard_mensajes.php" class="btn btn-primary position-relative">
+                            Mensajes
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                0
+                                <span class="visually-hidden">unread messages</span>
+                            </span>
+                        </a>
+                        <?php else: ?>
+                        <button type="button" class="btn btn-primary position-relative">
+                            Mensajes
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                0
+                                <span class="visually-hidden">unread messages</span>
+                            </span>
+                        </button>
+                        <?php endif; ?>
 
                         <div class="dropdown">
                             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
@@ -75,6 +105,17 @@ if (isset($_SESSION['id'])) {
                                 <?php
                                 if (isset($_SESSION['usuario']) && !empty($_SESSION['usuario'])) {
                                     echo htmlspecialchars($_SESSION['usuario']); // Mostrar el nombre de usuario
+                                    
+                                    // Mostrar indicador de rol si está disponible
+                                    if (isset($_SESSION['idRol'])) {
+                                        $rolTexto = "";
+                                        switch($_SESSION['idRol']) {
+                                            case 1: $rolTexto = "Admin"; break;
+                                            case 2: $rolTexto = "Vendedor"; break;
+                                            case 3: $rolTexto = "Cliente"; break;
+                                        }
+                                        echo '<span class="role-badge">' . $rolTexto . '</span>';
+                                    }
                                 } else {
                                     echo 'Usuario';
                                 }
@@ -85,13 +126,10 @@ if (isset($_SESSION['id'])) {
                                 if (isset($_SESSION['usuario']) && !empty($_SESSION['usuario'])) {
                                     // Mostrar enlaces según el rol del usuario
                                     if (isset($_SESSION['idRol'])) {
-                                        if ($_SESSION['idRol'] == 1) { // Admin
-                                            echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/dashboard/admin.php">Panel Administrador</a></li>';
-                                        }
                                         if ($_SESSION['idRol'] == 1 || $_SESSION['idRol'] == 2) { // Admin o Vendedor
-                                            echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/dashboard/vendedor.php">Panel Vendedor</a></li>';
+                                            echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/dashboard/principal.php">Panel de Control</a></li>';
                                         }
-                                        // Todos los usuarios pueden ver el panel de cliente
+                                        // Todos pueden ver Mi Cuenta, pero es la principal para clientes
                                         echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/dashboard/cliente.php">Mi Cuenta</a></li>';
                                     }
                                     echo '<li><a class="dropdown-item" href="/ProyectoJoyeria/ver_pedido.php">Ver Pedidos</a></li>';
@@ -104,6 +142,7 @@ if (isset($_SESSION['id'])) {
                             </ul>
                         </div>
 
+                        <?php if (isset($_SESSION['id'])): ?>
                         <a href="/ProyectoJoyeria/listadedeseo.php" class="icon-link">
                             <i class="fa-solid fa-heart"></i>
                         </a>
@@ -117,6 +156,7 @@ if (isset($_SESSION['id'])) {
                                 echo (empty($_SESSION['carrito'])) ? 0 : count($_SESSION['carrito']);
                                 ?>)</span>
                         </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -149,7 +189,7 @@ if (isset($_SESSION['id'])) {
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            
+                            <li><a class="dropdown-item" href="#">Algo más aquí</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
