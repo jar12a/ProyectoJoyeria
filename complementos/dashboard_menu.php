@@ -23,25 +23,22 @@
                         <a class="nav-link" href="../dashboard/bodega_dasboard.php">Bodega</a>
                         <a class="nav-link" href="../complementos/dashboard_verpedido_adm.php">Pedidos</a>
                         <a class="nav-link" href="../complementos/tabla_usuarios.php">Usuarios</a>
-                        <a class="nav-link" href="../complementos/tabla_usuarios.php">Empleados</a>
-                        
-                        
-                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                    Proveedores
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="../complementos/registrar_proveedores_dashboard.php">Registrar Proveedor</a>
-                                        <a class="nav-link" href="../complementos/proveedores_dashboard.php">Mostrar Proveedor</a>
-                                    </nav>
-                                </div>
+                        <a class="nav-link" href="../complementos/tabla_empleados.php">Empleados</a>
 
 
-                            </nav>
-                        
+                        <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                Proveedores
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="../complementos/registrar_proveedores_dashboard.php">Registrar Proveedor</a>
+                                    <a class="nav-link" href="../complementos/proveedores_dashboard.php">Mostrar Proveedor</a>
+                                </nav>
+                            </div>
+                        </nav>
+
 
                     </nav>
                 </div>
