@@ -1,32 +1,15 @@
 <?php
 
-<<<<<<< HEAD
-if (!isset($_SESSION['id']) || !isset($_SESSION['idRol'])) {
-    // Si no hay sesión activa, redirige al login
-    header("Location: login.php");
-    exit();
+// Definición de roles
+if (!defined('ROL_ADMIN')) {
+    define('ROL_ADMIN', 1);
 }
-
-// Definición de roles
-define('ROL_ADMIN', 1);    // Rol de administrador
-define('ROL_VENDEDOR', 2); // Rol de vendedor
-define('ROL_CLIENTE', 3);  // Rol de cliente
-
-// Definir los niveles de acceso según los roles
-$privilegios = [
-    ROL_ADMIN => ["admin.php", "vendedor.php", "cliente.php", "principal.php", "index.php"],  // Admin (acceso a todo)
-    ROL_VENDEDOR => ["vendedor.php", "cliente.php", "principal.php"],  // Vendedor (acceso a vendedor y cliente)
-    ROL_CLIENTE => ["cliente.php", "index.php"]  // Cliente (acceso solo a cliente y la página principal)
-];
-
-// Verificar si el usuario tiene permiso para estar en la página actual
-$pagina_actual = basename($_SERVER['PHP_SELF']); // Obtiene el nombre del archivo actual
-$rol_usuario = $_SESSION['idRol']; // Rol del usuario
-=======
-// Definición de roles
-define('ROL_ADMIN', 1);      // Rol de administrador
-define('ROL_VENDEDOR', 2);   // Rol de vendedor
-define('ROL_CLIENTE', 3);    // Rol de cliente
+if (!defined('ROL_VENDEDOR')) {
+    define('ROL_VENDEDOR', 2);
+}
+if (!defined('ROL_CLIENTE')) {
+    define('ROL_CLIENTE', 3);
+}
 define('ROL_VISITANTE', 0);  // Rol de visitante (no registrado)
 
 // Definir los niveles de acceso según los roles - formato más completo
@@ -51,14 +34,16 @@ $privilegios = [
     ROL_CLIENTE => [
         "cliente.php", "index.php", "pedidos/index.php", "perfil.php",
         "ver_pedido.php", "acceso_denegado.php", "carrito.php", "listadedeseo.php", 
-        "login.php", "registro.php", "codigo_recu.php", "recucontra.php", "password.php"
+        "login.php", "registro.php", "codigo_recu.php", "recucontra.php", "password.php", "catalago1.php","continuar_pedido.php",
+        "categoria_aritos.php", "categoria_anillos.php", "categoria_cadena.php", "categoria_brazaletes.php", "Contacto.php","seguir_pedido.php","filtradobusqueda.php",
+
         // Cliente solo puede ver su área
     ],
     ROL_VISITANTE => [
         "index.php", "catalago1.php", "categoria_aritos.php", "categoria_anillos.php", 
         "categoria_cadena.php", "categoria_brazaletes.php", "Contacto.php",
         "login.php", "registro.php", "password.php", "acceso_denegado.php", 
-        "codigo_recu.php", "recucontra.php"
+        "codigo_recu.php", "recucontra.php", "carrito.php","filtradobusqueda.php"
         // Visitantes solo pueden ver páginas públicas
     ]
 ];
@@ -89,7 +74,6 @@ if (!isset($_SESSION['id']) || !isset($_SESSION['idRol'])) {
 
 // Verificar si el usuario tiene permiso para estar en la página actual
 $pagina_actual = basename($_SERVER['PHP_SELF']); // Obtiene el nombre del archivo actual
->>>>>>> rol-+-extras
 
 // Comprobación especial para admin - puede acceder a cualquier página
 if ($rol_usuario == ROL_ADMIN) {
@@ -97,12 +81,6 @@ if ($rol_usuario == ROL_ADMIN) {
     // No se necesita redirección
 } 
 // Para otros roles, verificar si pueden acceder a la página actual
-<<<<<<< HEAD
-else if (!in_array($pagina_actual, $privilegios[$rol_usuario])) {
-    // Si la página actual no está permitida para su rol, redirigir
-    header("Location: acceso_denegado.php");
-    exit();
-=======
 else {
     $puede_acceder = false;
     foreach ($privilegios[$rol_usuario] as $pagina_permitida) {
@@ -132,15 +110,11 @@ function getRutaAccesoDenegado() {
     } else {
         return './dashboard/acceso_denegado.php';
     }
->>>>>>> rol-+-extras
 }
 
 // Función auxiliar para comprobar si un usuario puede acceder a una página específica
 function tienePermiso($pagina, $rol) {
     global $privilegios;
-<<<<<<< HEAD
-    return in_array($pagina, $privilegios[$rol]);
-=======
     
     if ($rol == ROL_ADMIN) return true; // Admin siempre tiene permiso
     
@@ -155,33 +129,22 @@ function tienePermiso($pagina, $rol) {
         }
     }
     return false;
->>>>>>> rol-+-extras
 }
 
 // Función para redirigir al usuario a su página de inicio según su rol
 function redirigirSegunRol($rol) {
     switch ($rol) {
         case ROL_ADMIN:
-<<<<<<< HEAD
-            return "admin.php";
-        case ROL_VENDEDOR:
-            return "vendedor.php";
-        case ROL_CLIENTE:
-            return "../index.php";
-=======
             return "../dashboard/principal.php";
         case ROL_VENDEDOR:
             return "../dashboard/principal.php";
         case ROL_CLIENTE:
             return "../index.php";
         case ROL_VISITANTE:
->>>>>>> rol-+-extras
         default:
             return "../index.php";
     }
 }
-<<<<<<< HEAD
-=======
 
 // Función para obtener el nombre del panel según el rol
 function getNombrePanel($rol) {
@@ -226,5 +189,4 @@ function estaLogueado() {
 function getRolActual() {
     return isset($_SESSION['idRol']) ? $_SESSION['idRol'] : ROL_VISITANTE;
 }
->>>>>>> rol-+-extras
 ?>
