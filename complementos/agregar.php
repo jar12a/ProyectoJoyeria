@@ -18,6 +18,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Manejo de la imagen
     $foto = "";
     if (!empty($_FILES['foto']['name'])) {
+        if (!is_dir("uploads")) {
+            mkdir("uploads", 0777, true); // Crear la carpeta si no existe
+        }
         $foto = basename($_FILES['foto']['name']);
         move_uploaded_file($_FILES['foto']['tmp_name'], "uploads/" . $foto);
     }

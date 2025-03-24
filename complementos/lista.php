@@ -48,6 +48,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
 
             // Manejo de la foto
+            if (!is_dir("uploads")) {
+                mkdir("uploads", 0777, true); // Crear la carpeta si no existe
+            }
             $foto_nombre = $_FILES['foto']['name'];
             $foto_tmp = $_FILES['foto']['tmp_name'];
             $ruta_destino = "uploads/" . $foto_nombre;
