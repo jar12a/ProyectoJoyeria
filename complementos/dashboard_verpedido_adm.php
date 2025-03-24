@@ -36,10 +36,6 @@ include '../confi/conexion.php'; // crea la conexion con la base de datos
                         <div class="card mb-4">
 
                         
-
-
-
-
                         <?php
                         //
                         include_once '../complementos/verpedido_adm.php';
