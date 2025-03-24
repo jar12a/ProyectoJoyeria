@@ -1,0 +1,125 @@
+<?php
+ob_start(); // Inicia el búfer de salida
+include 'complementos/head.php';
+require_once 'confi/conexion.php'; // Asegúrate de que la conexión esté configurada correctamente
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nombre = htmlspecialchars($_POST["nombre"]);
+    $apellido = htmlspecialchars($_POST["apellido"]);
+    $email = htmlspecialchars($_POST["email"]);
+    $telefono = htmlspecialchars($_POST["telefono"]);
+    $mensaje = htmlspecialchars($_POST["mensaje"]);
+
+    if (empty($nombre) || empty($apellido) || empty($email) || empty($telefono) || empty($mensaje)) {
+        echo '<div class="alert alert-danger">Todos los campos son obligatorios.</div>';
+    } else {
+        // Insertar los datos en la base de datos
+        $stmt = $pdo->prepare("INSERT INTO contactos (nombre, apellido, email, telefono, mensaje) VALUES (?, ?, ?, ?, ?)");
+        try {
+            $stmt->execute([$nombre, $apellido, $email, $telefono, $mensaje]);
+            echo '<div class="alert alert-success">Gracias, ' . $nombre . ' ' . $apellido . '. Tu mensaje ha sido enviado con éxito.</div>';
+            
+            // Redirigir para evitar reenvío de datos
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
+        } catch (PDOException $e) {
+            echo '<div class="alert alert-danger">Error al enviar el mensaje: ' . $e->getMessage() . '</div>';
+        }
+    }
+}
+
+ob_end_flush(); // Envía el contenido del búfer al navegador
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contáctanos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #ffffff, #f0f0f0);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Contáctanos</h2>
+        <p class="text-center">Reserva una reunión o llamada con el equipo.</p>
+
+        <div class="row">
+            <div class="col-md-6">
+                <form action="" method="POST">
+                    <div class="mb-3 input-group">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        <input type="text" class="form-control" name="nombre" placeholder="Nombre..." required>
+                    </div>
+
+                    <div class="mb-3 input-group">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        <input type="text" class="form-control" name="apellido" placeholder="Apellido..." required>
+                    </div>
+
+                    <div class="mb-3 input-group">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        <input type="email" class="form-control" name="email" placeholder="Correo electrónico..." required>
+                    </div>
+
+                    <div class="mb-3 input-group">
+                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                        <input type="tel" class="form-control" name="telefono" placeholder="Número de teléfono..." required>
+                    </div>
+
+                    <div class="mb-3 input-group">
+                        <span class="input-group-text"><i class="fas fa-comment"></i></span>
+                        <textarea class="form-control" name="mensaje" rows="4" placeholder="Tu mensaje..." required></textarea>
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="privacidad" required>
+                        <label class="form-check-label" for="privacidad">Acepto la política de privacidad</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+
+            <div class="col-md-6">
+                <h5>¿Preguntas?</h5>
+                <p><strong>¿Cómo puedo contactar con Joyeria Bella?</strong></p>
+                <p>Contacta al equipo para preguntar sobre nuestras joyas o servicios.</p>
+                <p><strong>¿Ofrecen reuniones remotas?</strong></p>
+                <p>Sí, podemos hacer reuniones remotas. Solo háznoslo saber en las notas de la reunión.</p>
+                <p><strong>¿Cómo puedo solicitar una llamada de vuelta?</strong></p>
+                <p>Simplemente incluye tu número de teléfono y menciónalo en el campo proporcionado.</p>
+
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.1889912158595!2d-87.2154278249038!3d14.07452438635186!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f6fbd5024d3dc6b%3A0xbdb7f2ff72f90fc0!2sMetromall%20Tegucigalpa!5e1!3m2!1ses-419!2shn!4v1741548287517!5m2!1ses-419!2shn"
+                    width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+
+        <footer class="text-center mt-5">
+            <p><a href="#">Homepage</a> | <a href="#">Sobre Nosotros</a> | <a href="#">Contacto</a></p>
+            <p>
+                <a href="#" class="me-3"><i class="fab fa-facebook fa-lg"></i></a>
+                <a href="#" class="me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                <a href="#" class="me-3"><i class="fab fa-youtube fa-lg"></i></a>
+                <a href="#"><i class="fab fa-linkedin fa-lg"></i></a>
+            </p>
+            <p>&copy; Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
