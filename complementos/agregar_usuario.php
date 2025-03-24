@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 // Incluir la conexión a la base de datos
 include_once '../confi/conexion.php';
@@ -121,6 +122,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_usuario'])) {
 </div>
 
 
+=======
+>>>>>>> rol-+-extras
 <!-- Botón para agregar nuevo usuario -->
 <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#agregarUsuarioModal">
     Agregar Nuevo Usuario
@@ -136,19 +139,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_usuario'])) {
             </div>
             <div class="modal-body">
                 <!-- Formulario para agregar nuevo usuario -->
+<<<<<<< HEAD
                 <form id="formAgregarUsuario" method="POST">
                     <div class="mb-3">
                         <label for="nuevo_usuario" class="form-label">Usuario</label>
                         <input type="text" class="form-control" id="nuevo_usuario" name="usuario" required>
                         <div id="usuarioError" class="text-danger"></div>
+=======
+                <form action="" method="POST">
+                    <div class="mb-3">
+                        <label for="nuevo_usuario" class="form-label">Usuario</label>
+                        <input type="text" class="form-control" id="nuevo_usuario" name="usuario" required>
+>>>>>>> rol-+-extras
                     </div>
                     <div class="mb-3">
                         <label for="nuevo_password" class="form-label">Contraseña</label>
                         <input type="password" class="form-control" id="nuevo_password" name="password" required>
+<<<<<<< HEAD
                         <div class="form-check mt-2">
                             <input type="checkbox" class="form-check-input" id="mostrarPassword">
                             <label class="form-check-label" for="mostrarPassword">Mostrar contraseña</label>
                         </div>
+=======
+>>>>>>> rol-+-extras
                     </div>
                     <div class="mb-3">
                         <label for="nuevo_nombre" class="form-label">Nombre</label>
@@ -156,16 +169,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_usuario'])) {
                     </div>
                     <div class="mb-3">
                         <label for="nuevo_telefono" class="form-label">Teléfono</label>
+<<<<<<< HEAD
                         <input type="text" class="form-control" id="nuevo_telefono" name="telefono">
                     </div>
                     <div class="mb-3">
                         <label for="nuevo_direccion" class="form-label">Dirección</label>
                         <input type="text" class="form-control" id="nuevo_direccion" name="direccion">
+=======
+                        <input type="text" class="form-control" id="nuevo_telefono" name="telefono" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nuevo_direccion" class="form-label">Dirección</label>
+                        <input type="text" class="form-control" id="nuevo_direccion" name="direccion" required>
+>>>>>>> rol-+-extras
                     </div>
                     <div class="mb-3">
                         <label for="nuevo_correo" class="form-label">Correo</label>
                         <input type="email" class="form-control" id="nuevo_correo" name="correo" required>
+<<<<<<< HEAD
                         <div id="correoError" class="text-danger"></div>
+=======
+>>>>>>> rol-+-extras
                     </div>
                     <div class="mb-3">
                         <label for="nuevo_rol" class="form-label">Rol</label>
@@ -177,7 +201,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_usuario'])) {
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+<<<<<<< HEAD
                         <button id="btnAgregar" type="submit" name="agregar_usuario" class="btn btn-primary">Agregar</button>
+=======
+                        <button type="submit" name="agregar_usuario" class="btn btn-primary">Agregar</button>
+>>>>>>> rol-+-extras
                     </div>
                 </form>
             </div>
@@ -185,6 +213,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_usuario'])) {
     </div>
 </div>
 
+<<<<<<< HEAD
 <!-- Scripts para validaciones en tiempo real -->
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -299,3 +328,71 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_usuario'])) {
         }
     });
 </script>
+=======
+<?php
+// Incluir la conexión a la base de datos
+include_once '../confi/conexion.php';
+
+// Procesar el formulario de agregar usuario
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_usuario'])) {
+    // Obtener los datos del formulario
+    $usuario = $_POST['usuario'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Encriptar la contraseña
+    $nombre = $_POST['nombre'];
+    $telefono = $_POST['telefono'];
+    $direccion = $_POST['direccion'];
+    $correo = $_POST['correo'];
+    $rol = $_POST['rol'];
+
+   
+// Incluir la conexión a la base de datos
+include_once '../confi/conexion.php';
+
+// Procesar el formulario de agregar usuario
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agregar_usuario'])) {
+    // Obtener los datos del formulario
+    $usuario = $_POST['usuario'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Encriptar la contraseña
+    $nombre = $_POST['nombre'];
+    $telefono = $_POST['telefono'];
+    $direccion = $_POST['direccion'];
+    $correo = $_POST['correo'];
+    $rol = $_POST['rol'];
+
+    // Insertar el nuevo usuario en la base de datos
+    $query = "INSERT INTO usuario (usuario, password, nombre, telefono, direccion, correo, idRol) 
+              VALUES (:usuario, :password, :nombre, :telefono, :direccion, :correo, (SELECT id FROM rol WHERE Rol = :rol))";
+
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([
+        'usuario' => $usuario,
+        'password' => $password,
+        'nombre' => $nombre,
+        'telefono' => $telefono,
+        'direccion' => $direccion,
+        'correo' => $correo,
+        'rol' => $rol
+    ]);
+
+    // Redirigir para evitar el reenvío del formulario
+    if ($stmt->rowCount() > 0) {
+        header("Location: principal.php?success=1"); // Redirige a la misma página con un mensaje de éxito
+        exit;
+    } else {
+        header("Location: principal.php?error=1"); // Redirige a la misma página con un mensaje de error
+        exit;
+    }
+}
+
+    // Mostrar mensaje de éxito o error
+    if ($stmt->rowCount() > 0) {
+        echo '<div class="alert alert-success">Usuario agregado correctamente.</div>';
+    } else {
+        echo '<div class="alert alert-danger">Error al agregar el usuario.</div>';
+    }
+}
+
+include '../complementos/cargar_usuarios.php';
+?>
+
+>>>>>>> rol-+-extras

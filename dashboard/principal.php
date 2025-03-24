@@ -78,7 +78,6 @@ include '../confi/filtro_bodega.php';
                     </div>
                 </div>
             </div>
-
             <!-- Tarjeta para Usuarios -->
             <div class="col-md-3 mb-4">
                 <div class="card bg-info text-white text-center">
@@ -90,7 +89,6 @@ include '../confi/filtro_bodega.php';
                     </div>
                 </div>
             </div>
-
             <!-- Tarjeta para Bodega -->
             <div class="col-md-3 mb-4">
                 <div class="card bg-secondary text-white text-center">
