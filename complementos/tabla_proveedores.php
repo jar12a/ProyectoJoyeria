@@ -22,16 +22,7 @@ $sql_total = "SELECT COUNT(*) AS total FROM proveedores WHERE
     correo LIKE :busqueda OR 
     telefono LIKE :busqueda OR 
     direccion LIKE :busqueda OR 
-    tipo_pago LIKE :busqueda OR 
-    envio LIKE :busqueda OR 
-    banco LIKE :busqueda OR 
-    numCuenta LIKE :busqueda OR 
-    nombreTitular LIKE :busqueda OR 
-    tipoCuenta LIKE :busqueda OR 
-    direccionPagoEfectivo LIKE :busqueda OR 
-    horarioPagoEfectivo LIKE :busqueda OR 
-    correoPayPal LIKE :busqueda OR 
-    confirmarCuentaPayPal LIKE :busqueda";
+    envio LIKE :busqueda";
 
 $stmt_total = $pdo->prepare($sql_total);
 $stmt_total->execute([':busqueda' => "%$busqueda%"]);
@@ -41,7 +32,7 @@ $total_registros = $stmt_total->fetch(PDO::FETCH_ASSOC)['total'];
 $total_paginas = ceil($total_registros / $registros_por_pagina);
 
 // Consulta para obtener los proveedores con límite, desplazamiento y filtro
-$sql = "SELECT id, empresa, contacto, correo, telefono, direccion, tipo_pago, envio, banco, numCuenta, nombreTitular, tipoCuenta, direccionPagoEfectivo, horarioPagoEfectivo, correoPayPal, confirmarCuentaPayPal 
+$sql = "SELECT id, empresa, contacto, correo, telefono, direccion, envio 
         FROM proveedores 
         WHERE 
             empresa LIKE :busqueda OR 
@@ -49,16 +40,7 @@ $sql = "SELECT id, empresa, contacto, correo, telefono, direccion, tipo_pago, en
             correo LIKE :busqueda OR 
             telefono LIKE :busqueda OR 
             direccion LIKE :busqueda OR 
-            tipo_pago LIKE :busqueda OR 
-            envio LIKE :busqueda OR 
-            banco LIKE :busqueda OR 
-            numCuenta LIKE :busqueda OR 
-            nombreTitular LIKE :busqueda OR 
-            tipoCuenta LIKE :busqueda OR 
-            direccionPagoEfectivo LIKE :busqueda OR 
-            horarioPagoEfectivo LIKE :busqueda OR 
-            correoPayPal LIKE :busqueda OR 
-            confirmarCuentaPayPal LIKE :busqueda
+            envio LIKE :busqueda
         LIMIT :limit OFFSET :offset";
 
 $stmt = $pdo->prepare($sql);
@@ -157,16 +139,7 @@ $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <th>Correo</th>
                         <th>Teléfono</th>
                         <th>Dirección</th>
-                        <th>Tipo de Pago</th>
                         <th>Método de Envío</th>
-                        <th>Banco</th>
-                        <th>Número de Cuenta</th>
-                        <th>Nombre del Titular</th>
-                        <th>Tipo de Cuenta</th>
-                        <th>Dirección de Pago en Efectivo</th>
-                        <th>Horario de Pago</th>
-                        <th>Correo de PayPal</th>
-                        <th>Confirmación PayPal</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -179,16 +152,7 @@ $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <td data-editable data-columna="correo"><?php echo htmlspecialchars($fila['correo']); ?></td>
                             <td data-editable data-columna="telefono"><?php echo htmlspecialchars($fila['telefono']); ?></td>
                             <td data-editable data-columna="direccion"><?php echo htmlspecialchars($fila['direccion']); ?></td>
-                            <td data-editable data-columna="tipo_pago"><?php echo htmlspecialchars($fila['tipo_pago']); ?></td>
                             <td data-editable data-columna="envio"><?php echo htmlspecialchars($fila['envio']); ?></td>
-                            <td data-editable data-columna="banco"><?php echo htmlspecialchars($fila['banco']); ?></td>
-                            <td data-editable data-columna="numCuenta"><?php echo htmlspecialchars($fila['numCuenta']); ?></td>
-                            <td data-editable data-columna="nombreTitular"><?php echo htmlspecialchars($fila['nombreTitular']); ?></td>
-                            <td data-editable data-columna="tipoCuenta"><?php echo htmlspecialchars($fila['tipoCuenta']); ?></td>
-                            <td data-editable data-columna="direccionPagoEfectivo"><?php echo htmlspecialchars($fila['direccionPagoEfectivo']); ?></td>
-                            <td data-editable data-columna="horarioPagoEfectivo"><?php echo htmlspecialchars($fila['horarioPagoEfectivo']); ?></td>
-                            <td data-editable data-columna="correoPayPal"><?php echo htmlspecialchars($fila['correoPayPal']); ?></td>
-                            <td data-editable data-columna="confirmarCuentaPayPal"><?php echo htmlspecialchars($fila['confirmarCuentaPayPal']); ?></td>
                         </tr>
                     <?php } ?>
                 </tbody>
