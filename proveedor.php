@@ -1,6 +1,14 @@
 <?php
 include 'confi/conexion.php';
 
+// Inicializar la conexión PDO
+try {
+    $conexion = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Error de conexión: " . $e->getMessage());
+}
+
 // Verificar si el formulario se ha enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recibir los datos del formulario
@@ -42,41 +50,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $errores = [];
 
     // Verificar correo
-    $sql = "SELECT correo FROM proveedores WHERE correo = '$correo'";
-    $result = $conexion->query($sql);
-    if ($result->num_rows > 0) {
+    $sql = "SELECT correo FROM proveedores WHERE correo = :correo";
+    $stmt = $conexion->prepare($sql);
+    $stmt->bindParam(':correo', $correo);
+    $stmt->execute();
+    if ($stmt->rowCount() > 0) {
         $errores[] = "El correo electrónico ya está registrado.";
     }
 
     // Verificar teléfono
-    $sql = "SELECT telefono FROM proveedores WHERE telefono = '$telefono'";
-    $result = $conexion->query($sql);
-    if ($result->num_rows > 0) {
+    $sql = "SELECT telefono FROM proveedores WHERE telefono = :telefono";
+    $stmt = $conexion->prepare($sql);
+    $stmt->bindParam(':telefono', $telefono);
+    $stmt->execute();
+    if ($stmt->rowCount() > 0) {
         $errores[] = "El número de teléfono ya está registrado.";
     }
 
     // Verificar número de cuenta bancaria
     if ($numCuenta != '') {
-        $sql = "SELECT numCuenta FROM proveedores WHERE numCuenta = '$numCuenta'";
-        $result = $conexion->query($sql);
-        if ($result->num_rows > 0) {
+        $sql = "SELECT numCuenta FROM proveedores WHERE numCuenta = :numCuenta";
+        $stmt = $conexion->prepare($sql);
+        $stmt->bindParam(':numCuenta', $numCuenta);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
             $errores[] = "El número de cuenta bancaria ya está registrado.";
         }
     }
 
     // Verificar correo PayPal
     if ($correoPayPal != '') {
-        $sql = "SELECT correoPayPal FROM proveedores WHERE correoPayPal = '$correoPayPal'";
-        $result = $conexion->query($sql);
-        if ($result->num_rows > 0) {
+        $sql = "SELECT correoPayPal FROM proveedores WHERE correoPayPal = :correoPayPal";
+        $stmt = $conexion->prepare($sql);
+        $stmt->bindParam(':correoPayPal', $correoPayPal);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
             $errores[] = "El correo de PayPal ya está registrado.";
         }
     }
 
     // Verificar empresa
-    $sql = "SELECT empresa FROM proveedores WHERE empresa = '$empresa'";
-    $result = $conexion->query($sql);
-    if ($result->num_rows > 0) {
+    $sql = "SELECT empresa FROM proveedores WHERE empresa = :empresa";
+    $stmt = $conexion->prepare($sql);
+    $stmt->bindParam(':empresa', $empresa);
+    $stmt->execute();
+    if ($stmt->rowCount() > 0) {
         $errores[] = "El nombre de la empresa ya está registrado.";
     }
 
@@ -98,21 +116,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql = "INSERT INTO proveedores (empresa, contacto, correo, telefono, direccion, tipo_pago, envio, 
                 direccionPagoEfectivo, horarioPagoEfectivo, banco, numCuenta, nombreTitular, tipoCuenta, 
                 correoPayPal, confirmarCuentaPayPal) 
-                VALUES ('$empresa', '$contacto', '$correo', '$telefono', '$direccion', '$tipo_pago', '$envio', 
-                '$direccionPagoEfectivo', '$horarioPagoEfectivo', '$banco', '$numCuenta', '$nombreTitular', 
-                '$tipoCuenta', '$correoPayPal', '$confirmarCuentaPayPal')";
+                VALUES (:empresa, :contacto, :correo, :telefono, :direccion, :tipo_pago, :envio, 
+                :direccionPagoEfectivo, :horarioPagoEfectivo, :banco, :numCuenta, :nombreTitular, 
+                :tipoCuenta, :correoPayPal, :confirmarCuentaPayPal)";
+        $stmt = $conexion->prepare($sql);
+        $stmt->bindParam(':empresa', $empresa);
+        $stmt->bindParam(':contacto', $contacto);
+        $stmt->bindParam(':correo', $correo);
+        $stmt->bindParam(':telefono', $telefono);
+        $stmt->bindParam(':direccion', $direccion);
+        $stmt->bindParam(':tipo_pago', $tipo_pago);
+        $stmt->bindParam(':envio', $envio);
+        $stmt->bindParam(':direccionPagoEfectivo', $direccionPagoEfectivo);
+        $stmt->bindParam(':horarioPagoEfectivo', $horarioPagoEfectivo);
+        $stmt->bindParam(':banco', $banco);
+        $stmt->bindParam(':numCuenta', $numCuenta);
+        $stmt->bindParam(':nombreTitular', $nombreTitular);
+        $stmt->bindParam(':tipoCuenta', $tipoCuenta);
+        $stmt->bindParam(':correoPayPal', $correoPayPal);
+        $stmt->bindParam(':confirmarCuentaPayPal', $confirmarCuentaPayPal);
 
-        if ($conexion->query($sql) === TRUE) {
+        if ($stmt->execute()) {
             echo "<script>
                     alert('Proveedor agregado con éxito!');
                     window.location.href = window.location.href;  // Redirige a la misma página
                  </script>";
         } else {
-            echo "<p style='color:red;'>Error: " . $conexion->error . "</p>";
+            echo "<p style='color:red;'>Error: " . $stmt->errorInfo()[2] . "</p>";
         }
     }
 
-    $conexion->close();
+    $conexion = null;
 }
 ?>
 
