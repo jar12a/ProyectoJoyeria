@@ -45,9 +45,14 @@ include '../confi/conexion.php'; // crea la conexion con la base de datos
 
 
                         <?php
-                        //
-                        include_once '../complementos/verpedido_adm.php';
+                        // Definir las variables necesarias para el archivo incluido
+                        $rows_per_page = isset($_GET['rows_per_page']) ? (int)$_GET['rows_per_page'] : 10;
+                        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                        $search_cliente = isset($_GET['search_cliente']) ? $_GET['search_cliente'] : '';
+                        $search_fecha = isset($_GET['search_fecha']) ? $_GET['search_fecha'] : '';
 
+                        // Incluir el archivo sin parámetros en la URL
+                        include_once '../complementos/verpedido_adm.php';
                         ?>
 
 
@@ -58,3 +63,6 @@ include '../confi/conexion.php'; // crea la conexion con la base de datos
             include "../complementos/footer_dashboard.php";
             ?>
         </div>
+</body>
+
+</html>

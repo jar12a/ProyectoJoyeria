@@ -102,15 +102,7 @@ if (!function_exists('tienePermiso')) {
                 </div>
 
                 <?php if (mostrarElementoSegunRol(ROL_ADMIN)): ?>
-                <div class="sb-sidenav-menu-heading">Addons</div>
-                <a class="nav-link" href="charts.html">
-                    <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                    Charts
-                </a>
-                <a class="nav-link" href="tables.html">
-                    <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                    Tables
-                </a>
+                
                 <?php endif; ?>
             </div>
         </div>
@@ -124,4 +116,3 @@ if (!function_exists('tienePermiso')) {
 <script src="../dashboard/assets/demo/chart-bar-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
 <script src="../dashboard/js/datatables-simple-demo.js"></script>
-

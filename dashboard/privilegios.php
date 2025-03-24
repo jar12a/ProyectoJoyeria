@@ -29,14 +29,16 @@ $privilegios = [
     ROL_CLIENTE => [
         "cliente.php", "index.php", "pedidos/index.php", "perfil.php",
         "ver_pedido.php", "acceso_denegado.php", "carrito.php", "listadedeseo.php", 
-        "login.php", "registro.php", "codigo_recu.php", "recucontra.php", "password.php"
+        "login.php", "registro.php", "codigo_recu.php", "recucontra.php", "password.php", "catalago1.php","continuar_pedido.php",
+        "categoria_aritos.php", "categoria_anillos.php", "categoria_cadena.php", "categoria_brazaletes.php", 
+        "Contacto.php","seguir_pedido.php","filtradobusqueda.php"
         // Cliente solo puede ver su área
     ],
     ROL_VISITANTE => [
         "index.php", "catalago1.php", "categoria_aritos.php", "categoria_anillos.php", 
         "categoria_cadena.php", "categoria_brazaletes.php", "Contacto.php",
         "login.php", "registro.php", "password.php", "acceso_denegado.php", 
-        "codigo_recu.php", "recucontra.php"
+        "codigo_recu.php", "recucontra.php", "carrito.php","filtradobusqueda.php"
         // Visitantes solo pueden ver páginas públicas
     ]
 ];

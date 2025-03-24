@@ -90,13 +90,7 @@ if (isset($_SESSION['id'])) {
                             </span>
                         </a>
                         <?php else: ?>
-                        <button type="button" class="btn btn-primary position-relative">
-                            Mensajes
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                0
-                                <span class="visually-hidden">unread messages</span>
-                            </span>
-                        </button>
+                        
                         <?php endif; ?>
 
                         <div class="dropdown">

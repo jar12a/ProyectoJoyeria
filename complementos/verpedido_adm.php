@@ -72,7 +72,9 @@ $total_pages = ceil($total_pedidos / $rows_per_page);
     <div class="container mt-5">
         <h2 class="mb-4">Registro de Pedidos</h2>
         <div class="mb-3">
-            <form method="GET" action="../complementos/verpedido_adm.php" class="form-inline">
+            <form method="GET" action="../complementos/dashboard_verpedido_adm.php" class="form-inline">
+                <input type="hidden" name="page" value="<?php echo $page; ?>">
+                <input type="hidden" name="rows_per_page" value="<?php echo $rows_per_page; ?>">
                 <label for="rows_per_page" class="mr-2">Filas por página:</label>
                 <select name="rows_per_page" id="rows_per_page" class="form-control mr-2" onchange="this.form.submit()">
                     <option value="5" <?php if ($rows_per_page == 5) echo 'selected'; ?>>5</option>
@@ -116,7 +118,7 @@ $total_pages = ceil($total_pedidos / $rows_per_page);
             <ul class="pagination">
                 <?php for ($i = 1; $i <= $total_pages; $i++): ?>
                     <li class="page-item <?php if ($i == $page) echo 'active'; ?>">
-                        <a class="page-link" href="../complementos/verpedido_adm.php?page=<?php echo $i; ?>&rows_per_page=<?php echo $rows_per_page; ?>&search_cliente=<?php echo htmlspecialchars($search_cliente); ?>&search_fecha=<?php echo htmlspecialchars($search_fecha); ?>"><?php echo $i; ?></a>
+                        <a class="page-link" href="../complementos/dashboard_verpedido_adm.php?page=<?php echo $i; ?>&rows_per_page=<?php echo $rows_per_page; ?>&search_cliente=<?php echo htmlspecialchars($search_cliente); ?>&search_fecha=<?php echo htmlspecialchars($search_fecha); ?>"><?php echo $i; ?></a>
                     </li>
                 <?php endfor; ?>
             </ul>

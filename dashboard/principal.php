@@ -145,4 +145,3 @@ include '../confi/filtro_bodega.php';
 </body>
 
 </html>
-
