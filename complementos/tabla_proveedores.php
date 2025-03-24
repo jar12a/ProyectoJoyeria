@@ -17,24 +17,25 @@ $offset = ($pagina_actual - 1) * $registros_por_pagina;
 
 // Consulta para contar el total de registros con filtro
 $sql_total = "SELECT COUNT(*) AS total FROM proveedores WHERE 
-    empresa LIKE '%$busqueda%' OR 
-    contacto LIKE '%$busqueda%' OR 
-    correo LIKE '%$busqueda%' OR 
-    telefono LIKE '%$busqueda%' OR 
-    direccion LIKE '%$busqueda%' OR 
-    tipo_pago LIKE '%$busqueda%' OR 
-    envio LIKE '%$busqueda%' OR 
-    banco LIKE '%$busqueda%' OR 
-    numCuenta LIKE '%$busqueda%' OR 
-    nombreTitular LIKE '%$busqueda%' OR 
-    tipoCuenta LIKE '%$busqueda%' OR 
-    direccionPagoEfectivo LIKE '%$busqueda%' OR 
-    horarioPagoEfectivo LIKE '%$busqueda%' OR 
-    correoPayPal LIKE '%$busqueda%' OR 
-    confirmarCuentaPayPal LIKE '%$busqueda%';";
+    empresa LIKE :busqueda OR 
+    contacto LIKE :busqueda OR 
+    correo LIKE :busqueda OR 
+    telefono LIKE :busqueda OR 
+    direccion LIKE :busqueda OR 
+    tipo_pago LIKE :busqueda OR 
+    envio LIKE :busqueda OR 
+    banco LIKE :busqueda OR 
+    numCuenta LIKE :busqueda OR 
+    nombreTitular LIKE :busqueda OR 
+    tipoCuenta LIKE :busqueda OR 
+    direccionPagoEfectivo LIKE :busqueda OR 
+    horarioPagoEfectivo LIKE :busqueda OR 
+    correoPayPal LIKE :busqueda OR 
+    confirmarCuentaPayPal LIKE :busqueda";
 
-$resultado_total = $conexion->query($sql_total);
-$total_registros = $resultado_total->fetch_assoc()['total'];
+$stmt_total = $pdo->prepare($sql_total);
+$stmt_total->execute([':busqueda' => "%$busqueda%"]);
+$total_registros = $stmt_total->fetch(PDO::FETCH_ASSOC)['total'];
 
 // Calcular el número total de páginas
 $total_paginas = ceil($total_registros / $registros_por_pagina);
@@ -43,24 +44,29 @@ $total_paginas = ceil($total_registros / $registros_por_pagina);
 $sql = "SELECT id, empresa, contacto, correo, telefono, direccion, tipo_pago, envio, banco, numCuenta, nombreTitular, tipoCuenta, direccionPagoEfectivo, horarioPagoEfectivo, correoPayPal, confirmarCuentaPayPal 
         FROM proveedores 
         WHERE 
-            empresa LIKE '%$busqueda%' OR 
-            contacto LIKE '%$busqueda%' OR 
-            correo LIKE '%$busqueda%' OR 
-            telefono LIKE '%$busqueda%' OR 
-            direccion LIKE '%$busqueda%' OR 
-            tipo_pago LIKE '%$busqueda%' OR 
-            envio LIKE '%$busqueda%' OR 
-            banco LIKE '%$busqueda%' OR 
-            numCuenta LIKE '%$busqueda%' OR 
-            nombreTitular LIKE '%$busqueda%' OR 
-            tipoCuenta LIKE '%$busqueda%' OR 
-            direccionPagoEfectivo LIKE '%$busqueda%' OR 
-            horarioPagoEfectivo LIKE '%$busqueda%' OR 
-            correoPayPal LIKE '%$busqueda%' OR 
-            confirmarCuentaPayPal LIKE '%$busqueda%'
-        LIMIT $registros_por_pagina OFFSET $offset;";
+            empresa LIKE :busqueda OR 
+            contacto LIKE :busqueda OR 
+            correo LIKE :busqueda OR 
+            telefono LIKE :busqueda OR 
+            direccion LIKE :busqueda OR 
+            tipo_pago LIKE :busqueda OR 
+            envio LIKE :busqueda OR 
+            banco LIKE :busqueda OR 
+            numCuenta LIKE :busqueda OR 
+            nombreTitular LIKE :busqueda OR 
+            tipoCuenta LIKE :busqueda OR 
+            direccionPagoEfectivo LIKE :busqueda OR 
+            horarioPagoEfectivo LIKE :busqueda OR 
+            correoPayPal LIKE :busqueda OR 
+            confirmarCuentaPayPal LIKE :busqueda
+        LIMIT :limit OFFSET :offset";
 
-$resultado = $conexion->query($sql);
+$stmt = $pdo->prepare($sql);
+$stmt->bindValue(':busqueda', "%$busqueda%", PDO::PARAM_STR);
+$stmt->bindValue(':limit', $registros_por_pagina, PDO::PARAM_INT);
+$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+$stmt->execute();
+$resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -164,7 +170,7 @@ $resultado = $conexion->query($sql);
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while ($fila = $resultado->fetch_assoc()) { ?>
+                    <?php foreach ($resultado as $fila) { ?>
                         <tr id="<?php echo $fila['id']; ?>">
                             <td><input type="radio" name="seleccion" value="<?php echo $fila['id']; ?>"></td>
                             <td><?php echo $fila['id']; ?></td>
@@ -345,5 +351,5 @@ $resultado = $conexion->query($sql);
 
 <?php
 // Cerrar la conexión
-$conexion->close();
+$pdo = null;
 ?>
