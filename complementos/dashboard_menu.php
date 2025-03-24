@@ -19,12 +19,13 @@
                 </a>
                 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="../complementos/dashboard_mensajes.php">Mensajes </a>
                         <a class="nav-link" href="../dashboard/bodega_dasboard.php">Bodega</a>
                         <a class="nav-link" href="../complementos/dashboard_verpedido_adm.php">Pedidos</a>
                         <a class="nav-link" href="../complementos/tabla_usuarios.php">Usuarios</a>
                         <a class="nav-link" href="../complementos/tabla_usuarios.php">Empleados</a>
-
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                        
+                        
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
 
                                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
@@ -40,8 +41,7 @@
 
 
                             </nav>
-                        </div>
-                        <a class="nav-link" href="../complementos/dashboard_mensajes.php">Mensajes </a>
+                        
 
                     </nav>
                 </div>

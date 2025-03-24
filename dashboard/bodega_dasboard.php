@@ -7,11 +7,6 @@ include '../confi/conexion.php'; // crea la conexion con la base de datos
 include '../confi/filtro_bodega.php';
 ?>
 
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -38,7 +33,7 @@ include '../confi/filtro_bodega.php';
                         <h1 class="mt-4">Barra de navegación</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="../dashboard/principal.php">Menú</a></li>
-                            <li class="breadcrumb-item active">Inicio</li>
+                            <li class="breadcrumb-item active">Bodega</li>
                         </ol>
                         <div class="card mb-4">
 
@@ -55,8 +50,6 @@ include '../confi/filtro_bodega.php';
                         //
                         include_once '../bodega/bodega.php';
                         ?>
-
-
 
                     </div>
             </main>
