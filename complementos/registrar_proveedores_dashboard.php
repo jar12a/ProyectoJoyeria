@@ -42,7 +42,7 @@ include '../confi/conexion.php'; // crea la conexion con la base de datos
 
                         <?php
                         //
-                        include_once '../complementos/tabla_proveedores.php';
+                        include_once '../complementos/proveedor.php';
 
                         ?>
 
