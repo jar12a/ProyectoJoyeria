@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../confi/conexion.php';
+include '../complementos/head.php';
 require '../confi/PHPMailer.php';
 require '../confi/SMTP.php';
 require '../confi/Exception.php';
@@ -43,13 +44,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['codigo'])) {
         if (isset($_SESSION['recovery_token']) && $_SESSION['recovery_token'] == $codigo) {
             // Si coincide con el token de sesión, aceptarlo
             $_SESSION['recovery_code'] = $codigo;
-            
+
             // Registrar éxito en log para depuración
             error_log("Código válido para: $email. Redirigiendo a recucontra.php");
-            
+
             // Eliminar cualquier error previo
             unset($_SESSION['error_message']);
-            
+
             // Redireccionar a la página para cambiar la contraseña
             header("Location: recucontra.php");
             exit();
@@ -61,10 +62,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['codigo'])) {
             } else {
                 $_SESSION['failed_attempts']++;
             }
-            
+
             // Log para depuración
-            error_log("Intento fallido para: $email. Código ingresado: $codigo, token esperado: " . 
-                     (isset($_SESSION['recovery_token']) ? $_SESSION['recovery_token'] : 'no establecido'));
+            error_log("Intento fallido para: $email. Código ingresado: $codigo, token esperado: " .
+                (isset($_SESSION['recovery_token']) ? $_SESSION['recovery_token'] : 'no establecido'));
         }
     }
 }
@@ -80,11 +81,11 @@ if (isset($_GET['resend']) && $_GET['resend'] == 'true') {
 if (!isset($_SESSION['code_sent']) || $_SESSION['code_sent'] !== true) {
     // Generar un nuevo token
     $token = rand(100000, 999999);
-    
+
     try {
         // Guardar el token en la sesión para compararlo más tarde
         $_SESSION['recovery_token'] = $token;
-        
+
         // Enviar correo con el token
         $mail = new PHPMailer(true);
         try {
@@ -96,13 +97,13 @@ if (!isset($_SESSION['code_sent']) || $_SESSION['code_sent'] !== true) {
             $mail->Password = 'xdjs xfjy csuf iatd'; // App password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
-            
+
             // Configuración de depuración - Activar para diagnóstico
             $mail->SMTPDebug = 2; // 2 = mostrar mensajes cliente/servidor para diagnóstico
-            $mail->Debugoutput = function($str, $level) {
+            $mail->Debugoutput = function ($str, $level) {
                 error_log("PHPMailer [$level] : $str");
             };
-            
+
             // Configuración SSL más segura pero permisiva
             $mail->SMTPOptions = array(
                 'ssl' => array(
@@ -119,7 +120,7 @@ if (!isset($_SESSION['code_sent']) || $_SESSION['code_sent'] !== true) {
 
             // Configuración de tiempo de espera
             $mail->Timeout = 60; // Aumentar tiempo de espera a 60 segundos
-            
+
             // Contenido del correo
             $mail->isHTML(true);
             $mail->Subject = 'Código de recuperación de contraseña';
@@ -144,7 +145,7 @@ if (!isset($_SESSION['code_sent']) || $_SESSION['code_sent'] !== true) {
             </body>
             </html>";
             $mail->AltBody = "Su código de recuperación es: $token. Este código expirará en 15 minutos.";
-            
+
             if ($mail->send()) {
                 $success_message = "Se ha enviado un código de verificación a su correo electrónico: " . substr($email, 0, 3) . "***" . substr($email, strrpos($email, "@"));
                 $_SESSION['code_sent'] = true;
@@ -152,7 +153,7 @@ if (!isset($_SESSION['code_sent']) || $_SESSION['code_sent'] !== true) {
                 // Si el correo no se envía, mostrar un mensaje genérico
                 $error_message = "No se pudo enviar el correo. Por favor, intente nuevamente.";
                 error_log("Error PHPMailer completo: " . $mail->ErrorInfo);
-                
+
                 // A pesar del error, permitir verificar con el código
                 $_SESSION['code_sent'] = true;
                 $success_message = "El servidor de correo no responde. ";
@@ -161,7 +162,7 @@ if (!isset($_SESSION['code_sent']) || $_SESSION['code_sent'] !== true) {
             $error_message = "Error al enviar el correo: " . $mail->ErrorInfo;
             // Log del error para depuración
             error_log("Error PHPMailer Exception: " . $e->getMessage());
-            
+
             // A pesar del error, permitir verificar con el código
             $_SESSION['code_sent'] = true;
             $success_message = "El servidor de correo no responde. ";
@@ -169,7 +170,7 @@ if (!isset($_SESSION['code_sent']) || $_SESSION['code_sent'] !== true) {
     } catch (PDOException $e) {
         $error_message = "Error en la base de datos: " . $e->getMessage();
         error_log("Error PDO: " . $e->getMessage());
-        
+
         // Intentamos mostrar el código incluso con error de BD
         $_SESSION['code_sent'] = true;
         $_SESSION['recovery_token'] = $token;
@@ -180,6 +181,7 @@ if (!isset($_SESSION['code_sent']) || $_SESSION['code_sent'] !== true) {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -187,10 +189,13 @@ if (!isset($_SESSION['code_sent']) || $_SESSION['code_sent'] !== true) {
     <meta name="description" content="Verificación de código para recuperación de contraseña">
     <meta name="author" content="Imperial Gems">
     <title>Verificación de Código - Imperial Gems</title>
-    <link href="css/styles.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link href="/ProyectoJoyeria/dashboard/css/styles.css" rel="stylesheet" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <?php
+    ?>
 </head>
+
 <body class="bg-primary">
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
@@ -209,31 +214,31 @@ if (!isset($_SESSION['code_sent']) || $_SESSION['code_sent'] !== true) {
                                             <?php echo $error_message; ?>
                                         </div>
                                     <?php endif; ?>
-                                    
+
                                     <?php if (!empty($success_message)): ?>
                                         <div class="alert alert-success">
                                             <i class="fas fa-check-circle me-2"></i>
                                             <?php echo $success_message; ?>
                                         </div>
                                     <?php endif; ?>
-                                    
+
                                     <div class="text-center mb-4">
                                         <i class="fas fa-envelope fa-3x text-primary mb-3"></i>
                                         <p class="mb-1">Hemos enviado un código de verificación a:</p>
                                         <p class="fw-bold"><?php echo htmlspecialchars($email); ?></p>
-                                        
+
                                         <?php if (isset($_SESSION['recovery_token'])): ?>
-                                        <div class="mt-3 alert alert-info">
-                                            <p class="mb-0">Si no recibe el correo, vuelve a intentar</p>
-                                            
-                                        </div>
+                                            <div class="mt-3 alert alert-info">
+                                                <p class="mb-0">Si no recibe el correo, vuelve a intentar</p>
+
+                                            </div>
                                         <?php endif; ?>
                                     </div>
-                                    
+
                                     <form action="codigo_recu.php" method="POST">
                                         <div class="form-floating mb-3">
-                                            <input class="form-control" id="codigo" name="codigo" type="text" 
-                                                placeholder="Ingrese el código" required maxlength="6" 
+                                            <input class="form-control" id="codigo" name="codigo" type="text"
+                                                placeholder="Ingrese el código" required maxlength="6"
                                                 pattern="\d{6}" title="El código debe tener 6 dígitos">
                                             <label for="codigo">Código de verificación</label>
                                         </div>
@@ -248,7 +253,7 @@ if (!isset($_SESSION['code_sent']) || $_SESSION['code_sent'] !== true) {
                                     </form>
                                 </div>
                                 <div class="card-footer text-center py-3">
-                                    <div class="small">¿No recibió el código? 
+                                    <div class="small">¿No recibió el código?
                                         <a href="codigo_recu.php?resend=true">Enviar nuevamente</a>
                                     </div>
                                     <div class="small mt-2">
@@ -276,6 +281,10 @@ if (!isset($_SESSION['code_sent']) || $_SESSION['code_sent'] !== true) {
             </footer>
         </div>
     </div>
+    <?php include '../complementos/footer.php';
+    include '../confi/cierre_sesion.php';
+    ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <?php
 require_once '../confi/conexion.php'; // crea la conexion con la base de datos
+include '../complementos/head.php';
 require '../confi/PHPMailer.php';
 require '../confi/SMTP.php';
 require '../confi/Exception.php';
@@ -109,9 +110,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="description" content="Registro de usuario" />
     <meta name="author" content="" />
     <title>Registro de Usuario</title>
-    <link href="css/styles.css" rel="stylesheet" />
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <?php include '../complementos/head.php'; ?>
+    <link href="/ProyectoJoyeria/dashboard/css/styles.css" rel="stylesheet" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    
 
     <!-- Incluye los estilos de Bootstrap -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
