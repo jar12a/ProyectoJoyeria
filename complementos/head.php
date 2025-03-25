@@ -136,7 +136,7 @@ if (isset($_SESSION['id'])) {
                             </ul>
                         </div>
 
-                        <?php if (isset($_SESSION['id'])): ?>
+                        
                         <a href="/ProyectoJoyeria/listadedeseo.php" class="icon-link">
                             <i class="fa-solid fa-heart"></i>
                         </a>
@@ -150,7 +150,7 @@ if (isset($_SESSION['id'])) {
                                 echo (empty($_SESSION['carrito'])) ? 0 : count($_SESSION['carrito']);
                                 ?>)</span>
                         </div>
-                        <?php endif; ?>
+                        
                     </div>
                 </div>
             </div>
