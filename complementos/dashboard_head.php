@@ -45,7 +45,6 @@ if (!estaLogueado()) {
                     ?>
                     <i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="../dashboard/perfil.php">Mi Perfil</a></li>
                     <?php if ($_SESSION['idRol'] == ROL_ADMIN): ?>
                     <li><a class="dropdown-item" href="../complementos/tabla_usuarios.php">Gestionar Usuarios</a></li>
                     <?php endif; ?>
